@@ -29,3 +29,5 @@ create table wishlist(
     constraint wishlist_user_fk foreign key (user_id) references users (id),
     constraint wishlist_item_fk foreign key (item_id) references items (id)
 );
+
+# test
