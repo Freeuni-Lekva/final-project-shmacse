@@ -2,3 +2,4 @@
 /.idea/
 /src/main/java/schmacse/databaseconnection/DBConnection.java
 src/main/java/schmacse/databaseconnection/DBConnection.java
+setupDB
