@@ -1,5 +1,6 @@
 package tests;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import schmacse.daos.ItemDao;
 import schmacse.databaseconnection.DBConnection;
@@ -7,7 +8,6 @@ import schmacse.model.Category;
 import schmacse.model.Item;
 
 import java.sql.*;
-import java.util.List;
 
 public class ItemDaoTest {
 
@@ -19,13 +19,30 @@ public class ItemDaoTest {
             {"watch", "your", "TROUSERS"}
     };
 
-    private void  addDummyUser(Connection connection) throws SQLException {
+    private static final String viewItems = "SELECT * FROM items";
+    private static final String viewUsers = "SELECT * FROM users";
+    private static final String clearItems = "DELETE FROM items";
+    private static final String clearUsers = "DELETE FROM users";
+    private static final String resetIncrementItems = "ALTER TABLE items AUTO_INCREMENT = 1";
+    private static final String resetIncrementUsers = "ALTER TABLE users AUTO_INCREMENT = 1";
+
+    private void addDummyUser(Connection connection) throws SQLException {
 
         // create user, to satisfy foreign key constraint (in items table)
         Statement stm = connection.createStatement();
         stm.executeUpdate("INSERT INTO " +
                 "users (first_name, last_name, phone_number, username, password) " +
                 "VALUES ('test','test','test','test', 'test')");
+
+    }
+    private void addDummyItem(Connection connection) throws SQLException{
+
+        Statement stm = connection.createStatement();
+        stm.executeUpdate(
+                "INSERT INTO items (user_id, name, description, category)" +
+                        "VALUES (1, 'item', 'nice', 'TROUSERS')"
+        );
+
 
     }
 
@@ -38,11 +55,11 @@ public class ItemDaoTest {
         addDummyUser(connection);
         ItemDao itemDao = new ItemDao(connection);
         for(int i = 0; i < 60; i++){
-            Item firstItem = new Item(i,1, item_names[i%5][0], item_names[i%5][1],
-                    Category.valueOf(item_names[i%5][2]));
+            Item firstItem = new Item(i,1, Integer.toString(i), Integer.toString(i),
+                    Category.TROUSERS);
             itemDao.add(firstItem);
         }
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM items");
+        PreparedStatement stm = connection.prepareStatement(viewItems);
         ResultSet resultSet = stm.executeQuery();
 
         int i = 0;
@@ -77,7 +94,7 @@ public class ItemDaoTest {
             itemDao.add(item);
         }
 
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM items");
+        PreparedStatement stm = connection.prepareStatement(viewItems);
         ResultSet resultSet = stm.executeQuery();
 
         int i = 0;
@@ -92,90 +109,64 @@ public class ItemDaoTest {
 
     }
 
-    @Test
-    public void testGetItemsByUsername() throws SQLException {
+    @Test // tests if successfully removes item from database
+    public void testRemoveOne() throws SQLException{
+
         Connection connection = DBConnection.getConnection();
+        reset_db(connection);
+
+        addDummyUser(connection);
 
         ItemDao itemDao = new ItemDao(connection);
 
-        Statement statement = connection.createStatement();
+        addDummyItem(connection);
+        itemDao.remove(1); // because its first item
 
-        statement.executeUpdate("INSERT INTO users (id, first_name, last_name, phone_number, username, password) " +
-                "VALUES (1, 'name1', 'last_name1', 123, 'username1', 'password1')");
+        Item secondItem = new Item(2, 1, "second", "good", Category.TROUSERS);
+        itemDao.remove(secondItem); // check both ways to remove
 
-        statement.executeUpdate("INSERT INTO users (id, first_name, last_name, phone_number, username, password) " +
-                "VALUES (2, 'name2', 'last_name2', 456, 'username2', 'password2')");
+        PreparedStatement stm = connection.prepareStatement(viewItems);
+        ResultSet resultSet = stm.executeQuery();
 
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
-                "VALUES (1, 2, '%s', '%s', '%s')", item_names[0][0], item_names[0][1], item_names[0][2]));
+        Assertions.assertFalse(resultSet.next());
 
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
-                "VALUES (2, 2, '%s', '%s', '%s')", item_names[1][0], item_names[1][1], item_names[1][2]));
+        reset_db(connection);
 
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
-                "VALUES (3, 1, '%s', '%s', '%s')", item_names[2][0], item_names[2][1], item_names[2][2]));
+    }
 
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
-                "VALUES (4, 2, '%s', '%s', '%s')", item_names[3][0], item_names[3][1], item_names[3][2]));
+    @Test // tests if does not reset autoincrement
+    public void testRemoveIncrement() throws SQLException{
 
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
-                "VALUES (5, 1, '%s', '%s', '%s')", item_names[4][0], item_names[4][1], item_names[4][2]));
+        Connection connection = DBConnection.getConnection();
+        reset_db(connection);
 
-        List<Item> itemListForUsername1 = itemDao.getItemsByUsername("username1");
-        List<Item> itemListForUsername2 = itemDao.getItemsByUsername("username2");
+        addDummyUser(connection);
 
-        Assertions.assertEquals(2, itemListForUsername1.size());
-        Assertions.assertEquals(3, itemListForUsername2.size());
+        ItemDao itemDao = new ItemDao(connection);
+        addDummyItem(connection);
+        itemDao.remove(1);
 
-        Item item3 = itemListForUsername1.get(0);
+        for(int i = 0; i < 5; i++){ addDummyItem(connection); } // should add id-s from 2 to 6
 
-        Assertions.assertEquals(3, item3.getId());
-        Assertions.assertEquals(1, item3.getUserId());
-        Assertions.assertEquals(item_names[2][0], item3.getName());
-        Assertions.assertEquals(item_names[2][1], item3.getDescription());
-        Assertions.assertEquals(Category.valueOf(item_names[2][2]), item3.getCategory());
+        PreparedStatement stm1 = connection.prepareStatement(viewItems);
+        ResultSet resultSet = stm1.executeQuery();
 
-        Item item5 = itemListForUsername1.get(1);
+        int j = 2;
+        while (resultSet.next()){
+            Assertions.assertEquals(j, resultSet.getInt(1));
+            j++;
+        }
 
-        Assertions.assertEquals(5, item5.getId());
-        Assertions.assertEquals(1, item5.getUserId());
-        Assertions.assertEquals(item_names[4][0], item5.getName());
-        Assertions.assertEquals(item_names[4][1], item5.getDescription());
-        Assertions.assertEquals(Category.valueOf(item_names[4][2]), item5.getCategory());
+        itemDao.remove(2);
+        itemDao.remove(4);
 
-        Item item1 = itemListForUsername2.get(0);
+        for(int i = 0; i < 3; i++){ addDummyItem(connection); }
+        while (resultSet.next()){
+            Assertions.assertEquals(j, resultSet.getInt(1));
+            j++;
+        }
 
-        Assertions.assertEquals(1, item1.getId());
-        Assertions.assertEquals(2, item1.getUserId());
-        Assertions.assertEquals(item_names[0][0], item1.getName());
-        Assertions.assertEquals(item_names[0][1], item1.getDescription());
-        Assertions.assertEquals(Category.valueOf(item_names[0][2]), item1.getCategory());
-
-        Item item2 = itemListForUsername2.get(1);
-
-        Assertions.assertEquals(2, item2.getId());
-        Assertions.assertEquals(2, item2.getUserId());
-        Assertions.assertEquals(item_names[1][0], item2.getName());
-        Assertions.assertEquals(item_names[1][1], item2.getDescription());
-        Assertions.assertEquals(Category.valueOf(item_names[1][2]), item2.getCategory());
-
-        Item item4 = itemListForUsername2.get(2);
-
-        Assertions.assertEquals(4, item4.getId());
-        Assertions.assertEquals(2, item4.getUserId());
-        Assertions.assertEquals(item_names[3][0], item4.getName());
-        Assertions.assertEquals(item_names[3][1], item4.getDescription());
-        Assertions.assertEquals(Category.valueOf(item_names[3][2]), item4.getCategory());
-
-        statement.executeUpdate("DELETE FROM items WHERE id = 1");
-        statement.executeUpdate("DELETE FROM items WHERE id = 2");
-        statement.executeUpdate("DELETE FROM items WHERE id = 3");
-        statement.executeUpdate("DELETE FROM items WHERE id = 4");
-        statement.executeUpdate("DELETE FROM items WHERE id = 5");
-
-        statement.executeUpdate("DELETE FROM users WHERE id = 1");
-        statement.executeUpdate("DELETE FROM users WHERE id = 2");
-
+        reset_db(connection);
 
     }
 
@@ -184,10 +175,10 @@ public class ItemDaoTest {
         // deletes rows in items
         Statement stm = connection.createStatement();
 
-        stm.addBatch("DELETE FROM items"); // clear rows in items table
-        stm.addBatch("DELETE FROM users"); // clear rows in users table
-        stm.addBatch("ALTER TABLE items AUTO_INCREMENT = 1"); // reset auto_increment in items
-        stm.addBatch("ALTER TABLE users AUTO_INCREMENT = 1"); // reset auto_increment in users
+        stm.addBatch(clearItems); // clear rows in items table
+        stm.addBatch(clearUsers); // clear rows in users table
+        stm.addBatch(resetIncrementItems); // reset auto_increment in items
+        stm.addBatch(resetIncrementUsers); // reset auto_increment in users
 
         stm.executeBatch();
 
