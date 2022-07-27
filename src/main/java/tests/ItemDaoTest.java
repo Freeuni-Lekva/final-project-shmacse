@@ -6,7 +6,9 @@ import schmacse.databaseconnection.DBConnection;
 import schmacse.model.Category;
 import schmacse.model.Item;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.List;
 
 public class ItemDaoTest {
 
@@ -166,6 +168,90 @@ public class ItemDaoTest {
         }
 
         reset_db(connection);
+
+    }
+
+    @Test
+    public void testGetItemsByUsername() throws SQLException {
+
+        Connection connection = DBConnection.getConnection();
+
+        ItemDao itemDao = new ItemDao(connection);
+
+        Statement statement = connection.createStatement();
+
+        statement.executeUpdate("INSERT INTO users (id, first_name, last_name, phone_number, username, password) " +
+                "VALUES (1, 'name1', 'lastname1', '123', 'username1', 'password1')");
+
+        statement.executeUpdate("INSERT INTO users (id, first_name, last_name, phone_number, username, password) " +
+                "VALUES (2, 'name2', 'lastname2', '456', 'username2', 'password2')");
+
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
+                "VALUES (1, 2, '%s', '%s', '%s')", item_names[0][0], item_names[0][1], item_names[0][2]));
+
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
+                "VALUES (2, 2, '%s', '%s', '%s')", item_names[1][0], item_names[1][1], item_names[1][2]));
+
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
+                "VALUES (3, 1, '%s', '%s', '%s')", item_names[2][0], item_names[2][1], item_names[2][2]));
+
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
+                "VALUES (4, 2, '%s', '%s', '%s')", item_names[3][0], item_names[3][1], item_names[3][2]));
+
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, description, category) " +
+                "VALUES (5, 1, '%s', '%s', '%s')", item_names[4][0], item_names[4][1], item_names[4][2]));
+
+        List<Item> itemList1 = itemDao.getItemsByUsername("username1");
+        List<Item> itemList2 = itemDao.getItemsByUsername("username2");
+
+        Item item3 = itemList1.get(0);
+
+        Assertions.assertEquals(3, item3.getId());
+        Assertions.assertEquals(1, item3.getUserId());
+        Assertions.assertEquals(item_names[2][0], item3.getName());
+        Assertions.assertEquals(item_names[2][1], item3.getDescription());
+        Assertions.assertEquals(Category.valueOf(item_names[2][2]), item3.getCategory());
+
+        Item item5 = itemList1.get(1);
+
+        Assertions.assertEquals(5, item5.getId());
+        Assertions.assertEquals(1, item5.getUserId());
+        Assertions.assertEquals(item_names[4][0], item5.getName());
+        Assertions.assertEquals(item_names[4][1], item5.getDescription());
+        Assertions.assertEquals(Category.valueOf(item_names[4][2]), item5.getCategory());
+
+        Item item1 = itemList2.get(0);
+
+        Assertions.assertEquals(1, item1.getId());
+        Assertions.assertEquals(2, item1.getUserId());
+        Assertions.assertEquals(item_names[0][0], item1.getName());
+        Assertions.assertEquals(item_names[0][1], item1.getDescription());
+        Assertions.assertEquals(Category.valueOf(item_names[0][2]), item1.getCategory());
+
+        Item item2 = itemList2.get(1);
+
+        Assertions.assertEquals(2, item2.getId());
+        Assertions.assertEquals(2, item2.getUserId());
+        Assertions.assertEquals(item_names[1][0], item2.getName());
+        Assertions.assertEquals(item_names[1][1], item2.getDescription());
+        Assertions.assertEquals(Category.valueOf(item_names[1][2]), item2.getCategory());
+
+        Item item4 = itemList2.get(2);
+
+        Assertions.assertEquals(4, item4.getId());
+        Assertions.assertEquals(2, item4.getUserId());
+        Assertions.assertEquals(item_names[3][0], item4.getName());
+        Assertions.assertEquals(item_names[3][1], item4.getDescription());
+        Assertions.assertEquals(Category.valueOf(item_names[3][2]), item4.getCategory());
+
+        statement.executeUpdate("DELETE FROM items WHERE id = 1");
+        statement.executeUpdate("DELETE FROM items WHERE id = 2");
+        statement.executeUpdate("DELETE FROM items WHERE id = 3");
+        statement.executeUpdate("DELETE FROM items WHERE id = 4");
+        statement.executeUpdate("DELETE FROM items WHERE id = 5");
+
+        statement.executeUpdate("DELETE FROM users WHERE id = 1");
+        statement.executeUpdate("DELETE FROM users WHERE id = 2");
 
     }
 
