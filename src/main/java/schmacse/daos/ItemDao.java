@@ -34,6 +34,19 @@ public class ItemDao {
         stm.executeUpdate();
     }
 
+    public void remove(Item item) throws SQLException{
+
+        int item_id = item.getId();
+
+        PreparedStatement stm = connection.prepareStatement(
+                "DELETE FROM items WHERE id = ?"
+        );
+
+        stm.setInt(item_id,1);
+        stm.executeUpdate();
+
+    }
+
     public List<Item> getItemsByUserId(int userId) throws SQLException {
 
         List<Item> itemList = new ArrayList<>();
