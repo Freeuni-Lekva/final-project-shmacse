@@ -1,6 +1,5 @@
 package tests;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import schmacse.daos.ItemDao;
 import schmacse.databaseconnection.DBConnection;

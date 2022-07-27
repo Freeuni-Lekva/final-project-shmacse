@@ -84,20 +84,4 @@ public class ItemDao {
         return itemList;
     }
 
-//    private Category getCategory(String category) {
-//
-//        switch (category.toLowerCase()) {
-//            case "trousers":
-//                return Category.TROUSERS;
-//            case "isgood":
-//                return Category.ISGOOD;
-//            case "saul":
-//                return Category.SAUL;
-//            case "anddrive":
-//                return Category.ANDDRIVE;
-//        }
-//
-//        return null;
-//    }
-
 }
