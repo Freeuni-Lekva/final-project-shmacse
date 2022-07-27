@@ -1,6 +1,6 @@
-drop database if exists db;
-create database db;
 use db;
+
+SET FOREIGN_KEY_CHECKS=0; -- to disable them
 
 drop table if exists users;
 create table users(
@@ -29,3 +29,5 @@ create table wishlist(
     constraint wishlist_user_fk foreign key (user_id) references users (id),
     constraint wishlist_item_fk foreign key (item_id) references items (id)
 );
+
+SET FOREIGN_KEY_CHECKS=1; -- to re-enable them
