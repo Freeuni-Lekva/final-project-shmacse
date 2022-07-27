@@ -12,7 +12,8 @@ import java.util.List;
 
 public class ItemDao {
 
-    private static final String SELECT_ITEMS_BY_USER_ID = "SELECT * FROM items WHERE user_id = ?";
+    private static final String SELECT_ITEMS_OF_USER_TO_SELL = "SELECT * FROM items " +
+            "JOIN users WHERE users.id = items.user_id AND users.username = ?";
 
     private Connection connection;
 
@@ -47,25 +48,25 @@ public class ItemDao {
 
     }
 
-    public List<Item> getItemsByUserId(int userId) throws SQLException {
+    public List<Item> getItemsByUsername(String username) throws SQLException {
 
         List<Item> itemList = new ArrayList<>();
 
-        PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_BY_USER_ID);
+        PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_OF_USER_TO_SELL);
 
-        stm.setInt(1, userId);
+        stm.setString(1, username);
 
         ResultSet resultSet = stm.executeQuery();
 
         while (resultSet.next()) {
 
             int id = resultSet.getInt("id");
-            int currUserId = resultSet.getInt("user_id");
+            int userId = resultSet.getInt("user_id");
             String name = resultSet.getString("name");
             String description = resultSet.getString("description");
-            Category category = getCategory(resultSet.getString("category"));
+            Category category = Category.valueOf(resultSet.getString("category"));
 
-            Item newItem = new Item(id, currUserId, name, description, category);
+            Item newItem = new Item(id, userId, name, description, category);
 
             itemList.add(newItem);
         }
@@ -73,20 +74,20 @@ public class ItemDao {
         return itemList;
     }
 
-    private Category getCategory(String category) {
-
-        switch (category.toLowerCase()) {
-            case "trousers":
-                return Category.TROUSERS;
-            case "isgood":
-                return Category.ISGOOD;
-            case "saul":
-                return Category.SAUL;
-            case "anddrive":
-                return Category.ANDDRIVE;
-        }
-
-        return null;
-    }
+//    private Category getCategory(String category) {
+//
+//        switch (category.toLowerCase()) {
+//            case "trousers":
+//                return Category.TROUSERS;
+//            case "isgood":
+//                return Category.ISGOOD;
+//            case "saul":
+//                return Category.SAUL;
+//            case "anddrive":
+//                return Category.ANDDRIVE;
+//        }
+//
+//        return null;
+//    }
 
 }
