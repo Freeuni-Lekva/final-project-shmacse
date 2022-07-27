@@ -36,13 +36,23 @@ public class ItemDao {
 
     public void remove(Item item) throws SQLException{
 
-        int item_id = item.getId();
+        int itemID = item.getId();
 
         PreparedStatement stm = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
         );
 
-        stm.setInt(item_id,1);
+        stm.setInt(1,itemID);
+        stm.executeUpdate();
+
+    }
+    public void remove(int itemID) throws SQLException{
+
+        PreparedStatement stm = connection.prepareStatement(
+                "DELETE FROM items WHERE id = ?"
+        );
+
+        stm.setInt(1,itemID);
         stm.executeUpdate();
 
     }
