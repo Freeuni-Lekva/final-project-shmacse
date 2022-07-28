@@ -20,8 +20,8 @@ public class ItemDaoTest {
             {"watch", "your", "TROUSERS"}
     };
 
-    private static final String viewItems = "SELECT * FROM items";
-    private static final String viewUsers = "SELECT * FROM users";
+    private static final String selectItems = "SELECT * FROM items";
+    private static final String selectUsers = "SELECT * FROM users";
     private static final String clearItems = "DELETE FROM items";
     private static final String clearUsers = "DELETE FROM users";
     private static final String resetIncrementItems = "ALTER TABLE items AUTO_INCREMENT = 1";
@@ -46,9 +46,17 @@ public class ItemDaoTest {
 
 
     }
+    private void addDummyItem(Connection connection, int userID) throws SQLException{
 
-    @Test
-    public void testAddIDs() throws SQLException{
+        PreparedStatement stm = connection.prepareStatement(
+                "INSERT INTO items (user_id, name, description, category)" +
+                "VALUES (?, 'item', 'nice', 'TROUSERS')");
+        stm.setInt(1, userID);
+        stm.executeUpdate();
+
+    }
+
+    private void testAddIDs() throws SQLException{
 
         Connection connection = DBConnection.getConnection();
         reset_db(connection);
@@ -60,7 +68,7 @@ public class ItemDaoTest {
                     Category.TROUSERS);
             itemDao.add(firstItem);
         }
-        PreparedStatement stm = connection.prepareStatement(viewItems);
+        PreparedStatement stm = connection.prepareStatement(selectItems);
         ResultSet resultSet = stm.executeQuery();
 
         int i = 0;
@@ -73,9 +81,7 @@ public class ItemDaoTest {
 
         reset_db(connection);
     }
-
-    @Test
-    public void testAddScenario() throws SQLException {
+    private void testAddScenario() throws SQLException {
 
         Connection connection = DBConnection.getConnection();
         reset_db(connection);
@@ -95,7 +101,7 @@ public class ItemDaoTest {
             itemDao.add(item);
         }
 
-        PreparedStatement stm = connection.prepareStatement(viewItems);
+        PreparedStatement stm = connection.prepareStatement(selectItems);
         ResultSet resultSet = stm.executeQuery();
 
         int i = 0;
@@ -110,9 +116,9 @@ public class ItemDaoTest {
 
     }
 
-    @Test // tests if successfully removes item from database
-    public void testRemoveOne() throws SQLException{
 
+    private void testRemoveOne() throws SQLException{
+        // tests if successfully removes item from database
         Connection connection = DBConnection.getConnection();
         reset_db(connection);
 
@@ -126,7 +132,7 @@ public class ItemDaoTest {
         Item secondItem = new Item(2, 1, "second", "good", Category.TROUSERS);
         itemDao.remove(secondItem); // check both ways to remove
 
-        PreparedStatement stm = connection.prepareStatement(viewItems);
+        PreparedStatement stm = connection.prepareStatement(selectItems);
         ResultSet resultSet = stm.executeQuery();
 
         Assertions.assertFalse(resultSet.next());
@@ -134,10 +140,8 @@ public class ItemDaoTest {
         reset_db(connection);
 
     }
-
-    @Test // tests if does not reset autoincrement
-    public void testRemoveIncrement() throws SQLException{
-
+    private void testRemoveIncrement() throws SQLException{
+        // tests if does not reset autoincrement
         Connection connection = DBConnection.getConnection();
         reset_db(connection);
 
@@ -149,7 +153,7 @@ public class ItemDaoTest {
 
         for(int i = 0; i < 5; i++){ addDummyItem(connection); } // should add id-s from 2 to 6
 
-        PreparedStatement stm1 = connection.prepareStatement(viewItems);
+        PreparedStatement stm1 = connection.prepareStatement(selectItems);
         ResultSet resultSet = stm1.executeQuery();
 
         int j = 2;
@@ -169,6 +173,87 @@ public class ItemDaoTest {
 
         reset_db(connection);
 
+    }
+
+
+    private void testRemoveByUserIDOne() throws SQLException{
+        // remove single item by userID
+        Connection connection = DBConnection.getConnection();
+        ItemDao itemDao = new ItemDao(connection);
+
+        reset_db(connection);
+
+        addDummyUser(connection);
+        addDummyItem(connection, 1);
+        itemDao.removeByUserID(1);
+
+        PreparedStatement stm = connection.prepareStatement(selectItems);
+        ResultSet resultSet = stm.executeQuery();
+
+        Assertions.assertFalse(resultSet.next());
+
+        reset_db(connection);
+
+    }
+    private void testRemoveByUserIDMultiple() throws SQLException{
+        // test if removes all of the items with certain userID
+        Connection connection = DBConnection.getConnection();
+        ItemDao itemDao = new ItemDao(connection);
+
+        reset_db(connection);
+
+        // create 3 different users with 1-3 userID-s
+        addDummyUser(connection);
+        addDummyUser(connection);
+        addDummyUser(connection);
+
+        for(int i = 0; i < 13; i++){addDummyItem(connection, 1);}
+        for(int i = 0; i < 3; i++){addDummyItem(connection, 2);}
+        for(int i = 0; i < 20; i++){addDummyItem(connection, 3);}
+
+        itemDao.removeByUserID(2);
+
+        PreparedStatement stm = connection.prepareStatement(selectItems);
+        ResultSet resultSet = stm.executeQuery();
+
+        int j = 0;
+        while(resultSet.next()){
+            j++;
+            if(j <= 13) Assertions.assertEquals(resultSet.getInt(2),1);
+            if(j > 13) Assertions.assertEquals(resultSet.getInt(2),3);
+        }
+
+        itemDao.removeByUserID(1);
+
+        resultSet = stm.executeQuery();
+
+        while(resultSet.next()){
+            Assertions.assertEquals(resultSet.getInt(2), 3);
+        }
+
+        itemDao.removeByUserID(3);
+        resultSet = stm.executeQuery();
+        Assertions.assertFalse(resultSet.next());
+
+        reset_db(connection);
+    }
+
+    @Test
+    public void testAdd() throws SQLException {
+        testAddIDs();
+        testAddScenario();
+    }
+
+    @Test
+    public void testRemove() throws SQLException{
+        testRemoveOne();
+        testRemoveIncrement();
+    }
+
+    @Test
+    public void testRemoveByUserID() throws SQLException{
+        testRemoveByUserIDOne();
+        testRemoveByUserIDMultiple();
     }
 
     @Test

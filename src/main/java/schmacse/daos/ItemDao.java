@@ -14,6 +14,9 @@ public class ItemDao {
 
     private static final String SELECT_ITEMS_OF_USER_TO_SELL = "SELECT * FROM items " +
             "JOIN users WHERE users.id = items.user_id AND users.username = ?";
+    private static final String DELETE_ITEMS_WITH_USER_ID = "" +
+            "DELETE FROM items WHERE user_id = ?";
+
 
     private Connection connection;
 
@@ -57,6 +60,15 @@ public class ItemDao {
         stm.executeUpdate();
 
     }
+
+    public void removeByUserID(int userID) throws SQLException{
+
+        PreparedStatement stm = connection.prepareStatement(DELETE_ITEMS_WITH_USER_ID);
+        stm.setInt(1, userID);
+
+        stm.executeUpdate();
+    }
+
 
     public List<Item> getItemsByUsername(String username) throws SQLException {
 
