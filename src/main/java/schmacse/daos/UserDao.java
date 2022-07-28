@@ -8,7 +8,13 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-    private static final String SELECT_USERS_BY_USER_ID = "SELECT * FROM users WHERE user_id = ?";
+    private static final String ADD_USER = "INSERT INTO users" +
+            "(first_name, last_name, username, phone_number, password)" +
+            " VALUES (?,?,?,?,?)";
+    private static final String SELECT_USER_BY_USERNAME_AND_PASSWORD = "SELECT * FROM users " +
+            "WHERE username = ? and password = ?";
+    private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
+
 
     private Connection connection;
 
@@ -18,12 +24,7 @@ public class UserDao {
 
     public void add(User user) throws SQLException {
 
-        PreparedStatement stm =
-                connection.prepareStatement(
-                        "INSERT INTO users" +
-                        "(first_name, last_name, username, phone_number, password)" +
-                        " VALUES (?,?,?,?,?)"
-                );
+        PreparedStatement stm = connection.prepareStatement(ADD_USER);
 
         stm.setString(1, user.getFirstName());
         stm.setString(2, user.getLastName());
@@ -36,9 +37,8 @@ public class UserDao {
 
     public User getUserByUsernameAndPassword(String username, String password) throws SQLException {
 
-        PreparedStatement stm = connection.prepareStatement(
-                "select * from users where username = ? and password = ?"
-        );
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME_AND_PASSWORD);
+
         stm.setString(1,username);
         stm.setString(2,password);
 
@@ -57,9 +57,8 @@ public class UserDao {
     }
 
     public  User getUserById(int id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement(
-                "select * from users where id = ?"
-        );
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_ID);
+
         stm.setInt(1, id);
 
         ResultSet rs = stm.executeQuery();
