@@ -12,7 +12,11 @@ import java.util.List;
 
 public class ItemDao {
 
-    private static final String SELECT_ITEMS_BY_USER_ID = "SELECT * FROM items WHERE user_id = ?";
+    private static final String SELECT_ITEMS_OF_USER_TO_SELL = "SELECT * FROM items " +
+            "JOIN users WHERE users.id = items.user_id AND users.username = ?";
+    private static final String DELETE_ITEMS_WITH_USER_ID = "" +
+            "DELETE FROM items WHERE user_id = ?";
+
 
     private Connection connection;
 
@@ -36,57 +40,60 @@ public class ItemDao {
 
     public void remove(Item item) throws SQLException{
 
-        int item_id = item.getId();
+        int itemID = item.getId();
 
         PreparedStatement stm = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
         );
 
-        stm.setInt(item_id,1);
+        stm.setInt(1,itemID);
+        stm.executeUpdate();
+
+    }
+    public void remove(int itemID) throws SQLException{
+
+        PreparedStatement stm = connection.prepareStatement(
+                "DELETE FROM items WHERE id = ?"
+        );
+
+        stm.setInt(1,itemID);
         stm.executeUpdate();
 
     }
 
-    public List<Item> getItemsByUserId(int userId) throws SQLException {
+    public void removeByUserID(int userID) throws SQLException{
+
+        PreparedStatement stm = connection.prepareStatement(DELETE_ITEMS_WITH_USER_ID);
+        stm.setInt(1, userID);
+
+        stm.executeUpdate();
+    }
+
+
+    public List<Item> getItemsByUsername(String username) throws SQLException {
 
         List<Item> itemList = new ArrayList<>();
 
-        PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_BY_USER_ID);
+        PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_OF_USER_TO_SELL);
 
-        stm.setInt(1, userId);
+        stm.setString(1, username);
 
         ResultSet resultSet = stm.executeQuery();
 
         while (resultSet.next()) {
 
             int id = resultSet.getInt("id");
-            int currUserId = resultSet.getInt("user_id");
+            int userId = resultSet.getInt("user_id");
             String name = resultSet.getString("name");
             String description = resultSet.getString("description");
-            Category category = getCategory(resultSet.getString("category"));
+            Category category = Category.valueOf(resultSet.getString("category"));
 
-            Item newItem = new Item(id, currUserId, name, description, category);
+            Item newItem = new Item(id, userId, name, description, category);
 
             itemList.add(newItem);
         }
 
         return itemList;
-    }
-
-    private Category getCategory(String category) {
-
-        switch (category.toLowerCase()) {
-            case "trousers":
-                return Category.TROUSERS;
-            case "isgood":
-                return Category.ISGOOD;
-            case "saul":
-                return Category.SAUL;
-            case "anddrive":
-                return Category.ANDDRIVE;
-        }
-
-        return null;
     }
 
 }
