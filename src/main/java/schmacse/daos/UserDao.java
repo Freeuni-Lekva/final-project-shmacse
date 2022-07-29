@@ -15,6 +15,9 @@ public class UserDao {
             "WHERE username = ? and password = ?";
     private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
 
+    private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM users " +
+            "WHERE username = ?";
+
 
     private Connection connection;
 
@@ -56,6 +59,25 @@ public class UserDao {
 
     }
 
+    public User getUserByUsername(String username) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME);
+
+        stm.setString(1,username);
+
+        ResultSet rs = stm.executeQuery();
+        if(!rs.next()) return null;
+
+        return new User(
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getString(5),
+                rs.getString(6)
+        );
+
+    }
     public  User getUserById(int id) throws SQLException {
         PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_ID);
 
