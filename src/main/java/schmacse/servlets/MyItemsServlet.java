@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-@WebServlet("/my-items")
+@WebServlet(name="my-items", value="/my-items")
 public class MyItemsServlet extends HttpServlet {
 
     @Override
