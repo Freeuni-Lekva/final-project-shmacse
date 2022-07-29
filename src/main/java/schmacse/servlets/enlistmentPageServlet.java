@@ -58,7 +58,6 @@ public class enlistmentPageServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         if(validInput(req)){
-            System.out.println(req.getParameter("category"));
             try {
                 itemDao.add(new Item(0, userId, req.getParameter("item-name"), req.getParameter("description"), Category.valueOf(req.getParameter("categories"))));
             } catch (SQLException e) {
