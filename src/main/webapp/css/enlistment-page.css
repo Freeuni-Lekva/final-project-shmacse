@@ -1,0 +1,55 @@
+body {
+    font-family: "Helvetica", sans-serif;
+    line-height: 2.5;
+    padding: 10em 10em;
+    color: #555;
+    background: white;
+    -moz-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+label {
+    border-bottom: 1px #69c;
+}
+
+.prompt {
+    color: #FF0014;
+}
+
+#item-name {
+    width: 24em;
+}
+
+#description {
+    width: 32em;
+    height: 6em;
+}
+
+#enlistment-form {
+    background: #f5f7f9;
+    padding: 2em 3em;
+    -moz-font-smoothing: grayscale;
+    -webkit-font-smoothing: initial;
+    border-left: 4px solid #69c;
+}
+
+#enlist-button {
+    width: 7em;
+    height: 3em;
+    background: #69c;
+    position: relative;
+    left: 4em;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
+    color: #555;
+    letter-spacing: 0.1em;
+    -webkit-transition: color 200ms ease-out;
+    transition: color 200ms ease-out;
+}
+
+#enlist-button:hover {
+    background: #3b5998;
+    border-color: transparent;
+    color: #a7adba;
+}

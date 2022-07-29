@@ -4,4 +4,33 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <servlet>
+        <servlet-name>enlistment-page</servlet-name>
+        <servlet-class>schmacse.servlets.enlistmentPageServlet
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>enlistment-page</servlet-name>
+        <url-pattern>/enlistment-page/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>my-items</servlet-name>
+        <servlet-class>schmacse.servlets.MyItemsServlet
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>my-items</servlet-name>
+        <url-pattern>/my-items/*</url-pattern>
+    </servlet-mapping>
+
+       <servlet>
+        <servlet-name>delete-item</servlet-name>
+        <servlet-class>schmacse.servlets.DeleteItemServlet
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>delete-item</servlet-name>
+        <url-pattern>/delete-items/*</url-pattern>
+    </servlet-mapping>
 </web-app>

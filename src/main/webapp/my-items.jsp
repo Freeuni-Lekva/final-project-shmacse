@@ -37,7 +37,7 @@
                         <p class="card-text"><%=item.getDescription()%></p>
 
                         <div class="text-center my-3">
-                            <form action="/shmacse/delete-item" method="post">
+                            <form action=" delete-item" method="post">
                                 <input type="hidden" name="itemId" value="<%=item.getId()%>">
                                 <button class="btn btn-danger">Delete</button>
                             </form>
