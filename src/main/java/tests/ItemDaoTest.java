@@ -249,6 +249,41 @@ public class ItemDaoTest {
     }
 
     @Test
+    public void testgetItemByItemID() throws SQLException{
+
+        Connection connection = DBConnection.getConnection();
+        reset_db(connection);
+
+        ItemDao itemDao = new ItemDao(connection);
+        addDummyUser(connection);
+
+        itemDao.add(new Item(1, 1, item_names[0][0], item_names[0][1],
+                Category.valueOf(item_names[0][2])));
+        itemDao.add(new Item(2, 1, item_names[1][0], item_names[1][1],
+                Category.valueOf(item_names[1][2])));
+        itemDao.add(new Item(3, 1, item_names[2][0], item_names[2][1],
+                Category.valueOf(item_names[2][2])));
+        itemDao.add(new Item(4, 1, item_names[3][0], item_names[3][1],
+                Category.valueOf(item_names[3][2])));
+        itemDao.add(new Item(5, 1, item_names[4][0], item_names[4][1],
+                Category.valueOf(item_names[4][2])));
+
+        PreparedStatement stm = connection.prepareStatement(selectItems);
+        ResultSet resultSet = stm.executeQuery();
+
+        for(int i = 1; i <= 5; i++) {
+            resultSet.next();
+            Item item = itemDao.getItemByItemID(i);
+            Assertions.assertEquals(resultSet.getInt(2), item.getUserId()); // userID
+            Assertions.assertEquals(resultSet.getString(3), item.getName()); // name
+            Assertions.assertEquals(resultSet.getString(4), item.getDescription()); // description
+            Assertions.assertEquals(Category.valueOf(resultSet.getString(5)), item.getCategory()); // category
+        }
+
+        reset_db(connection);
+    }
+
+    @Test
     public void testgetUserIDByItemID() throws SQLException{
 
         Connection connection = DBConnection.getConnection();
