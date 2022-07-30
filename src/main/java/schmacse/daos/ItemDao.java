@@ -16,7 +16,8 @@ public class ItemDao {
             "JOIN users WHERE users.id = items.user_id AND users.username = ?";
     private static final String DELETE_ITEMS_WITH_USER_ID = "" +
             "DELETE FROM items WHERE user_id = ?";
-
+    private static final String SELECT_ITEMS_WITH_USERID = "SELECT * FROM items " +
+            "WHERE id = ?";
 
     private Connection connection;
 
@@ -69,6 +70,28 @@ public class ItemDao {
         stm.executeUpdate();
     }
 
+    public int getUserIDByItemID(int itemID) throws SQLException{
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_WITH_USERID);
+        stm.setInt(1, itemID);
+        ResultSet resultSet = stm.executeQuery();
+
+        resultSet.next();
+        return resultSet.getInt(2);
+
+    }
+    public int getUserIDByItem(Item item) throws SQLException{
+
+        int itemID = item.getId();
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_WITH_USERID);
+        stm.setInt(1, itemID);
+        ResultSet resultSet = stm.executeQuery();
+
+        resultSet.next();
+        return resultSet.getInt(2);
+
+    }
 
     public List<Item> getItemsByUsername(String username) throws SQLException {
 

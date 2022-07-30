@@ -2,9 +2,11 @@ package tests;
 
 import org.junit.jupiter.api.*;
 import schmacse.daos.ItemDao;
+import schmacse.daos.UserDao;
 import schmacse.databaseconnection.DBConnection;
 import schmacse.model.Category;
 import schmacse.model.Item;
+import schmacse.model.User;
 
 import java.sql.*;
 import java.util.List;
@@ -18,6 +20,15 @@ public class ItemDaoTest {
             {"better", "call", "SAUL"},
             {"watch", "your", "TROUSERS"}
     };
+
+    private final String[][] usersData = new String[][]{
+            {"iosebi", "chkhikvadze", "xutixutishvidi", "ioska", "zamtrisusafrtxoeba"},
+            {"nika", "sharmazanashvili", "xutiertierti", "sharma", "sharmalozi"},
+            {"gocha", "gulua", "xuticxracxra", "gogulua", "raviaba"},
+            {"daviti", "xarshiladze", "xutishvidierti", "xarshila", "kenwero"},
+            {"rolandi", "pkhakadze", "xuticxrarva", "rolandiko", "paroliko"}
+    };
+
 
     private static final String selectItems = "SELECT * FROM items";
     private static final String selectUsers = "SELECT * FROM users";
@@ -233,6 +244,40 @@ public class ItemDaoTest {
         itemDao.removeByUserID(3);
         resultSet = stm.executeQuery();
         Assertions.assertFalse(resultSet.next());
+
+        reset_db(connection);
+    }
+
+    @Test
+    public void testgetUserIDByItemID() throws SQLException{
+
+        Connection connection = DBConnection.getConnection();
+        reset_db(connection);
+
+        UserDao userDao = new UserDao(connection);
+        ItemDao itemDao = new ItemDao(connection);
+
+        for (String[] usersDatum : usersData) {
+            userDao.add(new User(0, usersDatum[0], usersDatum[1],
+                    usersDatum[2], usersDatum[3], usersDatum[4]));
+        }
+
+        itemDao.add(new Item(0, 2, item_names[0][0], item_names[0][1],
+                Category.valueOf(item_names[0][2])));
+        itemDao.add(new Item(0, 4, item_names[1][0], item_names[1][1],
+                Category.valueOf(item_names[1][2])));
+        itemDao.add(new Item(0, 3, item_names[2][0], item_names[2][1],
+                Category.valueOf(item_names[2][2])));
+        itemDao.add(new Item(0, 1, item_names[3][0], item_names[3][1],
+                Category.valueOf(item_names[3][2])));
+        itemDao.add(new Item(0, 5, item_names[4][0], item_names[4][1],
+                Category.valueOf(item_names[4][2])));
+
+        Assertions.assertEquals(itemDao.getUserIDByItemID(1), 2);
+        Assertions.assertEquals(itemDao.getUserIDByItemID(2), 4);
+        Assertions.assertEquals(itemDao.getUserIDByItemID(3), 3);
+        Assertions.assertEquals(itemDao.getUserIDByItemID(4), 1);
+        Assertions.assertEquals(itemDao.getUserIDByItemID(5), 5);
 
         reset_db(connection);
     }
