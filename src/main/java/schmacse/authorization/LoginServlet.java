@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = stm.executeQuery();
 
             if(rs.next()){
-                session.setAttribute("name", rs.getString("username"));
+                session.setAttribute("username", rs.getString("username"));
                 dispatcher = req.getRequestDispatcher("index.jsp");
             }else{
                 req.setAttribute("status", "failed");
