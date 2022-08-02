@@ -50,8 +50,8 @@ public class ItemDaoTest {
 
         Statement stm = connection.createStatement();
         stm.executeUpdate(
-                "INSERT INTO items (user_id, name, description, category)" +
-                        "VALUES (1, 'item', 'nice', 'TROUSERS')"
+                "INSERT INTO items (user_id, name, price, description, category)" +
+                        "VALUES (1, 'item', 1, 'nice', 'TROUSERS')"
         );
 
 
@@ -59,8 +59,8 @@ public class ItemDaoTest {
     private void addDummyItem(Connection connection, int userID) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(
-                "INSERT INTO items (user_id, name, description, category)" +
-                "VALUES (?, 'item', 'nice', 'TROUSERS')");
+                "INSERT INTO items (user_id, name, price, description, category)" +
+                "VALUES (?, 'item', 1, 'nice', 'TROUSERS')");
         stm.setInt(1, userID);
         stm.executeUpdate();
 
@@ -74,7 +74,7 @@ public class ItemDaoTest {
         addDummyUser(connection);
         ItemDao itemDao = new ItemDao(connection);
         for(int i = 0; i < 60; i++){
-            Item firstItem = new Item(i,1, Integer.toString(i), Integer.toString(i),
+            Item firstItem = new Item(i,1, Integer.toString(i), 1, Integer.toString(i),
                     Category.TROUSERS);
             itemDao.add(firstItem);
         }
@@ -102,7 +102,7 @@ public class ItemDaoTest {
 
         Item[] items = new Item[item_names.length];
         for(int i = 0; i < items.length; i++){
-            items[i] = new Item(1,1, item_names[i][0],
+            items[i] = new Item(1,1, item_names[i][0], i,
                     item_names[i][1], Category.valueOf(item_names[i][2]));
         }
 
@@ -116,9 +116,10 @@ public class ItemDaoTest {
 
         int i = 0;
         while(resultSet.next()){
-            Assertions.assertEquals(item_names[i][0], resultSet.getString(3));
-            Assertions.assertEquals(item_names[i][1], resultSet.getString(4));
-            Assertions.assertEquals(item_names[i][2], resultSet.getString(5));
+            Assertions.assertEquals(item_names[i][0], resultSet.getString("name"));
+            Assertions.assertEquals(i, resultSet.getInt("price"));
+            Assertions.assertEquals(item_names[i][1], resultSet.getString("description"));
+            Assertions.assertEquals(item_names[i][2], resultSet.getString("category"));
             i++;
         }
 
@@ -139,7 +140,7 @@ public class ItemDaoTest {
         addDummyItem(connection);
         itemDao.remove(1); // because its first item
 
-        Item secondItem = new Item(2, 1, "second", "good", Category.TROUSERS);
+        Item secondItem = new Item(2, 1, "second", 2, "good", Category.TROUSERS);
         itemDao.remove(secondItem); // check both ways to remove
 
         PreparedStatement stm = connection.prepareStatement(selectItems);
@@ -257,15 +258,15 @@ public class ItemDaoTest {
         ItemDao itemDao = new ItemDao(connection);
         addDummyUser(connection);
 
-        itemDao.add(new Item(1, 1, item_names[0][0], item_names[0][1],
+        itemDao.add(new Item(1, 1, item_names[0][0], 1, item_names[0][1],
                 Category.valueOf(item_names[0][2])));
-        itemDao.add(new Item(2, 1, item_names[1][0], item_names[1][1],
+        itemDao.add(new Item(2, 1, item_names[1][0], 2, item_names[1][1],
                 Category.valueOf(item_names[1][2])));
-        itemDao.add(new Item(3, 1, item_names[2][0], item_names[2][1],
+        itemDao.add(new Item(3, 1, item_names[2][0], 3, item_names[2][1],
                 Category.valueOf(item_names[2][2])));
-        itemDao.add(new Item(4, 1, item_names[3][0], item_names[3][1],
+        itemDao.add(new Item(4, 1, item_names[3][0], 4, item_names[3][1],
                 Category.valueOf(item_names[3][2])));
-        itemDao.add(new Item(5, 1, item_names[4][0], item_names[4][1],
+        itemDao.add(new Item(5, 1, item_names[4][0], 5, item_names[4][1],
                 Category.valueOf(item_names[4][2])));
 
         PreparedStatement stm = connection.prepareStatement(selectItems);
@@ -274,10 +275,11 @@ public class ItemDaoTest {
         for(int i = 1; i <= 5; i++) {
             resultSet.next();
             Item item = itemDao.getItemByItemID(i);
-            Assertions.assertEquals(resultSet.getInt(2), item.getUserId()); // userID
-            Assertions.assertEquals(resultSet.getString(3), item.getName()); // name
-            Assertions.assertEquals(resultSet.getString(4), item.getDescription()); // description
-            Assertions.assertEquals(Category.valueOf(resultSet.getString(5)), item.getCategory()); // category
+            Assertions.assertEquals(resultSet.getInt("user_id"), item.getUserId()); // userID
+            Assertions.assertEquals(resultSet.getString("name"), item.getName()); // name
+            Assertions.assertEquals(i, resultSet.getInt("price"));
+            Assertions.assertEquals(resultSet.getString("description"), item.getDescription()); // description
+            Assertions.assertEquals(Category.valueOf(resultSet.getString("category")), item.getCategory()); // category
         }
 
         reset_db(connection);
@@ -297,15 +299,15 @@ public class ItemDaoTest {
                     usersDatum[2], usersDatum[3], usersDatum[4]));
         }
 
-        itemDao.add(new Item(0, 2, item_names[0][0], item_names[0][1],
+        itemDao.add(new Item(0, 2, item_names[0][0], 4, item_names[0][1],
                 Category.valueOf(item_names[0][2])));
-        itemDao.add(new Item(0, 4, item_names[1][0], item_names[1][1],
+        itemDao.add(new Item(0, 4, item_names[1][0], 3, item_names[1][1],
                 Category.valueOf(item_names[1][2])));
-        itemDao.add(new Item(0, 3, item_names[2][0], item_names[2][1],
+        itemDao.add(new Item(0, 3, item_names[2][0], 6, item_names[2][1],
                 Category.valueOf(item_names[2][2])));
-        itemDao.add(new Item(0, 1, item_names[3][0], item_names[3][1],
+        itemDao.add(new Item(0, 1, item_names[3][0], 12, item_names[3][1],
                 Category.valueOf(item_names[3][2])));
-        itemDao.add(new Item(0, 5, item_names[4][0], item_names[4][1],
+        itemDao.add(new Item(0, 5, item_names[4][0], 5, item_names[4][1],
                 Category.valueOf(item_names[4][2])));
 
         Assertions.assertEquals(itemDao.getUserIDByItemID(1), 2);

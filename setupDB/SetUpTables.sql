@@ -17,6 +17,7 @@ create table items(
     id int auto_increment primary key,
     user_id int,
     name varchar(64),
+    price int,
     description text,
     category varchar(32),
     constraint user_item_fk foreign key (user_id) references users (id)

@@ -28,14 +28,15 @@ public class ItemDao {
     public void add(Item item) throws SQLException {
 
         PreparedStatement stm =  connection.prepareStatement(
-                "INSERT INTO items (user_id, name, description, category)" +
-                        "VALUES (?, ?, ?, ?)"
+                "INSERT INTO items (user_id, name, price, description, category)" +
+                        "VALUES (?, ?, ?, ?, ?)"
         );
 
         stm.setInt(1, item.getUserId());
         stm.setString(2, item.getName());
-        stm.setString(3, item.getDescription());
-        stm.setObject(4, item.getCategory().name());
+        stm.setInt(3, item.getPrice());
+        stm.setString(4, item.getDescription());
+        stm.setObject(5, item.getCategory().name());
         stm.executeUpdate();
     }
 
@@ -101,8 +102,8 @@ public class ItemDao {
 
         resultSet.next();
         return new Item(resultSet.getInt(1), resultSet.getInt(2),
-                resultSet.getString(3), resultSet.getString(4),
-                Category.valueOf(resultSet.getString(5)));
+                resultSet.getString(3), resultSet.getInt(4),
+                resultSet.getString(5),Category.valueOf(resultSet.getString(6)));
 
     }
 
@@ -121,10 +122,11 @@ public class ItemDao {
             int id = resultSet.getInt("id");
             int userId = resultSet.getInt("user_id");
             String name = resultSet.getString("name");
+            int price = resultSet.getInt("price");
             String description = resultSet.getString("description");
             Category category = Category.valueOf(resultSet.getString("category"));
 
-            Item newItem = new Item(id, userId, name, description, category);
+            Item newItem = new Item(id, userId, name, price, description, category);
 
             itemList.add(newItem);
         }

@@ -12,12 +12,12 @@
 </head>
 <body>
     <%
-//        Item item = (Item) request.getAttribute("item");
-//        User owner = (User) request.getAttribute("owner");
+        Item item = (Item) request.getAttribute("item");
+        User owner = (User) request.getAttribute("owner");
 
         // to Test
-        Item item = new Item(1, 1, "Kastumi", "Silikonis Substrati", Category.TROUSERS);
-        User owner = new User(1, "Gio", "Gio", "557696969", "mepatrone", "koka");
+        //Item item = new Item(1, 1, "Kastumi", 1, "Silikonis Substrati", Category.TROUSERS);
+        //User owner = new User(1, "Gio", "Gio", "557696969", "mepatrone", "koka");
     %>
     <h1 class="display-3 text-center text-bold"><%=item.getName()%></h1>
     <h2 class="fs-4 text-center text-muted"><%=item.getCategory().toString()%></h2>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-2"></div>
             <div class="col-1 text-center bg-light border">
-                Pirce : 50GEL <!-- insert price here -->
+                Pirce : <%= Integer.toString(item.getPrice()) %> <!-- insert price here -->
             </div>
             <div class="col-2 text-start py-2">
                 <a href="" class="btn btn-success">Add to Wishlist</a>
