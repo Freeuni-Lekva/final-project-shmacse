@@ -16,7 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 // adds item to wishlist of current user
-@WebServlet(name = "add_to_wishlist", value = "/add_to_wishlist")
+@WebServlet(name = "add-to-wishlist", value = "/add-to-wishlist")
 public class AddToWishlistServlet extends HttpServlet {
 
     @Override
@@ -27,7 +27,7 @@ public class AddToWishlistServlet extends HttpServlet {
         String username = (String) req.getSession().getAttribute("username");
 
         UserDao userDao = new UserDao(connection);
-        int itemID = (int) req.getAttribute("itemID");
+        int itemID = Integer.parseInt(req.getParameter("itemID"));
 
         User user = null;
         try {
@@ -50,10 +50,8 @@ public class AddToWishlistServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            req.setAttribute("item", item);
-            req.setAttribute("user", user);
-
             if(added){
+                req.setAttribute("itemID", itemID);
                 req.getRequestDispatcher("/itemPage.jsp").forward(req,resp);
             }else{
                 req.getRequestDispatcher("/error-page.jsp").forward(req,resp);

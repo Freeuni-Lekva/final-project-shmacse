@@ -30,7 +30,6 @@ public class ItemPageServlet extends HttpServlet {
 
         int itemID = (int) req.getAttribute("itemID");
 
-
         try {
 
             Item item = itemDao.getItemByItemID(itemID);
@@ -38,7 +37,7 @@ public class ItemPageServlet extends HttpServlet {
             User user = userDao.getUserById(userID);
 
             req.setAttribute("item", item);
-            req.setAttribute("owner", user);
+            req.setAttribute("user", user);
 
             req.getRequestDispatcher("/itemPage.jsp").forward(req, resp);
 
