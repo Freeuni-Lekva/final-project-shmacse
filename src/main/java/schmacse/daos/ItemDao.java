@@ -18,6 +18,7 @@ public class ItemDao {
             "DELETE FROM items WHERE user_id = ?";
     private static final String SELECT_ITEMS_WITH_ID = "SELECT * FROM items " +
             "WHERE id = ?";
+    private static final String UPDATE_PRICE = "UPDATE items SET price = ? WHERE id = ?";
 
     private Connection connection;
 
@@ -69,6 +70,15 @@ public class ItemDao {
         stm.setInt(1, userID);
 
         stm.executeUpdate();
+    }
+
+    public void updatePrice(int itemID, int newPrice) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(UPDATE_PRICE);
+        stm.setInt(1,newPrice);
+        stm.setInt(2, itemID);
+        stm.executeUpdate();
+
     }
 
     public int getUserIDByItemID(int itemID) throws SQLException{
