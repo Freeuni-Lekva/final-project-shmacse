@@ -39,7 +39,7 @@ public class ItemPageServlet extends HttpServlet {
             req.setAttribute("item", item);
             req.setAttribute("user", user);
 
-            req.getRequestDispatcher("/itemPage.jsp").forward(req, resp);
+            req.getRequestDispatcher("/item-page.jsp").forward(req, resp);
 
         } catch (SQLException e) {
             e.printStackTrace();
