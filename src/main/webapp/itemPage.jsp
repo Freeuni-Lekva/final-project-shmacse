@@ -7,17 +7,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>magari saiti</title>
+    <title>Item Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
     <%
-        //Item item = (Item) request.getAttribute("item");
-        //User owner = (User) request.getAttribute("user");
+        Item item = (Item) request.getAttribute("item");
+        User owner = (User) request.getAttribute("user");
 
         // to Test
-        Item item = new Item(1, 1, "Kastumi", 1, "Silikonis Substrati", Category.TROUSERS);
-        User owner = new User(1, "Gio", "Gio", "557696969", "mepatrone", "koka");
+        //Item item = new Item(1, 1, "Kastumi", 1, "Silikonis Substrati", Category.TROUSERS);
+        //User owner = new User(1, "Gio", "Gio", "557696969", "mepatrone", "koka");
     %>
     <h1 class="display-3 text-center text-bold"><%=item.getName()%></h1>
     <h2 class="fs-4 text-center text-muted"><%=item.getCategory().toString()%></h2>
@@ -25,7 +25,6 @@
 
     <br>
     <br>
-    </br>
     <div class="container">
         <div class="row gx-5 gy-5">
             <div class="col-5 text-center py-1">
@@ -36,7 +35,7 @@
                 Pirce : <%= Integer.toString(item.getPrice()) %> <!-- insert price here -->
             </div>
             <div class="col-2 text-start py-2">
-                <form action="add_to_wishlist" method="post">
+                <form action="add-to-wishlist" method="post">
                     <input type="hidden" name="itemID" value="<%=item.getId()%>">
                     <button class="btn btn-success">Add to WishList</button>
                 </form>
