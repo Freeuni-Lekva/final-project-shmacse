@@ -22,7 +22,7 @@
             int attrInt = 0;
             if(backTo.equals("item-page")){
                 attrInt = (int) request.getAttribute("itemID");
-                request.setAttribute("itemID", attribute);
+                request.setAttribute("itemID", attrInt);
             }
         %>
         <button class="btn btn-info">Go Back</button>
