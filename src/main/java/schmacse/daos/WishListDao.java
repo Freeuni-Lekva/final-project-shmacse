@@ -20,7 +20,8 @@ public class WishListDao {
         this.connection = connection;
     }
 
-    public void add(User user, Item item) throws SQLException {
+    // returs true if added succesfully
+    public boolean add(User user, Item item) throws SQLException {
 
         int userID = user.getId();
         int itemID = item.getId();
@@ -31,10 +32,14 @@ public class WishListDao {
             stm.setInt(2, itemID);
 
             stm.executeUpdate();
+
+            return true;
         }
 
+        return false;
+
     }
-    public void add(int userID, int itemID) throws SQLException{
+    public boolean add(int userID, int itemID) throws SQLException{
 
         if(checkValidity(userID, itemID)) {
             PreparedStatement stm = connection.prepareStatement(INSERT_INTO_WISHLIST);
@@ -42,8 +47,11 @@ public class WishListDao {
             stm.setInt(2, itemID);
 
             stm.executeUpdate();
+
+            return true;
         }
 
+        return false;
     }
 
     // checks if user owns the item
@@ -93,7 +101,7 @@ public class WishListDao {
 
     }
 
-    public void remvoeRowsOfItem(Item item) throws SQLException{
+    public void removeRowsOfItem(Item item) throws SQLException{
 
         int itemID = item.getId();
 
@@ -103,7 +111,7 @@ public class WishListDao {
         stm.executeUpdate();
 
     }
-    public void remvoeRowsOfItem(int itemID) throws SQLException{
+    public void removeRowsOfItem(int itemID) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(DELETE_ROW_WITH_ITEM);
         stm.setInt(1, itemID);
