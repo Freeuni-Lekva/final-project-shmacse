@@ -15,7 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@WebServlet(name = "item_page_servlet", value = "/item_page_servlet")
+@WebServlet(name = "item-page", value = "/item-page")
 public class ItemPageServlet extends HttpServlet {
 
     private static final String SELECT_ITEMS_WITH_ID = "SELECT * FROM items " +
