@@ -25,20 +25,34 @@ public class WishListDao {
         int userID = user.getId();
         int itemID = item.getId();
 
-        PreparedStatement stm = connection.prepareStatement(INSERT_INTO_WISHLIST);
-        stm.setInt(1,userID);
-        stm.setInt(2,itemID);
+        if(checkValidity(userID, itemID)) {
+            PreparedStatement stm = connection.prepareStatement(INSERT_INTO_WISHLIST);
+            stm.setInt(1, userID);
+            stm.setInt(2, itemID);
 
-        stm.executeUpdate();
+            stm.executeUpdate();
+        }
 
     }
     public void add(int userID, int itemID) throws SQLException{
 
-        PreparedStatement stm = connection.prepareStatement(INSERT_INTO_WISHLIST);
-        stm.setInt(1,userID);
-        stm.setInt(2,itemID);
+        if(checkValidity(userID, itemID)) {
+            PreparedStatement stm = connection.prepareStatement(INSERT_INTO_WISHLIST);
+            stm.setInt(1, userID);
+            stm.setInt(2, itemID);
 
-        stm.executeUpdate();
+            stm.executeUpdate();
+        }
+
+    }
+
+    // checks if user owns the item
+    private boolean checkValidity(int userID, int itemID) throws SQLException {
+
+        ItemDao itemDao = new ItemDao(connection);
+        Item item = itemDao.getItemByItemID(itemID);
+
+        return userID != item.getUserId();
 
     }
 
