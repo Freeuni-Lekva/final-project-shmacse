@@ -1,6 +1,7 @@
 package schmacse.servlets;
 
 import schmacse.daos.ItemDao;
+import schmacse.daos.WishListDao;
 import schmacse.model.Item;
 
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ public class DeleteItemServlet extends HttpServlet {
 
         Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
         ItemDao itemDao = new ItemDao(connection);
+        WishListDao wishListDao = new WishListDao(connection);
 
         int itemId = Integer.parseInt(req.getParameter("itemId"));
 
@@ -37,6 +39,7 @@ public class DeleteItemServlet extends HttpServlet {
         }
 
         try {
+            wishListDao.removeRowsOfItem(itemId);
             itemDao.remove(itemId);
             myItemsList = itemDao.getItemsByUsername(username);
         } catch (SQLException e) {

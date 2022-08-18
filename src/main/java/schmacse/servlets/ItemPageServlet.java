@@ -15,7 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@WebServlet(name = "item_page_servlet", value = "/item_page_servlet")
+@WebServlet(name = "item-page", value = "/item-page")
 public class ItemPageServlet extends HttpServlet {
 
     private static final String SELECT_ITEMS_WITH_ID = "SELECT * FROM items " +
@@ -30,7 +30,6 @@ public class ItemPageServlet extends HttpServlet {
 
         int itemID = (int) req.getAttribute("itemID");
 
-
         try {
 
             Item item = itemDao.getItemByItemID(itemID);
@@ -38,17 +37,13 @@ public class ItemPageServlet extends HttpServlet {
             User user = userDao.getUserById(userID);
 
             req.setAttribute("item", item);
-            req.setAttribute("owner", user);
+            req.setAttribute("user", user);
 
-            req.getRequestDispatcher("/itemPage.jsp").forward(req, resp);
+            req.getRequestDispatcher("/item-page.jsp").forward(req, resp);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
-    }
 }

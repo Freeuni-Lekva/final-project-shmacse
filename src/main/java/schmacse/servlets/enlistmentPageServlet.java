@@ -59,7 +59,7 @@ public class enlistmentPageServlet extends HttpServlet {
         }
         if(validInput(req)){
             try {
-                itemDao.add(new Item(0, userId, req.getParameter("item-name"), req.getParameter("description"), Category.valueOf(req.getParameter("categories"))));
+                itemDao.add(new Item(0, userId, req.getParameter("item-name"), Integer.parseInt(req.getParameter("item-price")), req.getParameter("description"), Category.valueOf(req.getParameter("categories"))));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -85,6 +85,17 @@ public class enlistmentPageServlet extends HttpServlet {
             ret = false;
         }else{
             req.removeAttribute("item-name-prompt");
+        }
+
+        int itemPrice = Integer.parseInt(req.getParameter("item-price"));
+        if(itemPrice == 0){
+            req.setAttribute("item-price-prompt", "Item price can't be 0.");
+            ret = false;
+        }else if(itemPrice < 0){
+            req.setAttribute("item-price-prompt", "Item price can't be negative.");
+            ret = false;
+        }else{
+            req.removeAttribute("item-price-prompt");
         }
 
         String description = req.getParameter("description");
