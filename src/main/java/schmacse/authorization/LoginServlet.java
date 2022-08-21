@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
         RequestDispatcher dispatcher = null;
 
         try {
-            con = DBConnection.getConnection();
+            con = (Connection) getServletContext().getAttribute("DBConnection");
             PreparedStatement stm = con.prepareStatement(
                     "select * from users where username = ? and password = ?"
             );

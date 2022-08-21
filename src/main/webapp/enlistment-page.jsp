@@ -21,6 +21,17 @@
     %>
     <br>
 
+    <label for="item-price">price:<br></label>
+
+    <input type="number" name="item-price" id="item-price" min="0" value="0">
+    <%
+        String item_price_prompt = (String) request.getAttribute("item-price-prompt");
+        if (item_price_prompt != null){
+            out.println("<label class=\"prompt\">" + item_price_prompt + "</label>");
+        }
+    %>
+    <br>
+
     <label for="categories">select category:<br></label>
     <select name="categories" id="categories">
         <%
