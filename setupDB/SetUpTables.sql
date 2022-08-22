@@ -8,6 +8,7 @@ create table users(
     first_name varchar(32),
     last_name varchar(32),
     phone_number varchar(32),
+    is_admin boolean,
     username varchar(32),
     password varchar(32)
 );
