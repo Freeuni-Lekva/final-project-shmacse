@@ -29,14 +29,9 @@ public class DeleteItemServlet extends HttpServlet {
 
         int itemId = Integer.parseInt(req.getParameter("itemId"));
 
-        String username = (String) session.getAttribute("username");
+        String username = "luka"; // (String) session.getAttribute("username");
 
         List<Item> myItemsList = Collections.emptyList();
-
-        try {
-            myItemsList = itemDao.getItemsByUsername(username);
-        } catch (SQLException ignored) {
-        }
 
         try {
             wishListDao.removeRowsOfItem(itemId);

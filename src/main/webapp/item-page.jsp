@@ -36,7 +36,7 @@
             </div>
             <div class="col-2 text-start py-2">
                 <form action="add-to-wishlist" method="post">
-                    <input type="hidden" name="itemID" value="<%=item.getId()%>">
+                    <input type="hidden" name="itemId" value="<%=item.getId()%>">
                     <button class="btn btn-success">Add to WishList</button>
                 </form>
             </div>

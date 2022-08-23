@@ -27,16 +27,16 @@
         <div class="col-5 text-center py-1">
             <div class="fs-3"> Description </div>
         </div>
-        <div class="col-5 text-end py-2"></div>
-        <form action="owner-item-page" method="post">
-            <label for="itemID"> Price : </label>
-            <input type="text" name="newPrice" value="<%=Integer.toString(item.getPrice())%>">
-            <label class="pe-5" for="itemID"> GEL </label>
-            <input type="hidden" id="itemID" name="itemID" value="<%=item.getId()%>">
-            <button class="btn btn-primary">Update Price</button>
-        </form>
+        <div class="col-7 text-center py-2">
+            <form action="owner-item-page" method="post" style="display: inline">
+                <label for="newPrice"> Price : </label>
+                <input type="text" id="newPrice" name="newPrice" value="<%=Integer.toString(item.getPrice())%>">
+                <label class="pe-5" for="itemId"> GEL </label>
+                <input type="hidden" id="itemId" name="itemId" value="<%=item.getId()%>">
+                <button class="btn btn-primary">Update Price</button>
+            </form>
+        </div>
 
-        <div class="col-2"></div>
     </div>
     <div class="row gx-5 gy-1">
         <div class="col-5 text-center">

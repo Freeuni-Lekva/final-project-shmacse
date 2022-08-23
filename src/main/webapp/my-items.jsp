@@ -37,9 +37,10 @@
                         <p class="card-text"><%=item.getDescription()%></p>
 
                         <div class="text-center my-3">
-                            <form action=" delete-item" method="post">
+                            <form>
                                 <input type="hidden" name="itemId" value="<%=item.getId()%>">
-                                <button class="btn btn-danger">Delete</button>
+                                <button formaction="owner-item-page" formmethod="get" class="btn btn-primary">Visit</button>
+                                <button formaction="delete-item" formmethod="post" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
 
