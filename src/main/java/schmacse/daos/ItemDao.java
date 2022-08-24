@@ -21,7 +21,7 @@ public class ItemDao {
             "WHERE id = ?";
     private static final String UPDATE_PRICE = "UPDATE items SET price = ? WHERE id = ?";
     private static final String SELECT_FILTERED_ITEMS = "SELECT * FROM items " +
-            "WHERE name = ? AND category = ?";
+            "WHERE name LIKE CONCAT('%', ?, '%') AND category LIKE CONCAT('%', ?, '%')";
 
     private Connection connection;
 
@@ -152,15 +152,28 @@ public class ItemDao {
         List<Item> filteredList = new ArrayList<>();
 
         PreparedStatement stm = connection.prepareStatement(SELECT_FILTERED_ITEMS);
+
+        System.out.println(itemName);
+        if (itemName.equals("")){
+            System.out.println("changed");
+            itemName = "%";
+        }
         stm.setString(1,itemName);
-        stm.setString(2,category.name());
+
+        if (category == null){
+            stm.setString(2, "");
+        }else{
+            stm.setString(2, category.name());
+        }
 
         ResultSet resultSet = stm.executeQuery();
         while(resultSet.next()){
             int id = resultSet.getInt("id");
             int userId = resultSet.getInt("user_id");
             int price = resultSet.getInt("price");
+            itemName = resultSet.getString("name");
             String description = resultSet.getString("description");
+            category = Category.valueOf(resultSet.getString("category"));
 
             Item newItem = new Item(id, userId, itemName, price, description, category);
             filteredList.add(newItem);
