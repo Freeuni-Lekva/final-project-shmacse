@@ -2,6 +2,7 @@ package schmacse.daos;
 
 import schmacse.model.Category;
 import schmacse.model.Item;
+import schmacse.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,8 @@ public class ItemDao {
     private static final String SELECT_ITEMS_WITH_ID = "SELECT * FROM items " +
             "WHERE id = ?";
     private static final String UPDATE_PRICE = "UPDATE items SET price = ? WHERE id = ?";
+    private static final String SELECT_FILTERED_ITEMS = "SELECT * FROM items " +
+            "WHERE name = ? AND category = ?";
 
     private Connection connection;
 
@@ -142,6 +145,28 @@ public class ItemDao {
         }
 
         return itemList;
+    }
+
+    public List<Item> getFilteredItems(String itemName, Category category) throws SQLException{
+
+        List<Item> filteredList = new ArrayList<>();
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_FILTERED_ITEMS);
+        stm.setString(1,itemName);
+        stm.setString(2,category.name());
+
+        ResultSet resultSet = stm.executeQuery();
+        while(resultSet.next()){
+            int id = resultSet.getInt("id");
+            int userId = resultSet.getInt("user_id");
+            int price = resultSet.getInt("price");
+            String description = resultSet.getString("description");
+
+            Item newItem = new Item(id, userId, itemName, price, description, category);
+            filteredList.add(newItem);
+        }
+
+        return filteredList;
     }
 
 }

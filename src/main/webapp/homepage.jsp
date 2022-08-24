@@ -7,8 +7,8 @@
 </head>
 <body>
 <h1> COCO </h1>
-<form id="search-form">
-    <select name="as" id="categories">
+<form id="search-form" method="post">
+    <select name="categories" id="categories">
         <option value="ALL"> ALL </option>
         <%
             List<Category> categories = (List<Category>) request.getAttribute("categoryList");
@@ -18,7 +18,7 @@
             }
         %>
     </select>
-    <input type="text" placeholder="Search..">
+    <input name="textfield" id=textfield" type="text" placeholder="Search..">
 </form>
 <button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button>
 </body>
