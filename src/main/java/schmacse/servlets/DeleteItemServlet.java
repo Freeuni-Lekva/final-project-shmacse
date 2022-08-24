@@ -29,7 +29,7 @@ public class DeleteItemServlet extends HttpServlet {
 
         int itemId = Integer.parseInt(req.getParameter("itemId"));
 
-        String username = "luka"; // (String) session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
 
         List<Item> myItemsList = Collections.emptyList();
 
