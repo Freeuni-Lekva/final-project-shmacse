@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Shmacse store</title>
+    <link rel="stylesheet" type="text/css" href="css/homepage.css">
 </head>
 <body>
 <h1> COCO </h1>
@@ -20,12 +21,14 @@
         %>
     </select>
     <input name="textfield" id=textfield" type="text" placeholder="Search..">
+
+    <label for="button" id="price-order"> Sort by price:  </label>
     <span class="button r" id="button">
-        <label for="invert">Price: </label><input type="checkbox" class="checkbox" id="invert" name="invert"/>
+        <input type="checkbox" class="checkbox" id="invert" name="invert"/>
         <span class="knobs"></span>
     </span>
 </form>
-<button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button><br>
+<button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button><br><br>
 
 
 
