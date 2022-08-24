@@ -153,9 +153,7 @@ public class ItemDao {
 
         PreparedStatement stm = connection.prepareStatement(SELECT_FILTERED_ITEMS);
 
-        System.out.println(itemName);
         if (itemName.equals("")){
-            System.out.println("changed");
             itemName = "%";
         }
         stm.setString(1,itemName);

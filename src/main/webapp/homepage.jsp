@@ -21,7 +21,7 @@
     </select>
     <input name="textfield" id=textfield" type="text" placeholder="Search..">
     <span class="button r" id="button">
-        <label for="Invert">Price: </label><input type="checkbox" class="checkbox" id="Invert"/>
+        <label for="invert">Price: </label><input type="checkbox" class="checkbox" id="invert" name="invert"/>
         <span class="knobs"></span>
     </span>
 </form>
@@ -32,10 +32,10 @@
 <%
     if (request.getAttribute("itemsList") != null){
         List<Item> items = (List<Item>) request.getAttribute("itemsList");
-        System.out.println("itemsList size: " + items.size());
+//        System.out.println("itemsList size: " + items.size());
 
         for (Item i: items) {
-            System.out.println("printed " + i);
+//            System.out.println("printed " + i);
             out.println("<label>" + i + "</label><br>");
         }
     }

@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @WebServlet(name = "search-servlet", value = "/search-servlet")
 public class SearchServlet extends HttpServlet {
@@ -39,6 +37,13 @@ public class SearchServlet extends HttpServlet {
                 items = itemDao.getFilteredItems(textfield, Category.valueOf(category));
             }
 
+
+            items.sort(Item::comparePrice);
+            //System.out.println(req.getParameterValues("invert")[0]);
+            if (req.getParameterValues("invert") != null){
+                Collections.reverse(items);
+            }
+
             req.setAttribute("itemsList", items);
             req.getRequestDispatcher("/homepage.jsp").forward(req, resp);
         } catch (SQLException e) {
@@ -47,3 +52,5 @@ public class SearchServlet extends HttpServlet {
 
     }
 }
+
+
