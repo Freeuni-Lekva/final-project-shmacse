@@ -19,6 +19,9 @@ public class ItemDao {
     private static final String SELECT_ITEMS_WITH_ID = "SELECT * FROM items " +
             "WHERE id = ?";
     private static final String UPDATE_PRICE = "UPDATE items SET price = ? WHERE id = ?";
+    private static final String SELECT_ITEMS_FOR_USER_IN_WISHLIST = "SELECT DISTINCT " +
+            "items.id, items.user_id, items.name, items.price, items.description, items.category FROM items " +
+            "JOIN wishlist ON items.id = wishlist.item_id AND wishlist.user_id = ?";
 
     private Connection connection;
 
@@ -144,4 +147,29 @@ public class ItemDao {
         return itemList;
     }
 
+    public List<Item> getItemsForUserInWishlist(int id) throws SQLException {
+        List<Item> itemsInWishlist = new ArrayList<>();
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_FOR_USER_IN_WISHLIST);
+
+        stm.setInt(1, id);
+
+        ResultSet resultSet = stm.executeQuery();
+
+        while (resultSet.next()) {
+
+            int itemId = resultSet.getInt("id");
+            int userId = resultSet.getInt("user_id");
+            String name = resultSet.getString("name");
+            int price = resultSet.getInt("price");
+            String description = resultSet.getString("description");
+            Category category = Category.valueOf(resultSet.getString("category"));
+
+            Item newItem = new Item(itemId, userId, name, price, description, category);
+
+            itemsInWishlist.add(newItem);
+        }
+
+        return itemsInWishlist;
+    }
 }
