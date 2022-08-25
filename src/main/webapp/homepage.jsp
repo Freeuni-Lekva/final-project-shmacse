@@ -30,6 +30,10 @@
 </form>
 <button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button><br><br>
 
+<form>
+    <button type="submit" formaction="my-items" formmethod="get" id="to-my-items" name="to-my-items"> My Items </button>
+    <button type="submit" formaction="log-out" formmethod="post" id="log-out" name="log-out"> Log Out </button>
+</form>
 
 
 <%
