@@ -94,3 +94,19 @@ body {
 #button .checkbox:checked ~ .layer {
   background-color: #fcebeb;
 }
+
+#log-out{
+  position:absolute;
+
+  right: 0;
+  margin-top:10px;
+}
+
+#to-my-items{
+  position:absolute;
+
+  right:70px;
+  margin-top:10px;
+}
+
+
