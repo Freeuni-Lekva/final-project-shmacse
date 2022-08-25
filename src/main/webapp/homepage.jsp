@@ -10,6 +10,7 @@
 <body>
 <h1> COCO </h1>
 <form id="search-form" action="search-servlet" method="post">
+    <label for="categories" id="categories-label"> Categories: </label>
     <select name="categories" id="categories">
         <option value="ALL"> ALL </option>
         <%
@@ -21,19 +22,17 @@
         %>
     </select>
     <input name="textfield" id=textfield" type="text" placeholder="Search..">
+    <button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button>
 
     <label for="button" id="price-order"> Sort by price:  </label>
     <span class="button r" id="button">
         <input type="checkbox" class="checkbox" id="invert" name="invert"/>
         <span class="knobs"></span>
     </span>
-</form>
-<button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button><br><br>
-
-<form>
     <button type="submit" formaction="my-items" formmethod="get" id="to-my-items" name="to-my-items"> My Items </button>
     <button type="submit" formaction="log-out" formmethod="post" id="log-out" name="log-out"> Log Out </button>
 </form>
+
 
 
 <%
