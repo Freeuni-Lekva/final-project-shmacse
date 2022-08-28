@@ -2,13 +2,16 @@
 <%@ page import="java.util.List" %>
 <%@ page import="schmacse.model.Item" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    boolean ifLogged = (boolean) request.getAttribute("ifLogged");
+%>
 <html>
 <head>
     <title>Shmacse store</title>
     <link rel="stylesheet" type="text/css" href="css/homepage.css">
 </head>
 <body>
-<h1> COCO </h1>
+<h1> Homepage </h1>
 <form id="search-form" action="search-servlet" method="post">
     <label for="categories" id="categories-label"> Categories: </label>
     <select name="categories" id="categories">
@@ -29,8 +32,20 @@
         <input type="checkbox" class="checkbox" id="invert" name="invert"/>
         <span class="knobs"></span>
     </span>
+
+    <%
+        if(ifLogged){
+    %>
     <button type="submit" formaction="my-items" formmethod="get" id="to-my-items" name="to-my-items"> My Items </button>
     <button type="submit" formaction="log-out" formmethod="post" id="log-out" name="log-out"> Log Out </button>
+    <%
+        }else{
+    %>
+    <input type="submit" formaction="login.jsp" value="Log In" id="log-in" name="log-in">
+    <input type="submit" formaction="registration.jsp" value="Register" id="register" name="register">
+    <%
+        }
+    %>
 </form>
 
 

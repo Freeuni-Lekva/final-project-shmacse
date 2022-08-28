@@ -109,4 +109,18 @@ body {
   margin-top:10px;
 }
 
+#log-in{
+  position:absolute;
+
+  right:70px;
+  margin-top:10px;
+}
+
+#register{
+  position:absolute;
+
+  right: 0;
+  margin-top:10px;
+}
+
 
