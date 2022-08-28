@@ -2,9 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="schmacse.model.Item" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    boolean ifLogged = (boolean) request.getAttribute("ifLogged");
-%>
+
 <html>
 <head>
     <title>Shmacse store</title>
@@ -34,7 +32,7 @@
     </span>
 
     <%
-        if(ifLogged){
+        if(request.getAttribute("itemsList") != null){
     %>
     <button type="submit" formaction="my-items" formmethod="get" id="to-my-items" name="to-my-items"> My Items </button>
     <button type="submit" formaction="log-out" formmethod="post" id="log-out" name="log-out"> Log Out </button>
@@ -57,7 +55,7 @@
 
         for (Item i: items) {
 //            System.out.println("printed " + i);
-            out.println("<label>" + i + "</label><br>");
+            out.println("<label>" + i.toString() + "</label><br>");
         }
     }
 
