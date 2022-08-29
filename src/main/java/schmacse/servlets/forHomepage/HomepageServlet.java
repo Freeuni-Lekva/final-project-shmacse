@@ -22,12 +22,6 @@ public class HomepageServlet extends HttpServlet {
         List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));
         req.setAttribute("categoryList", categories);
 
-        boolean ifLogged = false;
-        if(req.getSession().getAttribute("username") != null){
-            ifLogged = true;
-        }
-        req.setAttribute("ifLogged", ifLogged);
-        System.out.println((boolean) req.getAttribute("ifLogged"));
         req.getRequestDispatcher("/homepage.jsp").forward(req, resp);
     }
 
