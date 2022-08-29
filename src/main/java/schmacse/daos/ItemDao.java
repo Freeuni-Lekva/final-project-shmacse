@@ -46,23 +46,23 @@ public class ItemDao {
 
     public void remove(Item item) throws SQLException{
 
-        int itemID = item.getId();
+        int itemId = item.getId();
 
         PreparedStatement stm = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
         );
 
-        stm.setInt(1,itemID);
+        stm.setInt(1,itemId);
         stm.executeUpdate();
 
     }
-    public void remove(int itemID) throws SQLException{
+    public void remove(int itemId) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
         );
 
-        stm.setInt(1,itemID);
+        stm.setInt(1,itemId);
         stm.executeUpdate();
 
     }
@@ -75,19 +75,19 @@ public class ItemDao {
         stm.executeUpdate();
     }
 
-    public void updatePrice(int itemID, int newPrice) throws SQLException {
+    public void updatePrice(int itemId, int newPrice) throws SQLException {
 
         PreparedStatement stm = connection.prepareStatement(UPDATE_PRICE);
         stm.setInt(1,newPrice);
-        stm.setInt(2, itemID);
+        stm.setInt(2, itemId);
         stm.executeUpdate();
 
     }
 
-    public int getUserIDByItemID(int itemID) throws SQLException{
+    public int getUserIDByItemID(int itemId) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_WITH_ID);
-        stm.setInt(1, itemID);
+        stm.setInt(1, itemId);
         ResultSet resultSet = stm.executeQuery();
 
         resultSet.next();
@@ -96,10 +96,10 @@ public class ItemDao {
     }
     public int getUserIDByItem(Item item) throws SQLException{
 
-        int itemID = item.getId();
+        int itemId = item.getId();
 
         PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_WITH_ID);
-        stm.setInt(1, itemID);
+        stm.setInt(1, itemId);
         ResultSet resultSet = stm.executeQuery();
 
         resultSet.next();
@@ -107,10 +107,10 @@ public class ItemDao {
 
     }
 
-    public Item getItemByItemID(int itemID) throws SQLException{
+    public Item getItemByItemID(int itemId) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_WITH_ID);
-        stm.setInt(1, itemID);
+        stm.setInt(1, itemId);
         ResultSet resultSet = stm.executeQuery();
 
         resultSet.next();

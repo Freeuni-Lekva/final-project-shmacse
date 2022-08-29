@@ -23,14 +23,14 @@ public class OwnerItemPage extends HttpServlet {
         Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
 
         String username = (String) req.getSession().getAttribute("username");
-        int itemID = Integer.parseInt(req.getParameter("itemId"));
+        int itemId = Integer.parseInt(req.getParameter("itemId"));
 
         UserDao userDao = new UserDao(connection);
         ItemDao itemDao = new ItemDao(connection);
         try {
 
             User user = userDao.getUserByUsername(username);
-            Item item = itemDao.getItemByItemID(itemID);
+            Item item = itemDao.getItemByItemID(itemId);
 
             req.setAttribute("item", item);
             req.setAttribute("user", user);
@@ -49,7 +49,7 @@ public class OwnerItemPage extends HttpServlet {
         Connection connection = (Connection) req.getServletContext().getAttribute("DBConnection");
 
         String username = (String) req.getSession().getAttribute("username");
-        int itemID = Integer.parseInt(req.getParameter("itemId"));
+        int itemId = Integer.parseInt(req.getParameter("itemId"));
         int newPrice = Integer.parseInt(req.getParameter("newPrice"));
 
         ItemDao itemDao = new ItemDao(connection);
@@ -57,10 +57,10 @@ public class OwnerItemPage extends HttpServlet {
 
         try {
 
-            itemDao.updatePrice(itemID, newPrice);
+            itemDao.updatePrice(itemId, newPrice);
 
             User user = userDao.getUserByUsername(username);
-            Item item = itemDao.getItemByItemID(itemID);
+            Item item = itemDao.getItemByItemID(itemId);
 
             req.setAttribute("item", item);
             req.setAttribute("user", user);

@@ -18,13 +18,13 @@
     <br>
     <form action= <%= backTo %> method="get">
         <%
-            String attribute = "";
-            int attrInt = 0;
-            if(backTo.equals("item-page")){
-                attrInt = (int) request.getAttribute("itemID");
-                request.setAttribute("itemID", attrInt);
+            int itemId = 0;
+            if (request.getAttribute("itemId") != null){
+                itemId = (int) request.getAttribute("itemId");
             }
         %>
+
+        <input type="hidden" name="itemId" value="<%=itemId%>">
         <button class="btn btn-info">Go Back</button>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

@@ -28,12 +28,12 @@ public class ItemPageServlet extends HttpServlet {
         ItemDao itemDao = new ItemDao(connection);
         UserDao userDao = new UserDao(connection);
 
-        int itemID = Integer.parseInt(req.getParameter("itemId"));
+        int itemId = Integer.parseInt(req.getParameter("itemId"));
 
         try {
 
-            Item item = itemDao.getItemByItemID(itemID);
-            int userID = itemDao.getUserIDByItemID(itemID);
+            Item item = itemDao.getItemByItemID(itemId);
+            int userID = itemDao.getUserIDByItemID(itemId);
             User user = userDao.getUserById(userID);
 
             req.setAttribute("item", item);
