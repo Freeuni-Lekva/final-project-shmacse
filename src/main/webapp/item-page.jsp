@@ -30,17 +30,32 @@
             <div class="col-5 text-center py-1">
                 <div class="fs-3"> Description </div>
             </div>
+            <%
+                if(request.getSession().getAttribute("username") != null){
+            %>
             <div class="col-2"></div>
             <div class="col-1 text-center bg-light border">
-                Pirce : <%= Integer.toString(item.getPrice()) %> <!-- insert price here -->
+                Pirce : <%= Integer.toString(item.getPrice()) %> GEL
             </div>
             <div class="col-2 text-start py-2">
+
                 <form action="add-to-wishlist" method="post">
                     <input type="hidden" name="itemId" value="<%=item.getId()%>">
                     <button class="btn btn-success">Add to WishList</button>
                 </form>
             </div>
             <div class="col-2"></div>
+            <%
+                }else{
+            %>
+            <div class="col-3"></div>
+            <div class="col-1 text-center bg-light border">
+                Pirce : <%= Integer.toString(item.getPrice()) %>
+            </div>
+            <div class="col-3"></div>
+            <%
+                }
+            %>
         </div>
         <div class="row gx-5 gy-1">
             <div class="col-5 text-center">

@@ -28,7 +28,7 @@ public class ItemPageServlet extends HttpServlet {
         ItemDao itemDao = new ItemDao(connection);
         UserDao userDao = new UserDao(connection);
 
-        int itemID = (int) req.getAttribute("itemID");
+        int itemID = Integer.parseInt(req.getParameter("itemId"));
 
         try {
 

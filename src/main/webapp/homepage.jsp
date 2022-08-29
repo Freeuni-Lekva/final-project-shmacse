@@ -61,11 +61,42 @@
 
         for (Item i: items) {
 //            System.out.println("printed " + i);
-            out.println("<label>" + i.toString() + "</label><br>");
+//            out.println("<label>" + i.toString() + "</label><br>");
         }
     }
 
 %>
+<div class="row">
+    <%
+        if (request.getAttribute("itemsList") != null){
+            List<Item> items = (List<Item>) request.getAttribute("itemsList");
+
+            for (Item item: items) {
+    %>
+
+        <div class="col-lg-4 col-md-6 col-sm-10 my-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+
+                    <h3 class="text-center"><%=item.getName()+" ("+item.getPrice()+"GEL)"%></h3>
+
+                    <div class="text-center my-3">
+                        <form>
+                            <input type="hidden" name="itemId" value="<%=item.getId()%>">
+                            <button formaction="item-page" formmethod="get" class="btn btn-primary">Visit</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <%
+            }
+        }
+    %>
+
+</div>
 
 </body>
 </html>
