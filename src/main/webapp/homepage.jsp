@@ -91,20 +91,5 @@
 
 </div>
 
-<form action="homepage" method="get">
-    <%
-        int pageNumber = (int) request.getAttribute("pageNumber");
-        if(pageNumber != 1){
-    %>
-            <input type="submit" value="Previous Page" id="previous-page" name="previous-page">
-    <%
-        }
-        if(request.getAttribute("isLastPage") == null){
-    %>
-            <input type="submit" value="Next Page" id="next-page" name="next-page">
-    <%
-        }
-    %>
-</form>
 </body>
 </html>

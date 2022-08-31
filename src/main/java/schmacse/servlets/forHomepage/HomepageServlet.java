@@ -29,27 +29,6 @@ public class HomepageServlet extends HttpServlet {
         ItemDao itemDao = new ItemDao((Connection) req.getServletContext().getAttribute("DBConnection"));
         try {
             List<Item> itemsList = itemDao.getFilteredItems("", null);
-
-            if(req.getAttribute("pageNumber") != null){ // access pageNumber
-                int pageNumber = (int) req.getAttribute("pageNumber");
-                if(req.getParameter("newPage") != null){ // handles Next/Previous Page clicks (from homepage.jsp)
-                    String newPage = req.getParameter("newPage");
-                    if(newPage.equals("next")){
-                        pageNumber++;
-                    }
-                    if(newPage.equals("previous")){
-                        pageNumber--;
-                    }
-                }
-                req.setAttribute("pageNumber",(int) req.getAttribute("pageNumber"));
-                if( (itemsList.size()/32) + 1 == pageNumber){
-                    req.setAttribute("isLastPage", true);
-                }
-                itemsList = itemsList.subList((pageNumber-1)*32, pageNumber*32);
-            }else{ // if pageNumber attr does not exist, it must be 1.
-                req.setAttribute("pageNumber", 1);
-                itemsList = itemsList.subList(0,32);
-            }
             req.setAttribute("itemsList", itemsList);
         } catch (SQLException e) {
             e.printStackTrace();
