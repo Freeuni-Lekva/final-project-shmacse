@@ -52,20 +52,6 @@
     %>
 </form>
 
-
-
-<%
-    if (request.getAttribute("itemsList") != null){
-        List<Item> items = (List<Item>) request.getAttribute("itemsList");
-//        System.out.println("itemsList size: " + items.size());
-
-        for (Item i: items) {
-//            System.out.println("printed " + i);
-//            out.println("<label>" + i.toString() + "</label><br>");
-        }
-    }
-
-%>
 <div class="row">
     <%
         if (request.getAttribute("itemsList") != null){
@@ -74,11 +60,18 @@
             for (Item item: items) {
     %>
 
-        <div class="col-lg-4 col-md-6 col-sm-10 my-3">
+        <div class="col-lg-3 col-md-4 col-sm-10 my-3">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
 
-                    <h3 class="text-center"><%=item.getName()+" ("+item.getPrice()+"GEL)"%></h3>
+                    <%
+                        String nameToDisplay = item.getName();
+                        if(nameToDisplay.length() >= 15){
+                            nameToDisplay = nameToDisplay.substring(0,15) + "...";
+                        }
+                    %>
+                    <h3 class="text-center"><%=nameToDisplay%></h3>
+                    <h5 class="text-center"><%=item.getPrice()+" GEL"%></h5>
 
                     <div class="text-center my-3">
                         <form>
@@ -98,5 +91,20 @@
 
 </div>
 
+<form action="homepage" method="get">
+    <%
+        int pageNumber = (int) request.getAttribute("pageNumber");
+        if(pageNumber != 1){
+    %>
+            <input type="submit" value="Previous Page" id="previous-page" name="previous-page">
+    <%
+        }
+        if(request.getAttribute("isLastPage") == null){
+    %>
+            <input type="submit" value="Next Page" id="next-page" name="next-page">
+    <%
+        }
+    %>
+</form>
 </body>
 </html>
