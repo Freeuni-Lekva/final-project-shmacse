@@ -28,7 +28,14 @@ public class HomepageServlet extends HttpServlet {
         List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));
         req.setAttribute("categoryList", categories);
 
-        List<Item> allItems = (List<Item>) req.getSession().getAttribute("itemsList");
+        List<Item> allItems;
+        if(req.getAttribute("itemsList") != null){
+            System.out.println("SSS");
+            allItems = (List<Item>) req.getAttribute("itemsList");
+        }
+        else {
+            allItems = (List<Item>) req.getSession().getAttribute("itemsList");
+        }
 
         int currentPageNumber = 0;
         boolean isLastPage = false;
