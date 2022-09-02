@@ -1,10 +1,15 @@
 package schmacse;
 
+import schmacse.daos.ItemDao;
 import schmacse.databaseconnection.DBConnection;
+import schmacse.model.Item;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebListener
 public class Listener implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener {
@@ -27,6 +32,15 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         /* Session is created. */
+        Connection connection = DBConnection.getConnection();
+
+        ItemDao itemDao = new ItemDao(connection);
+        try {
+            List<Item> itemsList = itemDao.getFilteredItems("", null);
+            se.getSession().setAttribute("itemsList", itemsList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         //TODO initiate user session (privileges, shopping cart etc.).
     }

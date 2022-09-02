@@ -91,5 +91,36 @@
 
 </div>
 
+<form action="homepage" method="get">
+    <input type="hidden" value="<%=(String) request.getAttribute("pageNumber")%>" id="pageNumber" name="pageNumber">
+
+    <%
+        if(!((boolean)request.getAttribute("isLastPage"))){
+
+    %>
+    <input type="submit" value="Next Page" id="next-page" onclick="changePage('next')">
+    <%
+        }
+        if( !(((String)request.getAttribute("pageNumber")).equals("1"))){
+    %>
+        <input type="submit" value="Previous Page" id="previous-page" onclick="changePage('previous')">
+    <%
+        }
+    %>
+</form>
+
+<script>
+    function changePage(direction){
+        let hiddenParameter = document.getElementById('pageNumber');
+        let oldValue = parseInt(hiddenParameter.getAttribute('value'));
+        if(direction === 'next'){
+            oldValue = oldValue + 1;
+        }
+        if(direction === 'previous'){
+            oldValue = oldValue - 1;
+        }
+        hiddenParameter.setAttribute('value', oldValue.toString())
+    }
+</script>
 </body>
 </html>
