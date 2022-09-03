@@ -29,7 +29,7 @@
         %>
     </select>
     <input name="textfield" id=textfield" type="text" placeholder="Search.." style="border-radius: 8px; border-color: darkblue; border-width: 2px; background-color: #dde2eb; padding: 0px 5px;">
-    <button type="submit" form="search-form" value="Submit" id="search-button" name="search-button" style="border-radius: 10px; background-color: #dde2eb;">Search</button>
+    <button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button>
 
     <label for="button" id="price-order"> Sort by price:  </label>
     <span class="button r" id="button">
@@ -37,11 +37,14 @@
         <span class="knobs"></span>
     </span>
 
+    <span id="top-right-corner" name="top-right-corer">
     <%
         if(request.getSession().getAttribute("username") != null){
     %>
-    <button type="submit" formaction="my-items" formmethod="get" id="to-my-items" name="to-my-items"> My Items </button>
-    <button type="submit" formaction="log-out" formmethod="post" id="log-out" name="log-out"> Log Out </button>
+
+        <button type="submit" formaction="my-items" formmethod="get" id="to-my-items" name="to-my-items"> My Items </button>
+        <button type="submit" formaction="log-out" formmethod="post" id="log-out" name="log-out"> Log Out </button>
+
     <%
         }else{
     %>
@@ -50,6 +53,7 @@
     <%
         }
     %>
+    </span>
 </form>
 
 <div class="row">
@@ -61,7 +65,7 @@
     %>
 
         <div class="col-lg-3 col-md-4 col-sm-10 my-3">
-            <div class="card" style="width: 18rem; ">
+            <div class="card" style="width: 19rem;">
                 <div class="card-body" style="background-color: #ebd57a">
 
                     <%
@@ -76,8 +80,7 @@
                     <div class="text-center my-3">
                         <form>
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
-                            <button formaction="item-page" formmethod="get"
-                                style="font-size: 16px; border-radius: 15px; background-color: #dde2eb;border-width: 2px; border-color: #89bb58; padding: 0px 18px; letter-spacing: 1px;"
+                            <button formaction="item-page" formmethod="get" id="visit-button" name="visit-button"
                             >Visit</button>
                         </form>
                     </div>

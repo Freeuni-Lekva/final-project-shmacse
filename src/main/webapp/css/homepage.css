@@ -96,31 +96,45 @@ body {
 }
 
 #log-out{
-  position:absolute;
+  background-color: #DDE2EBFF;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
 
-  right: 0;
-  margin-top:10px;
+#log-out:hover{
+  color: white;
+  background-color: #ff443a;
 }
 
 #to-my-items{
-  position:absolute;
+  background-color: #DDE2EBFF;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
 
-  right:70px;
-  margin-top:10px;
+#to-my-items:hover{
+  color: white;
+  background:#0099ff;
 }
 
 #log-in{
-  position:absolute;
+  background-color: #DDE2EBFF;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
 
-  right:80px;
-  margin-top:10px;
+#log-in:hover{
+  background-color: #f3f436;
 }
 
 #register{
-  position:absolute;
+  background-color: #DDE2EBFF;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
 
-  right: 0;
-  margin-top:10px;
+#register:hover{
+  background-color: #4bf0ff;
 }
 
 #next-page{
@@ -155,5 +169,36 @@ body {
 #previous-page:hover{
   font-size: 17px;
   background-color: dodgerblue;
+}
+
+#top-right-corner{
+  float: right;
+  margin-top:10px;
+}
+
+#search-button{
+  border-radius: 10px;
+  background-color: #dde2eb;
+  transition-duration: 1s;
+}
+
+#search-button:hover{
+  background-color: #ff9c3d;
+}
+
+#visit-button{
+  font-size: 16px;
+  border-radius: 15px;
+  background-color: #dde2eb;
+  border-width: 2px;
+  border-color: #89bb58;
+  padding: 0px 18px;
+  letter-spacing: 1px;
+  transition-duration: 1s;
+}
+
+#visit-button:hover{
+  color: white;
+  background:#0099ff;
 }
 
