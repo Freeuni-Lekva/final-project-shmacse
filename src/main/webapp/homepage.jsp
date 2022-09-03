@@ -76,7 +76,7 @@
                     <div class="text-center my-3">
                         <form>
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
-                            <button formaction="item-page" formmethod="get" class="btn btn-primaryc>Visit</button>
+                            <button formaction="item-page" formmethod="get" class="btn btn-primary>Visit</button>
                         </form>
                     </div>
 
