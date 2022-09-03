@@ -123,4 +123,38 @@ body {
   margin-top:10px;
 }
 
+#next-page{
+  position: relative;
+  left: 10px;
+  font-size: 16px;
+  padding: 0px 30px;
+  border-radius: 10px;
+  background-color: skyblue;
+  color: darkblue;
+  border-width: 1px;
+  transition-duration: 1s;
+}
+
+#next-page:hover{
+  font-size: 17px;
+  background-color: dodgerblue;
+}
+
+#previous-page{
+  position: relative;
+  right: 10px;
+  font-size: 16px;
+  padding: 0px 17px;
+  border-radius: 10px;
+  background-color: skyblue;
+  color: darkblue;
+  border-width: 1px;
+  transition-duration: 1s;
+}
+
+#previous-page:hover{
+  font-size: 17px;
+  background-color: dodgerblue;
+}
+
 
