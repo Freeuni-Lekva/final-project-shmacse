@@ -14,11 +14,11 @@
             integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
             crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="background-color: #b1da52;">
 <h1> Homepage </h1>
 <form id="search-form" action="search-servlet" method="post">
     <label for="categories" id="categories-label"> Categories: </label>
-    <select name="categories" id="categories">
+    <select name="categories" id="categories" style="background-color: #dde2eb; border-radius: 10px; padding: 0px 5px; color: #7ddada">
         <option value="ALL"> ALL </option>
         <%
             List<Category> categories = (List<Category>) request.getAttribute("categoryList");
@@ -28,8 +28,8 @@
             }
         %>
     </select>
-    <input name="textfield" id=textfield" type="text" placeholder="Search..">
-    <button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button>
+    <input name="textfield" id=textfield" type="text" placeholder="Search.." style="border-radius: 8px; border-color: darkblue; border-width: 2px; background-color: #dde2eb; padding: 0px 5px;">
+    <button type="submit" form="search-form" value="Submit" id="search-button" name="search-button" style="border-radius: 10px; background-color: #dde2eb;">Search</button>
 
     <label for="button" id="price-order"> Sort by price:  </label>
     <span class="button r" id="button">
@@ -62,7 +62,7 @@
 
         <div class="col-lg-3 col-md-4 col-sm-10 my-3">
             <div class="card" style="width: 18rem; ">
-                <div class="card-body">
+                <div class="card-body" style="background-color: #ebd57a">
 
                     <%
                         String nameToDisplay = item.getName();
@@ -70,13 +70,15 @@
                             nameToDisplay = nameToDisplay.substring(0,15) + "...";
                         }
                     %>
-                    <h3 class="text-center"><%=nameToDisplay%></h3>
-                    <h5 class="text-center"><%=item.getPrice()+" GEL"%></h5>
+                    <h3 class="text-center fw-bold"><%=nameToDisplay%></h3>
+                    <h5 class="text-center" style="opacity: 0.5;"><%=item.getPrice()+" GEL"%></h5>
 
                     <div class="text-center my-3">
                         <form>
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
-                            <button formaction="item-page" formmethod="get" class="btn btn-primary>Visit</button>
+                            <button formaction="item-page" formmethod="get"
+                                style="font-size: 16px; border-radius: 15px; background-color: #dde2eb;border-width: 2px; border-color: #89bb58; padding: 0px 18px; letter-spacing: 1px;"
+                            >Visit</button>
                         </form>
                     </div>
 
