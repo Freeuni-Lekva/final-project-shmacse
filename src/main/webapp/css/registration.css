@@ -1,0 +1,50 @@
+body{
+    background: rgb(250,248,223);
+    background: radial-gradient(circle, rgba(250,248,223,1) 0%, rgba(185,180,113,1) 100%);
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-size: cover;
+    background-position: center;
+}
+
+.registration-form{
+    color: rgb(40, 65, 24);
+    font-family: Monospace, Monaco, serif;
+    border-width: thick;
+    border-color: HoneyDew;
+    border-style: solid;
+    background: rgb(167, 190, 130);
+    border-radius: 25px;
+    width: 300px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    margin: 5% auto 0;
+    text-align: center;
+    position: center;
+}
+
+.registered-link{
+    font-size: 10px;
+}
+
+.input-box
+{
+    border-radius: 20px;
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    border: 1px solid #999;
+    outline: none;
+}
+
+.register
+{
+    font-family: Monospace, Monaco, serif;
+
+    background-color: HoneyDew;
+    border-radius: 20px;
+    width: 100px;
+    height: 40px;
+}
+
