@@ -61,7 +61,7 @@
     %>
 
         <div class="col-lg-3 col-md-4 col-sm-10 my-3">
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem; ">
                 <div class="card-body">
 
                     <%
@@ -76,7 +76,7 @@
                     <div class="text-center my-3">
                         <form>
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
-                            <button formaction="item-page" formmethod="get" class="btn btn-primary">Visit</button>
+                            <button formaction="item-page" formmethod="get" class="btn btn-primaryc>Visit</button>
                         </form>
                     </div>
 
@@ -91,22 +91,23 @@
 
 </div>
 
-<form action="homepage" method="get">
+<form action="homepage" method="get" style="text-align: center" id="south-form">
     <input type="hidden" value="<%=(String) request.getAttribute("pageNumber")%>" id="pageNumber" name="pageNumber">
 
-    <%
-        if(!((boolean)request.getAttribute("isLastPage"))){
+        <input
+            <% if( (((String)request.getAttribute("pageNumber")).equals("1"))){ %>
+                style="opacity: 0.4; cursor: not-allowed; transition-duration: 1000s;"
+            <% } %>
+               type="submit" value="Previous Page" id="previous-page" onclick="changePage('previous')">
 
-    %>
-    <input type="submit" value="Next Page" id="next-page" onclick="changePage('next')">
-    <%
-        }
-        if( !(((String)request.getAttribute("pageNumber")).equals("1"))){
-    %>
-        <input type="submit" value="Previous Page" id="previous-page" onclick="changePage('previous')">
-    <%
-        }
-    %>
+        <label id="pageNumber-label" style="font-size: 17px;"> <%=(String) request.getAttribute("pageNumber")%> </label>
+
+        <input
+            <% if(((boolean)request.getAttribute("isLastPage"))){ %>
+                style="opacity: 0.4; cursor: not-allowed; transition-duration: 1000s;"
+            <% } %>
+                type="submit" value="Next Page" id="next-page" onclick="changePage('next')">
+
 </form>
 
 <script>
