@@ -18,7 +18,7 @@
 <h1> Homepage </h1>
 <form id="search-form" action="search-servlet" method="post">
     <label for="categories" id="categories-label"> Categories: </label>
-    <select name="categories" id="categories" style="background-color: #dde2eb; border-radius: 10px; padding: 0px 5px; color: #7ddada">
+    <select name="categories" id="categories" style="background-color: #dde2eb; border-radius: 10px; padding: 0px 5px; font-size: 15px;">
         <option value="ALL"> ALL </option>
         <%
             List<Category> categories = (List<Category>) request.getAttribute("categoryList");
