@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -46,6 +47,13 @@ public class RegistrationServlet extends HttpServlet {
             req.getRequestDispatcher("registration.jsp").forward(req, resp);
             return;
         }
+
+        if (contact.length() != 9 || contact.charAt(0) != '5'){
+            req.setAttribute("status", "failed, invalid number");
+            req.getRequestDispatcher("registration.jsp").forward(req, resp);
+            return;
+        }
+
         try{
             Connection con = (Connection) req.getServletContext().getAttribute("DBConnection");
             UserDao userDao = new UserDao(con);
