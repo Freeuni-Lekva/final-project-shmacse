@@ -108,18 +108,20 @@
     <input type="hidden" value="<%=(String) request.getAttribute("pageNumber")%>" id="pageNumber" name="pageNumber">
 
         <input
+                type="submit" value="Previous Page" id="previous-page" onclick="changePage('previous')"
             <% if( (((String)request.getAttribute("pageNumber")).equals("1"))){ %>
-                style="opacity: 0.4; cursor: not-allowed; transition-duration: 1000s;"
+                style="opacity: 0.4; cursor: not-allowed; transition-duration: 1000s;" disabled
             <% } %>
-               type="submit" value="Previous Page" id="previous-page" onclick="changePage('previous')">
+        >
 
         <label id="pageNumber-label" style="font-size: 17px;"> <%=(String) request.getAttribute("pageNumber")%> </label>
 
         <input
+                type="submit" value="Next Page" id="next-page" onclick="changePage('next')"
             <% if(((boolean)request.getAttribute("isLastPage"))){ %>
-                style="opacity: 0.4; cursor: not-allowed; transition-duration: 1000s;"
+                style="opacity: 0.4; cursor: not-allowed; transition-duration: 1000s;" disabled
             <% } %>
-                type="submit" value="Next Page" id="next-page" onclick="changePage('next')">
+        >
 
 </form>
 
