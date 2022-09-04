@@ -61,7 +61,7 @@ public class RegistrationServlet extends HttpServlet {
         try {
             Connection con = (Connection) req.getServletContext().getAttribute("DBConnection");
             UserDao userDao = new UserDao(con);
-            User user = new User(firstName, lastName, username, contact, password);
+            User user = new User(firstName, lastName, contact, username, password);
             userDao.add(user);
             req.getRequestDispatcher("registration.jsp").forward(req, resp);
         } catch (SQLException e) {
