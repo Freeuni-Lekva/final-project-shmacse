@@ -22,7 +22,7 @@
 		<button type="submit" class="login-button">Sign in</button>
 		<br>
 		<br>
-		<a style="font-size: smaller;color: rgb(40, 65, 24)" class="newtohere-link" href="http://localhost:8080/shmacse/registration.jsp">New to here? Sign up!</a>
+		<a style="font-size: smaller;color: rgb(40, 65, 24)" class="newtohere-link" href="registration.jsp">New to here? Sign up!</a>
 	</form>
 </div>
 

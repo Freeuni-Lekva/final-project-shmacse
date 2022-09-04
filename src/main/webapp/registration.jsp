@@ -30,7 +30,7 @@
 		<br><br>
 		<button type="submit" class="register">Sign up</button>
 		<br><br>
-		<a style="font-size: smaller;color: rgb(40, 65, 24)" class="registered-link" href="http://localhost:8080/shmacse/login.jsp">Already registered? Log in</a>
+		<a style="font-size: smaller;color: rgb(40, 65, 24)" class="registered-link" href="login.jsp">Already registered? Log in</a>
 	</form>
 	<h1> Create account </h1>
 </div>
