@@ -36,6 +36,7 @@ public class ItemDaoTest {
     private static final String clearUsers = "DELETE FROM users";
     private static final String resetIncrementItems = "ALTER TABLE items AUTO_INCREMENT = 1";
     private static final String resetIncrementUsers = "ALTER TABLE users AUTO_INCREMENT = 1";
+    private static final String clearWishlist = "DELETE FROM wishlist";
 
     private void addDummyUser(Connection connection) throws SQLException {
 
@@ -421,11 +422,56 @@ public class ItemDaoTest {
 
     }
 
+    @Test
+    public void testGetItemsForUserInWishlist() throws SQLException {
+        Connection connection = DBConnection.getConnection();
+
+        ItemDao itemDao = new ItemDao(connection);
+
+        Statement statement = connection.createStatement();
+
+        statement.executeUpdate("INSERT INTO users (id, first_name, last_name, phone_number, username, password) " +
+                "VALUES (1, 'name1', 'lastname1', '123', 'username1', 'password1')");
+        statement.executeUpdate("INSERT INTO users (id, first_name, last_name, phone_number, username, password) " +
+                "VALUES (2, 'name2', 'lastname2', '456', 'username2', 'password2')");
+
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
+                "VALUES (1, 2, '%s', 4, '%s', '%s')", item_names[0][0], item_names[0][1], item_names[0][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
+                "VALUES (2, 2, '%s', 6, '%s', '%s')", item_names[1][0], item_names[1][1], item_names[1][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
+                "VALUES (3, 1, '%s', 5, '%s', '%s')", item_names[2][0], item_names[2][1], item_names[2][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
+                "VALUES (4, 2, '%s', 14, '%s', '%s')", item_names[3][0], item_names[3][1], item_names[3][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
+                "VALUES (5, 1, '%s', 24, '%s', '%s')", item_names[4][0], item_names[4][1], item_names[4][2]));
+
+        statement.executeUpdate("INSERT INTO wishlist (user_id, item_id) " +
+                "VALUES (1, 1)");
+        statement.executeUpdate("INSERT INTO wishlist (user_id, item_id) " +
+                "VALUES (1, 4)");
+        statement.executeUpdate("INSERT INTO wishlist (user_id, item_id) " +
+                "VALUES (2, 3)");
+
+        List<Item> itemsInWishlist1 = itemDao.getItemsForUserInWishlist(1);
+        List<Item> itemsInWishlist2 = itemDao.getItemsForUserInWishlist(2);
+
+        Assertions.assertEquals(2, itemsInWishlist1.size());
+        Assertions.assertEquals(2, itemsInWishlist1.get(0).getUserId());
+        Assertions.assertEquals(2, itemsInWishlist1.get(1).getUserId());
+
+        Assertions.assertEquals(1, itemsInWishlist2.size());
+        Assertions.assertEquals(1, itemsInWishlist2.get(0).getUserId());
+
+        reset_db(connection);
+    }
+
     private void reset_db(Connection connection) throws SQLException {
 
         // deletes rows in items
         Statement stm = connection.createStatement();
 
+        stm.addBatch(clearWishlist);
         stm.addBatch(clearItems); // clear rows in items table
         stm.addBatch(clearUsers); // clear rows in users table
         stm.addBatch(resetIncrementItems); // reset auto_increment in items

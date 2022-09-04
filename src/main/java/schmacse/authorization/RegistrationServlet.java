@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,30 +18,33 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String fname = req.getParameter("firstname");
-        String lname = req.getParameter("lastname");
-        String uname = req.getParameter("username");
-        String pass = req.getParameter("pass");
-        String email = req.getParameter("email");
+        String firstName = req.getParameter("firstname");
+        String lastName = req.getParameter("lastname");
+        String username = req.getParameter("username");
+        String password = req.getParameter("pass");
+        String repeatedPassword = req.getParameter("re_pass");
         String contact = req.getParameter("contact");
 
-        RequestDispatcher dispatcher = null;
-        Connection con = null;
+        if(!repeatedPassword.equals(password)){
+            req.setAttribute("status", "failed, passwords do not match");
+            req.getRequestDispatcher("registration.jsp").forward(req, resp);
+            return;
+        }
 
         try {
-            con = DBConnection.getConnection();
+            Connection con = (Connection) req.getServletContext().getAttribute("DBConnection");
             PreparedStatement stm = con.prepareStatement(
                     "insert into users(first_name,last_name,username,phone_number,password) " +
                             "values (?,?,?,?,?)"
             );
-            stm.setString(1,fname);
-            stm.setString(2,lname);
-            stm.setString(3,uname);
-            stm.setString(4,contact);
-            stm.setString(5,pass);
+            stm.setString(1, firstName);
+            stm.setString(2, lastName);
+            stm.setString(3, username);
+            stm.setString(4, contact);
+            stm.setString(5, password);
 
             int rowCount = stm.executeUpdate();
-            dispatcher = req.getRequestDispatcher("registration.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("registration.jsp");
 
             if (rowCount > 0) {
                 req.setAttribute("status", "success");
