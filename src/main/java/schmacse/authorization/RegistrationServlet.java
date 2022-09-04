@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @WebServlet("/register")
@@ -62,28 +61,9 @@ public class RegistrationServlet extends HttpServlet {
         try {
             Connection con = (Connection) req.getServletContext().getAttribute("DBConnection");
             UserDao userDao = new UserDao(con);
-//            User user = new User(firstName, lastName, username, contact, password);
-
-            PreparedStatement stm = con.prepareStatement(
-                    "insert into users(first_name,last_name,username,phone_number,password) " +
-                            "values (?,?,?,?,?)"
-            );
-            stm.setString(1, firstName);
-            stm.setString(2, lastName);
-            stm.setString(3, username);
-            stm.setString(4, contact);
-            stm.setString(5, password);
-
-            int rowCount = stm.executeUpdate();
-            RequestDispatcher dispatcher = req.getRequestDispatcher("registration.jsp");
-
-            if (rowCount > 0) {
-                req.setAttribute("status", "success");
-            }else {
-                req.setAttribute("status", "failed");
-            }
-
-            dispatcher.forward(req,resp);
+            User user = new User(firstName, lastName, username, contact, password);
+            userDao.add(user);
+            req.getRequestDispatcher("registration.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

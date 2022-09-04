@@ -12,9 +12,12 @@
 	<form action="login" method="post">
 		<input type="text" class="input-box" placeholder="Username " name="username">
 		<input type="password" class="input-box" placeholder="Password" name="pass">
-		<%  if (request.getAttribute("status") != null) {%>
-		<label form="registration-form"> Passwords do not match </label>
-		<% }%>
+		<% if (request.getAttribute("status") != null){ %>
+		<%  if (request.getAttribute("status").equals("failed, username not found")) {%>
+		<label form="login-form"> Invalid username </label>
+		<% }else if(request.getAttribute("status").equals("failed, password incorrect")) { %>
+		<label form="login-form"> Password incorrect </label>
+		<% }}%>
 		<br>
 		<button type="submit" class="login-button">Sign in</button>
 		<br>
