@@ -32,17 +32,10 @@
     <button type="submit" form="search-form" value="Submit" id="search-button" name="search-button">Search</button>
 
     <label for="button" id="price-order"> Sort by price:  </label>
-    <span class="button r" id="button">
-        <%
-            if (request.getParameterValues("invert") != null){
-        %>
-            <input type="checkbox" class="checkbox" id="invert" name="invert" checked/>
-        <%
-            } else {
-        %>
-            <input type="checkbox" class="checkbox" id="invert" name="invert"/>
-        <% } %>
-
+    <span id="button">
+        <input type="checkbox" id="invert" name="invert"
+            <%if (request.getParameterValues("invert") != null){%> checked <% } %>
+        />
         <span class="knobs"></span>
     </span>
 
@@ -107,8 +100,12 @@
 <form action="homepage" method="get" style="text-align: center" id="south-form">
     <input type="hidden" value="<%=(String) request.getAttribute("pageNumber")%>" id="pageNumber" name="pageNumber">
 
-        <input
-                type="submit" value="Previous Page" id="previous-page" onclick="changePage('previous')"
+    <% if(request.getParameterValues("invert") != null){ %>
+        <input type="hidden" value="<%=request.getParameterValues("invert")[0]%>"  name="invert">
+    <% } %>
+
+    <input
+            type="submit" value="Previous Page" id="previous-page" onclick="changePage('previous')"
             <% if( (((String)request.getAttribute("pageNumber")).equals("1"))){ %>
                 style="opacity: 0.4; cursor: not-allowed; transition-duration: 1000s;" disabled
             <% } %>

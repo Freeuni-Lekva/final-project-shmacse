@@ -39,12 +39,13 @@ public class SearchServlet extends HttpServlet {
 
 
             items.sort(Item::comparePrice);
-            //System.out.println(req.getParameterValues("invert")[0]);
+//            System.out.println(req.getParameterValues("invert")[0]);
             if (req.getParameterValues("invert") != null){
                 Collections.reverse(items);
             }
 
             req.setAttribute("itemsList", items);
+            req.getSession().setAttribute("itemsList", items);
             req.getRequestDispatcher("/homepage").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
