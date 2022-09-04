@@ -45,7 +45,7 @@ public class SearchServlet extends HttpServlet {
             }
 
             req.setAttribute("itemsList", items);
-            req.getRequestDispatcher("/homepage.jsp").forward(req, resp);
+            req.getRequestDispatcher("/homepage").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }

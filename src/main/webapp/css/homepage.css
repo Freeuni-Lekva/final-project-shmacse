@@ -65,21 +65,18 @@ body {
   text-align: center;
   line-height: 0.5;
   padding: 12px 0px;
-  background-color: #03a9f4;
   border-radius: 6%;
 }
 
 #button .knobs:before {
   z-index: 2;
   content: "Increasing";
+  background-color: #03a9f4;
 }
 
 #button .knobs:after {
+  z-index: 1;
   content: "Decreasing";
-}
-
-#button .knobs:after {
-   z-index: 1;
   background-color: #f44336;
 }
 
@@ -96,31 +93,109 @@ body {
 }
 
 #log-out{
-  position:absolute;
+  background-color: #DDE2EBFF;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
 
-  right: 0;
-  margin-top:10px;
+#log-out:hover{
+  color: white;
+  background-color: #ff443a;
 }
 
 #to-my-items{
-  position:absolute;
+  background-color: #DDE2EBFF;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
 
-  right:70px;
-  margin-top:10px;
+#to-my-items:hover{
+  color: white;
+  background:#0099ff;
 }
 
 #log-in{
-  position:absolute;
+  background-color: #DDE2EBFF;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
 
-  right:80px;
-  margin-top:10px;
+#log-in:hover{
+  background-color: #f3f436;
 }
 
 #register{
-  position:absolute;
+  background-color: #DDE2EBFF;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
 
-  right: 0;
+#register:hover{
+  background-color: #4bf0ff;
+}
+
+#next-page{
+  position: relative;
+  left: 10px;
+  font-size: 16px;
+  padding: 0px 30px;
+  border-radius: 10px;
+  background-color: skyblue;
+  color: darkblue;
+  border-width: 1px;
+  transition-duration: 1s;
+}
+
+#next-page:hover{
+  font-size: 17px;
+  background-color: dodgerblue;
+}
+
+#previous-page{
+  position: relative;
+  right: 10px;
+  font-size: 16px;
+  padding: 0px 17px;
+  border-radius: 10px;
+  background-color: skyblue;
+  color: darkblue;
+  border-width: 1px;
+  transition-duration: 1s;
+}
+
+#previous-page:hover{
+  font-size: 17px;
+  background-color: dodgerblue;
+}
+
+#top-right-corner{
+  float: right;
   margin-top:10px;
 }
 
+#search-button{
+  border-radius: 10px;
+  background-color: #dde2eb;
+  transition-duration: 1s;
+}
+
+#search-button:hover{
+  background-color: #ff9c3d;
+}
+
+#visit-button{
+  font-size: 16px;
+  border-radius: 15px;
+  background-color: #dde2eb;
+  border-width: 2px;
+  border-color: #89bb58;
+  padding: 0px 18px;
+  letter-spacing: 1px;
+  transition-duration: 1s;
+}
+
+#visit-button:hover{
+  color: white;
+  background:#0099ff;
+}
 
