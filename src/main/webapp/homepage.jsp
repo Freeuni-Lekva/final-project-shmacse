@@ -33,7 +33,16 @@
 
     <label for="button" id="price-order"> Sort by price:  </label>
     <span class="button r" id="button">
-        <input type="checkbox" class="checkbox" id="invert" name="invert"/>
+        <%
+            if (request.getParameterValues("invert") != null){
+        %>
+            <input type="checkbox" class="checkbox" id="invert" name="invert" checked/>
+        <%
+            } else {
+        %>
+            <input type="checkbox" class="checkbox" id="invert" name="invert"/>
+        <% } %>
+
         <span class="knobs"></span>
     </span>
 

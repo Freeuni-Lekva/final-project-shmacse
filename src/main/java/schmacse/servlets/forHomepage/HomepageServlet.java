@@ -30,7 +30,6 @@ public class HomepageServlet extends HttpServlet {
 
         List<Item> allItems;
         if(req.getAttribute("itemsList") != null){
-            System.out.println("SSS");
             allItems = (List<Item>) req.getAttribute("itemsList");
         }
         else {

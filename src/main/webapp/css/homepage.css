@@ -65,21 +65,18 @@ body {
   text-align: center;
   line-height: 0.5;
   padding: 12px 0px;
-  background-color: #03a9f4;
   border-radius: 6%;
 }
 
 #button .knobs:before {
   z-index: 2;
   content: "Increasing";
+  background-color: #03a9f4;
 }
 
 #button .knobs:after {
+  z-index: 1;
   content: "Decreasing";
-}
-
-#button .knobs:after {
-   z-index: 1;
   background-color: #f44336;
 }
 
