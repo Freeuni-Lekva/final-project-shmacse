@@ -1,6 +1,7 @@
 package schmacse.authorization;
 
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
+import schmacse.daos.UserDao;
 import schmacse.databaseconnection.DBConnection;
 
 import javax.servlet.RequestDispatcher;
@@ -22,35 +23,25 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String uname = req.getParameter("username");
-        String pass = req.getParameter("password");
+        String userName = req.getParameter("username");
+        String pass = req.getParameter("pass");
 
-        Connection con = null;
         HttpSession session = req.getSession();
-        RequestDispatcher dispatcher = null;
+        Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
 
         try {
-            con = (Connection) getServletContext().getAttribute("DBConnection");
-            PreparedStatement stm = con.prepareStatement(
-                    "select * from users where username = ? and password = ?"
-            );
-            stm.setString(1,uname);
-            stm.setString(2,pass);
-
-            ResultSet rs = stm.executeQuery();
-
-            if(rs.next()){
-                session.setAttribute("username", rs.getString("username"));
-                dispatcher = req.getRequestDispatcher("homepage");
-            }else{
-                req.setAttribute("status", "failed");
-                dispatcher = req.getRequestDispatcher("login.jsp");
+            UserDao userDao = new UserDao(connection);
+            if (userDao.getUserByUsername(userName) == null) {
+                req.setAttribute("status", "failed, username not found");
+                req.getRequestDispatcher("login.jsp").forward(req, resp);
+            } else if (userDao.getUserByUsernameAndPassword(userName, pass) == null) {
+                req.setAttribute("status", "failed, password incorrect");
+                req.getRequestDispatcher("login.jsp").forward(req, resp);
+            } else {
+                session.setAttribute("username", userName);
+                req.getRequestDispatcher("homepage").forward(req, resp);
             }
-            dispatcher.forward(req,resp);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        }catch (SQLException ignored){}
 
     }
 }
