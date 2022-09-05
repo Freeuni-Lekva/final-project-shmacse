@@ -72,9 +72,8 @@
 
             for (Item item: items) {
     %>
-
-        <div class="col-lg-3 col-md-4 col-sm-10 my-3">
-            <div class="card" style="width: 19rem;">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 my-3" style="text-align: center; margin: 0 auto;">
+            <div class="card" style="width: 19rem; text-align: center; margin: 0 auto;">
                 <div class="card-body" style="background-color: #ebd57a">
 
                     <%
