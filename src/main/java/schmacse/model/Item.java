@@ -1,5 +1,6 @@
 package schmacse.model;
 
+
 public class Item {
 
     private int id;
@@ -16,6 +17,10 @@ public class Item {
         this.price = price;
         this.description = description;
         this.category = category;
+    }
+
+    public static int comparePrice(Item a, Item b) {
+        return a.getPrice() - b.getPrice();
     }
 
     public int getId() {
@@ -64,6 +69,7 @@ public class Item {
                 "id=" + id +
                 ", userId=" + userId +
                 ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
                 ", description='" + description + '\'' +
                 ", category=" + category +
                 '}';

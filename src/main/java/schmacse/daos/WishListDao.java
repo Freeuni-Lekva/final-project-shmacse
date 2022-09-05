@@ -24,12 +24,12 @@ public class WishListDao {
     public boolean add(User user, Item item) throws SQLException {
 
         int userID = user.getId();
-        int itemID = item.getId();
+        int itemId = item.getId();
 
-        if(checkValidity(userID, itemID)) {
+        if(checkValidity(userID, itemId)) {
             PreparedStatement stm = connection.prepareStatement(INSERT_INTO_WISHLIST);
             stm.setInt(1, userID);
-            stm.setInt(2, itemID);
+            stm.setInt(2, itemId);
 
             stm.executeUpdate();
 
@@ -39,12 +39,12 @@ public class WishListDao {
         return false;
 
     }
-    public boolean add(int userID, int itemID) throws SQLException{
+    public boolean add(int userID, int itemId) throws SQLException{
 
-        if(checkValidity(userID, itemID)) {
+        if(checkValidity(userID, itemId)) {
             PreparedStatement stm = connection.prepareStatement(INSERT_INTO_WISHLIST);
             stm.setInt(1, userID);
-            stm.setInt(2, itemID);
+            stm.setInt(2, itemId);
 
             stm.executeUpdate();
 
@@ -55,10 +55,10 @@ public class WishListDao {
     }
 
     // checks if user owns the item
-    private boolean checkValidity(int userID, int itemID) throws SQLException {
+    private boolean checkValidity(int userID, int itemId) throws SQLException {
 
         ItemDao itemDao = new ItemDao(connection);
-        Item item = itemDao.getItemByItemID(itemID);
+        Item item = itemDao.getItemByItemID(itemId);
 
         return userID != item.getUserId();
 
@@ -67,19 +67,19 @@ public class WishListDao {
     public void remove(User user, Item item) throws SQLException{
 
         int userID = user.getId();
-        int itemID = item.getId();
+        int itemId = item.getId();
 
         PreparedStatement stm = connection.prepareStatement(DELETE_ROW);
         stm.setInt(1, userID);
-        stm.setInt(2, itemID);
+        stm.setInt(2, itemId);
         stm.executeUpdate();
 
     }
-    public void remove(int userID, int itemID) throws SQLException{
+    public void remove(int userID, int itemId) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(DELETE_ROW);
         stm.setInt(1, userID);
-        stm.setInt(2, itemID);
+        stm.setInt(2, itemId);
         stm.executeUpdate();
 
     }
@@ -103,18 +103,18 @@ public class WishListDao {
 
     public void removeRowsOfItem(Item item) throws SQLException{
 
-        int itemID = item.getId();
+        int itemId = item.getId();
 
         PreparedStatement stm = connection.prepareStatement(DELETE_ROW_WITH_ITEM);
-        stm.setInt(1, itemID);
+        stm.setInt(1, itemId);
 
         stm.executeUpdate();
 
     }
-    public void removeRowsOfItem(int itemID) throws SQLException{
+    public void removeRowsOfItem(int itemId) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(DELETE_ROW_WITH_ITEM);
-        stm.setInt(1, itemID);
+        stm.setInt(1, itemId);
 
         stm.executeUpdate();
 

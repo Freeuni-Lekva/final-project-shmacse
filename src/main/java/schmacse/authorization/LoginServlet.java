@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet {
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
             } else {
                 session.setAttribute("username", userName);
+                req.getRequestDispatcher("homepage").forward(req, resp);
                 // dispacheri
             }
         }catch (SQLException ignored){}

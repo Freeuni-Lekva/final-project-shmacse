@@ -27,7 +27,7 @@ public class AddToWishlistServlet extends HttpServlet {
         String username = (String) req.getSession().getAttribute("username");
 
         UserDao userDao = new UserDao(connection);
-        int itemID = Integer.parseInt(req.getParameter("itemID"));
+        int itemId = Integer.parseInt(req.getParameter("itemId"));
 
         User user = null;
         try {
@@ -35,7 +35,7 @@ public class AddToWishlistServlet extends HttpServlet {
             int userID = user.getId();
 
             WishListDao wishListDao = new WishListDao(connection);
-            boolean added = wishListDao.add(userID, itemID);
+            boolean added = wishListDao.add(userID, itemId);
             if(!added){
                 // prepare for error page
                 req.setAttribute("error-message", "unable to add to wishlist");
@@ -45,12 +45,12 @@ public class AddToWishlistServlet extends HttpServlet {
             ItemDao itemDao = new ItemDao(connection);
             Item item = null;
             try {
-                item = itemDao.getItemByItemID(itemID);
+                item = itemDao.getItemByItemID(itemId);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            req.setAttribute("itemID", itemID);
+            req.setAttribute("itemId", itemId);
             if(added){
                 req.getRequestDispatcher("item-page.jsp").forward(req,resp);
             }else{

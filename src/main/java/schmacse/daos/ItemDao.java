@@ -2,6 +2,7 @@ package schmacse.daos;
 
 import schmacse.model.Category;
 import schmacse.model.Item;
+import schmacse.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +23,8 @@ public class ItemDao {
     private static final String SELECT_ITEMS_FOR_USER_IN_WISHLIST = "SELECT DISTINCT " +
             "items.id, items.user_id, items.name, items.price, items.description, items.category FROM items " +
             "JOIN wishlist ON items.id = wishlist.item_id AND wishlist.user_id = ?";
+    private static final String SELECT_FILTERED_ITEMS = "SELECT * FROM items " +
+            "WHERE name LIKE CONCAT('%', ?, '%') AND category LIKE CONCAT('%', ?, '%')";
 
     private Connection connection;
 
@@ -46,23 +49,23 @@ public class ItemDao {
 
     public void remove(Item item) throws SQLException{
 
-        int itemID = item.getId();
+        int itemId = item.getId();
 
         PreparedStatement stm = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
         );
 
-        stm.setInt(1,itemID);
+        stm.setInt(1,itemId);
         stm.executeUpdate();
 
     }
-    public void remove(int itemID) throws SQLException{
+    public void remove(int itemId) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
         );
 
-        stm.setInt(1,itemID);
+        stm.setInt(1,itemId);
         stm.executeUpdate();
 
     }
@@ -75,19 +78,19 @@ public class ItemDao {
         stm.executeUpdate();
     }
 
-    public void updatePrice(int itemID, int newPrice) throws SQLException {
+    public void updatePrice(int itemId, int newPrice) throws SQLException {
 
         PreparedStatement stm = connection.prepareStatement(UPDATE_PRICE);
         stm.setInt(1,newPrice);
-        stm.setInt(2, itemID);
+        stm.setInt(2, itemId);
         stm.executeUpdate();
 
     }
 
-    public int getUserIDByItemID(int itemID) throws SQLException{
+    public int getUserIDByItemID(int itemId) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_WITH_ID);
-        stm.setInt(1, itemID);
+        stm.setInt(1, itemId);
         ResultSet resultSet = stm.executeQuery();
 
         resultSet.next();
@@ -96,10 +99,10 @@ public class ItemDao {
     }
     public int getUserIDByItem(Item item) throws SQLException{
 
-        int itemID = item.getId();
+        int itemId = item.getId();
 
         PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_WITH_ID);
-        stm.setInt(1, itemID);
+        stm.setInt(1, itemId);
         ResultSet resultSet = stm.executeQuery();
 
         resultSet.next();
@@ -107,10 +110,10 @@ public class ItemDao {
 
     }
 
-    public Item getItemByItemID(int itemID) throws SQLException{
+    public Item getItemByItemID(int itemId) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(SELECT_ITEMS_WITH_ID);
-        stm.setInt(1, itemID);
+        stm.setInt(1, itemId);
         ResultSet resultSet = stm.executeQuery();
 
         resultSet.next();
@@ -172,4 +175,38 @@ public class ItemDao {
 
         return itemsInWishlist;
     }
+
+    public List<Item> getFilteredItems(String itemName, Category category) throws SQLException{
+
+        List<Item> filteredList = new ArrayList<>();
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_FILTERED_ITEMS);
+
+        if (itemName.equals("")){
+            itemName = "%";
+        }
+        stm.setString(1,itemName);
+
+        if (category == null){
+            stm.setString(2, "");
+        }else{
+            stm.setString(2, category.name());
+        }
+
+        ResultSet resultSet = stm.executeQuery();
+        while(resultSet.next()){
+            int id = resultSet.getInt("id");
+            int userId = resultSet.getInt("user_id");
+            int price = resultSet.getInt("price");
+            itemName = resultSet.getString("name");
+            String description = resultSet.getString("description");
+            category = Category.valueOf(resultSet.getString("category"));
+
+            Item newItem = new Item(id, userId, itemName, price, description, category);
+            filteredList.add(newItem);
+        }
+
+        return filteredList;
+    }
+
 }

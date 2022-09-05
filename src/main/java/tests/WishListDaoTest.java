@@ -41,7 +41,7 @@ public class WishListDaoTest {
         Connection connection = DBConnection.getConnection();
         reset_db(connection);
 
-        // userIDs - 1, 2, 3 posses itemIDs - 1, 2, 3
+        // userIDs - 1, 2, 3 posses itemIds - 1, 2, 3
         addDummyUser(connection);
         addDummyUser(connection);
         addDummyUser(connection);
@@ -95,7 +95,7 @@ public class WishListDaoTest {
         Connection connection = DBConnection.getConnection();
         reset_db(connection);
 
-        // userIDs - 1, 2, 3 posses itemIDs - 3, 2, 1
+        // userIDs - 1, 2, 3 posses itemIds - 3, 2, 1
         addDummyUser(connection);
         addDummyUser(connection);
         addDummyUser(connection);
