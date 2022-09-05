@@ -37,6 +37,8 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         ItemDao itemDao = new ItemDao(connection);
         try {
             List<Item> itemsList = itemDao.getFilteredItems("", null);
+            itemsList.sort(Item::comparePrice);
+            System.out.println(itemsList.get(0).getName());
             se.getSession().setAttribute("itemsList", itemsList);
         } catch (SQLException e) {
             e.printStackTrace();

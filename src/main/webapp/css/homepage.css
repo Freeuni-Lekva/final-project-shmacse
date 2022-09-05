@@ -10,13 +10,13 @@
 
 
 body {
-    font-family: "Helvetica", sans-serif;
-    line-height: 2;
-    padding: 2em 2em;
-    color: #555;
-    background: white;
-    -moz-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
+  font-family: "Helvetica", sans-serif;
+  line-height: 2;
+  padding: 2em 2em;
+  color: #555;
+  background: white;
+  -moz-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 #price-order{
@@ -24,71 +24,61 @@ body {
 }
 
 .knobs{
-  position: relative;
-  margin-left: -84px;
+  position: absolute;
+  margin-top: 12px;
+  z-index: 2;
 }
 
-.button.r {
-  position: relative;
-  width: 96px;
-  height: 24px;
-  top: 2px;
-  overflow: hidden;
-  border-radius: 8px;
-}
 
-.checkbox {
-  position: relative;
-  width: 64px;
-  height: 24px;
+
+#invert {
+  position: absolute;
+  width: 84px;
+  height: 40px;
   padding: 0;
-  margin: 0;
+  margin-top: 12px;
   opacity: 0;
   cursor: pointer;
   z-index: 3;
 }
 
-.knobs {
-  z-index: 2;
-}
 
 /* Button */
-#button .knobs:before,
-#button .knobs:after {
+.knobs:before,
+.knobs:after {
   position: absolute;
-  top: -8px;
   width: 84px;
-  height: 4px;
+  height: 40px;
   color: #fff;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
   line-height: 0.5;
-  padding: 12px 0px;
-  border-radius: 6%;
+  padding: 18px 0px;
+  border-radius: 10px;
 }
 
-#button .knobs:before {
+.knobs:before {
   z-index: 2;
   content: "Increasing";
   background-color: #03a9f4;
 }
 
-#button .knobs:after {
+.knobs:after {
   z-index: 1;
   content: "Decreasing";
   background-color: #f44336;
 }
 
-#button .checkbox:checked + .knobs:before {
+#invert:checked + .knobs:before {
   z-index: 1;
 }
 
-#button .checkbox:checked + .knobs:after {
+#invert:checked + .knobs:after {
   z-index: 2;
 }
 
-#button .checkbox:checked ~ .layer {
+#invert:checked ~ .layer {
   background-color: #fcebeb;
 }
 
