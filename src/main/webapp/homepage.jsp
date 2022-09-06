@@ -79,6 +79,7 @@
                     <h3 class="text-center fw-bold"><%=nameToDisplay%></h3>
                     <h5 class="text-center" style="opacity: 0.5;"><%=item.getPrice()+" GEL"%></h5>
 
+                    <img src="${pageContext.request.contextPath}/images/bags.png" style="width: 242px; height: 133px; white-space: nowrap;">
                     <div class="text-center my-3">
                         <form>
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
