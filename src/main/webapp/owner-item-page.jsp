@@ -44,12 +44,7 @@
         </div>
         <div class="col-7 text-center d-none d-md-block">
             <!-- <img src="/assets/surati.jpg" class="img-fluid" alt="ebook"> -->
-            <div class="fs-2">
-                SURATI SURATI SURATI SURATI SURATI SURATI SURATI
-                SURATI SURATI SURATI SURATI SURATI SURATI SURATI
-                SURATI SURATI SURATI SURATI SURATI SURATI SURATI
-                SURATI SURATI SURATI SURATI
-            </div>
+            <img src="images/bags.png">
         </div>
         <div class="col-md-5 text-center d-none d-md-block">
         </div>

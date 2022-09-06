@@ -9,6 +9,7 @@
     <title>My Items</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" type="text/css" href="css/my-items.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
 
@@ -21,6 +22,20 @@
 <section id="my-notes" class="container bg-light py-4">
 
     <h1 class="text-center">My Items to Sell</h1>
+    <br>
+
+    <span name="span-homepage" id="span-homepage">
+        <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
+            <span>Go to Homepage</span>
+        </a>
+    </span>
+    <span name="span-enlist" id="span-enlist">
+        <a href="${pageContext.request.contextPath}/enlistment-page" class="btn" role="button" id="enlist-button" name="enlist-button">
+            <span>Add Item</span>
+        </a>
+    </span>
+    <br>
+    <br>
 
     <div class="row">
         <%
@@ -30,12 +45,13 @@
         %>
 
             <div class="col-lg-4 col-md-6 col-sm-10 my-3">
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem; text-align: center; margin: 0 auto;">
                     <div class="card-body">
 
                         <h3><%=item.getName()%></h3>
                         <p class="card-text"><%=item.getDescription()%></p>
 
+                        <img src="images/bags.png" style="width: 242px; height: 133px; white-space: nowrap;">
                         <div class="text-center my-3">
                             <form>
                                 <input type="hidden" name="itemId" value="<%=item.getId()%>">

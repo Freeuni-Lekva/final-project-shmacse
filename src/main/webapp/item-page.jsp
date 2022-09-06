@@ -8,16 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Item Page</title>
+    <link rel="stylesheet" type="text/css" href="css/item-page.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
     <%
         Item item = (Item) request.getAttribute("item");
         User owner = (User) request.getAttribute("user");
-
-        // to Test
-        //Item item = new Item(1, 1, "Kastumi", 1, "Silikonis Substrati", Category.TROUSERS);
-        //User owner = new User(1, "Gio", "Gio", "557696969", "mepatrone", "koka");
     %>
     <h1 class="display-3 text-center text-bold"><%=item.getName()%></h1>
     <h2 class="fs-4 text-center text-muted"><%=item.getCategory().toString()%></h2>
@@ -63,12 +60,7 @@
             </div>
             <div class="col-7 text-center d-none d-md-block">
                 <!-- <img src="/assets/surati.jpg" class="img-fluid" alt="ebook"> -->
-                <div class="fs-2">
-                    SURATI SURATI SURATI SURATI SURATI SURATI SURATI
-                    SURATI SURATI SURATI SURATI SURATI SURATI SURATI
-                    SURATI SURATI SURATI SURATI SURATI SURATI SURATI
-                    SURATI SURATI SURATI SURATI
-                </div>
+                <img src="images/bags.png">
             </div>
             <div class="col-md-5 text-center d-none d-md-block">
             </div>

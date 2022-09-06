@@ -14,7 +14,7 @@
             integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
             crossorigin="anonymous"></script>
 </head>
-<body style="background-color: #b1da52;">
+<body style="background-color: #c3c580;">
 <h1> Homepage </h1>
 <form id="search-form" action="search-servlet" method="post">
     <label for="categories" id="categories-label"> Categories: </label>
@@ -67,7 +67,7 @@
     %>
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 my-3" style="text-align: center; margin: 0 auto;">
             <div class="card" style="width: 19rem; text-align: center; margin: 0 auto;">
-                <div class="card-body" style="background-color: #ebd57a">
+                <div class="card-body" style="background: rgb(167, 190, 130)">
 
                     <%
                         String nameToDisplay = item.getName();
@@ -78,6 +78,7 @@
                     <h3 class="text-center fw-bold"><%=nameToDisplay%></h3>
                     <h5 class="text-center" style="opacity: 0.5;"><%=item.getPrice()+" GEL"%></h5>
 
+                    <img src="${pageContext.request.contextPath}/images/bags.png" style="width: 242px; height: 133px; white-space: nowrap;">
                     <div class="text-center my-3">
                         <form>
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
