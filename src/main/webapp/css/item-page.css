@@ -1,0 +1,82 @@
+.container {  display: grid;
+    grid-template-columns: 1.4fr 0.9fr 0.9fr 1fr 1.1fr 0.8fr;
+    grid-template-rows: 0.4fr 0.3fr 0.4fr 0.4fr 3.8fr 0.5fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    "HomepageButton . Title Title . ."
+    "HomepageButton . Category Category . ."
+    ". . . . . ."
+    "Description-header Description-header . Price Add-To-Wishlist ."
+    "Description Description Image Image Image Image"
+    ". . . . . Owner";
+}
+
+.HomepageButton { grid-area: HomepageButton; position: relative; }
+#homepage-button {
+    transform: translate(0%, 100%);
+    border-radius: 4px;
+    background-color: #4bca69;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 12px;
+    padding: 10px;
+    width: 150px;
+    transition: all 1s;
+    cursor: pointer;
+}
+#homepage-button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 1s;
+}
+#homepage-button span:after {
+    content: '\00ab''\00ab';
+    position: absolute;
+    opacity: 0;
+    top: -1px;
+    left: -3px;
+    transition: 1s;
+}
+#homepage-button:hover span {
+    padding-left: 20px;
+}
+#homepage-button:hover span:after {
+    opacity: 1;
+}
+#span-homepage{
+    float: left;
+    margin-left: 10px;
+}
+
+.Description-header { grid-area: Description-header; position: relative; }
+
+.Description { grid-area: Description; position: relative;}
+
+.Price { grid-area: Price; position: relative;}
+#price{
+    width: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Add-To-Wishlist { grid-area: Add-To-Wishlist; position: relative;}
+#wishlist-div{
+    margin-top: 7px;
+    width: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Image { grid-area: Image; position: relative;}
+
+.Owner { grid-area: Owner; position: relative;}
+
+.Title { grid-area: Title; position: relative;}
+
+.Category { grid-area: Category; position: relative;}
