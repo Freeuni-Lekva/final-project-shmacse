@@ -23,7 +23,7 @@ body {
     color: #FFFFFF;
     text-align: center;
     font-size: 20px;
-    padding: 15px;
+    padding: 10px;
     width: 220px;
     transition: all 1s;
     cursor: pointer;
@@ -48,8 +48,46 @@ body {
 #homepage-button:hover span:after {
     opacity: 1;
 }
+#span-homepage{
+    float: left;
+    margin-left: 10px;
+}
+
+#enlist-button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #42ca99;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 8px;
+    width: 180px;
+    transition: all 1s;
+    cursor: pointer;
+}
+#enlist-button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 1s;
+}
+#enlist-button span:after {
+    content: '\002b';
+    font-size: 25px;
+    position: absolute;
+    opacity: 0;
+    top: -5px;
+    right: -5px;
+    transition: 1s;
+}
+#enlist-button:hover span {
+    padding-right: 25px;
+}
+#enlist-button:hover span:after {
+    opacity: 1;
+}
 
 #span-enlist{
     float: right;
-    margin: 0px;
+    margin-right: 10px;
 }
