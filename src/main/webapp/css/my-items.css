@@ -12,6 +12,7 @@ body {
     padding: 2em 2em;
     color: #555;
     background: white;
+    background-color: #c3c580;
     -moz-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }

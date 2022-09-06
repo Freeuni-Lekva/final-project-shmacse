@@ -14,8 +14,7 @@
             integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
             crossorigin="anonymous"></script>
 </head>
-<body style="background: rgb(250,248,223);
-    background: radial-gradient(circle, rgba(250,248,223,1) 0%, rgba(185,180,113,1) 100%);">
+<body style="background-color: #c3c580;">
 <h1> Homepage </h1>
 <form id="search-form" action="search-servlet" method="post">
     <label for="categories" id="categories-label"> Categories: </label>
