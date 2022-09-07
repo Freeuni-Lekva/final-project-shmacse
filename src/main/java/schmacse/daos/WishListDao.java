@@ -5,6 +5,7 @@ import schmacse.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class WishListDao {
@@ -13,6 +14,7 @@ public class WishListDao {
     private final String DELETE_ROW = "DELETE FROM wishlist WHERE user_id = ? AND item_id = ?";
     private final String DELETE_ROW_WITH_USER = "DELETE FROM wishlist WHERE user_id = ?";
     private final String DELETE_ROW_WITH_ITEM = "DELETE FROM wishlist WHERE item_id = ?";
+    private final String FIND_IN_WISHLIST = "SELECT * FROM wishlist WHERE user_id = ? AND item_id = ?";
 
 
     Connection connection;
@@ -99,6 +101,13 @@ public class WishListDao {
         stm.setInt(1, userID);
         stm.executeUpdate();
 
+    }
+
+    public boolean hasItemInWishlist(int userId, int itemId) throws SQLException{
+        PreparedStatement stm = connection.prepareStatement(FIND_IN_WISHLIST);
+        stm.setInt(1, userId);
+        stm.setInt(2, itemId);
+        return stm.executeQuery().next();
     }
 
     public void removeRowsOfItem(Item item) throws SQLException{

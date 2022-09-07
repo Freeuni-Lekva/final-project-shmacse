@@ -35,12 +35,22 @@ public class AddToWishlistServlet extends HttpServlet {
             int userID = user.getId();
 
             WishListDao wishListDao = new WishListDao(connection);
-            boolean added = wishListDao.add(userID, itemId);
-            if(!added){
+
+            boolean added = false;
+            boolean alreadyInWishlist = wishListDao.hasItemInWishlist(userID, itemId);
+            if(alreadyInWishlist) {
                 // prepare for error page
-                req.setAttribute("error-message", "unable to add to wishlist");
+                req.setAttribute("error-message", "item already in wishlist");
                 req.setAttribute("back-to", "item-page"); // where to go from error page
+            }else{
+                added = wishListDao.add(userID, itemId);
+                if(!added){
+                    // prepare for error page
+                    req.setAttribute("error-message", "unable to add to wishlist");
+                    req.setAttribute("back-to", "item-page"); // where to go from error page
+                }
             }
+
 
             ItemDao itemDao = new ItemDao(connection);
             Item item = null;
@@ -52,6 +62,7 @@ public class AddToWishlistServlet extends HttpServlet {
 
 
             req.setAttribute("item", item);
+            req.setAttribute("itemId", itemId);
             req.setAttribute("user", userDao.getUserById(Integer.parseInt(req.getParameter("ownerId"))));
             if(added){
                 req.getRequestDispatcher("item-page.jsp").forward(req,resp);
