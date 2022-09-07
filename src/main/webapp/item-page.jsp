@@ -34,15 +34,21 @@
             </div>
         </div>
         <div class="Add-To-Wishlist">
-            <div class="text-start py-2" id="wishlist-div">
+            <%
+                if(request.getSession().getAttribute("username") != null){
+            %>
+                    <div class="text-start py-2" id="wishlist-div">
                 <form action="add-to-wishlist" method="post" id="wishlist-form">
                     <input type="hidden" name="itemId" value="<%=item.getId()%>">
                     <button class="btn btn-success" id="wishlist-button">Add to WishList</button>
                 </form>
             </div>
+            <%
+                }
+            %>
         </div>
         <div class="Image">
-            <img src="images/bags.png">
+            <img src="images/bags.png" id="image">
         </div>
         <div class="Owner">
             <span id="owner-info">
