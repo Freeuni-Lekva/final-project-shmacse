@@ -55,19 +55,34 @@ public class OwnerItemPage extends HttpServlet {
         Connection connection = (Connection) req.getServletContext().getAttribute("DBConnection");
 
         String username = (String) req.getSession().getAttribute("username");
+
         int itemId = Integer.parseInt(req.getParameter("itemId"));
-        int newPrice = Integer.parseInt(req.getParameter("newPrice"));
+
+        int newPrice = Integer.parseInt(req.getParameter("updated-price"));
+        String newItemName = req.getParameter("updated-item-name");
+        String newPhoneNumber = req.getParameter("updated-owner-phone");
+        String newDescription = req.getParameter("updated-description");
+        Category newCategory = Category.valueOf(req.getParameter("updated-category"));
 
         ItemDao itemDao = new ItemDao(connection);
         UserDao userDao = new UserDao(connection);
 
         try {
 
-            itemDao.updatePrice(itemId, newPrice);
-
             User user = userDao.getUserByUsername(username);
-            Item item = itemDao.getItemByItemID(itemId);
+            int userId = user.getId();
 
+            itemDao.updatePrice(itemId, newPrice);
+            itemDao.updateName(itemId, newItemName);
+            itemDao.updateDescription(itemId, newDescription);
+            userDao.updatePhoneNumber(userId, newPhoneNumber);
+            itemDao.updateCategory(itemId, newCategory);
+
+
+            Item item = itemDao.getItemByItemID(itemId);
+            List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));
+
+            req.setAttribute("categoryList", categories);
             req.setAttribute("item", item);
             req.setAttribute("user", user);
 

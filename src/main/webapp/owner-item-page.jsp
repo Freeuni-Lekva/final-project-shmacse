@@ -27,7 +27,7 @@
         <div class="fs-3" id="description-header"> Description </div>
     </div>
     <div class="Description">
-        <textarea name="description" id="description" value="<%=item.getDescription()%>"></textarea>
+        <textarea name="description" id="description" value="<%=item.getDescription()%>"><%=item.getDescription()%> </textarea>
     </div>
     <div class="Price">
         <label for="updated-price" id="label-first"> Price : </label>
@@ -64,20 +64,20 @@
     <div class="Update-Page">
         <form action="${pageContext.request.contextPath}/owner-item-page" method="post">
             <input type="submit" id="update-button" value="Update Information" onclick="prepeareHiddenParameters()">
-            <input type="hidden" id="hidden-owner-phone" name="updated-owner-phone" value="">
+
+            <input type="hidden" id="hidden-updated-owner-phone" name="updated-owner-phone" value="">
             <input type="hidden" id="hidden-updated-price" name="updated-price" value="">
             <input type="hidden" id="hidden-updated-description" name="updated-description" value="">
             <input type="hidden" id="hidden-updated-item-name" name="updated-item-name" value="">
             <input type="hidden" id="hidden-updated-category" name="updated-category" value="">
 
             <input type="hidden" value="<%=item.getId()%>" name="itemId">
-            <input type="hidden" value="<%=owner.getId()%>" name="userId">
         </form>
     </div>
 </div>
 <script>
     function prepeareHiddenParameters() {
-        document.getElementById('hidden-owner-phone').setAttribute('value', document.getElementById('owner-phone').value);
+        document.getElementById('hidden-updated-owner-phone').setAttribute('value', document.getElementById('owner-phone').value);
         document.getElementById('hidden-updated-price').setAttribute('value', document.getElementById('updated-price').value);
         document.getElementById('hidden-updated-description').setAttribute('value', document.getElementById('description').value);
         document.getElementById('hidden-updated-item-name').setAttribute('value', document.getElementById('item-name').value);
