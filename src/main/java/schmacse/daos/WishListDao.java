@@ -20,7 +20,7 @@ public class WishListDao {
         this.connection = connection;
     }
 
-    // returs true if added succesfully
+    // returns true if added succesfully
     public boolean add(User user, Item item) throws SQLException {
 
         int userID = user.getId();

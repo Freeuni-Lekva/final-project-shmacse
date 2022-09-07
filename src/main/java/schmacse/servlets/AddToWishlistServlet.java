@@ -50,7 +50,9 @@ public class AddToWishlistServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            req.setAttribute("itemId", itemId);
+
+            req.setAttribute("item", item);
+            req.setAttribute("user", userDao.getUserById(Integer.parseInt(req.getParameter("ownerId"))));
             if(added){
                 req.getRequestDispatcher("item-page.jsp").forward(req,resp);
             }else{
