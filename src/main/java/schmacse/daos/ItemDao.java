@@ -20,6 +20,8 @@ public class ItemDao {
     private static final String SELECT_ITEMS_WITH_ID = "SELECT * FROM items " +
             "WHERE id = ?";
     private static final String UPDATE_PRICE = "UPDATE items SET price = ? WHERE id = ?";
+    private static final String UPDATE_NAME = "UPDATE items SET name = ? WHERE id = ?";
+    private static final String UPDATE_DESCRIPTION = "UPDATE items SET description = ? WHERE id = ?";
     private static final String SELECT_ITEMS_FOR_USER_IN_WISHLIST = "SELECT DISTINCT " +
             "items.id, items.user_id, items.name, items.price, items.description, items.category FROM items " +
             "JOIN wishlist ON items.id = wishlist.item_id AND wishlist.user_id = ?";
@@ -78,6 +80,25 @@ public class ItemDao {
         stm.executeUpdate();
     }
 
+    public void updateName(int itemId, String newName) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(UPDATE_NAME);
+        stm.setString(1,newName);
+        stm.setInt(2, itemId);
+        stm.executeUpdate();
+
+    }
+    public void updateCategory(int itemId, Category newCategory) throws SQLException{
+
+    }
+    public void updateDescription(int itemId, String newDescription) throws SQLException{
+
+        PreparedStatement stm = connection.prepareStatement(UPDATE_DESCRIPTION);
+        stm.setString(1, newDescription);
+        stm.setInt(2, itemId);
+        stm.executeUpdate();
+
+    }
     public void updatePrice(int itemId, int newPrice) throws SQLException {
 
         PreparedStatement stm = connection.prepareStatement(UPDATE_PRICE);
