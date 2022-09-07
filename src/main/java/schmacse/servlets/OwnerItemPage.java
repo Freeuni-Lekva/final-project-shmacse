@@ -2,6 +2,7 @@ package schmacse.servlets;
 
 import schmacse.daos.ItemDao;
 import schmacse.daos.UserDao;
+import schmacse.model.Category;
 import schmacse.model.Item;
 import schmacse.model.User;
 
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @WebServlet(name = "owner-item-page", value = "/owner-item-page")
 public class OwnerItemPage extends HttpServlet {
@@ -31,7 +35,9 @@ public class OwnerItemPage extends HttpServlet {
 
             User user = userDao.getUserByUsername(username);
             Item item = itemDao.getItemByItemID(itemId);
+            List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));
 
+            req.setAttribute("categoryList", categories);
             req.setAttribute("item", item);
             req.setAttribute("user", user);
 
