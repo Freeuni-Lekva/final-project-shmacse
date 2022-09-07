@@ -2,6 +2,7 @@
 <%@ page import="schmacse.model.Item" %>
 <%@ page import="schmacse.model.User" %>
 <%@ page import="schmacse.model.Category" %>
+<%@ page import="java.util.List" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,11 +27,11 @@
         <div class="fs-3" id="description-header"> Description </div>
     </div>
     <div class="Description">
-        <textarea name="description" id="description"></textarea>
+        <textarea name="description" id="description" value="<%=item.getDescription()%>"></textarea>
     </div>
     <div class="Price">
-        <label for="newPrice" id="label-first"> Price : </label>
-        <input type="text" id="newPrice" name="newPrice" value="<%=Integer.toString(item.getPrice())%>">
+        <label for="updated-price" id="label-first"> Price : </label>
+        <input type="text" id="updated-price" value="<%=Integer.toString(item.getPrice())%>">
         <label class="pe-5"id="label-second"> ₾ </label>
     </div>
     <div class="Image">
@@ -40,16 +41,49 @@
     <div class="Owner">
             <span id="owner-info">
                 <label id="owner-name">Owner: <%= owner.getFirstName() %></label>
-                <label id="owner-phone">Phone Number: <%= owner.getPhoneNumber() %></label>
+                <br>
+                <label for="owner-phone"> Phone Number:</label>
+                <input type="text" id="owner-phone" value="<%= owner.getPhoneNumber() %>">
             </span>
     </div>
     <div class="Title">
-        <h1 class="display-3 text-center text-bold"><%=item.getName()%></h1>
+        <input type="text" id="item-name" value="<%=item.getName()%>">
     </div>
     <div class="Category">
-        <h2 class="fs-4 text-center text-muted"><%=item.getCategory().toString()%></h2>
+        <select name="categories" id="categories">
+            <option value="<%=item.getCategory().toString()%>"> <%=item.getCategory().toString()%> </option>
+            <%
+                List<Category> categories = (List<Category>) request.getAttribute("categoryList");
+
+                for (Category c: categories) {
+                    out.println("<option value=\"" + c + "\">" + c + "</option>");
+                }
+            %>
+        </select>
+    </div>
+    <div class="Update-Page">
+        <form action="${pageContext.request.contextPath}/owner-item-page" method="post">
+            <input type="submit" id="update-button" value="Update Information" onclick="prepeareHiddenParameters()">
+            <input type="hidden" id="hidden-owner-phone" name="updated-owner-phone" value="">
+            <input type="hidden" id="hidden-updated-price" name="updated-price" value="">
+            <input type="hidden" id="hidden-updated-description" name="updated-description" value="">
+            <input type="hidden" id="hidden-updated-item-name" name="updated-item-name" value="">
+            <input type="hidden" id="hidden-updated-category" name="updated-category" value="">
+
+            <input type="hidden" value="<%=item.getId()%>" name="itemId">
+            <input type="hidden" value="<%=owner.getId()%>" name="userId">
+        </form>
     </div>
 </div>
+<script>
+    function prepeareHiddenParameters() {
+        document.getElementById('hidden-owner-phone').setAttribute('value', document.getElementById('owner-phone').value);
+        document.getElementById('hidden-updated-price').setAttribute('value', document.getElementById('updated-price').value);
+        document.getElementById('hidden-updated-description').setAttribute('value', document.getElementById('description').value);
+        document.getElementById('hidden-updated-item-name').setAttribute('value', document.getElementById('item-name').value);
+        document.getElementById('hidden-updated-category').setAttribute('value', document.getElementById('categories').value);
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 </html>
