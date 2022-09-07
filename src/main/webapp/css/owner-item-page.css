@@ -9,19 +9,19 @@ body{
     grid-template-rows: 0.4fr 0.3fr 0.4fr 0.4fr 3.8fr 0.5fr;
     gap: 0px 0px;
     grid-template-areas:
-    "HomepageButton . Title Title . ."
+    "MyItemsButton . Title Title . ."
     ". . Category Category . ."
     ". . . . . ."
-    "Description-header Description-header . Price Add-To-Wishlist ."
+    "Description-header Description-header . Price Price ."
     "Description Description Image Image Image Image"
     ". . . Owner Owner .";
 }
 
-.HomepageButton { grid-area: HomepageButton; position: relative; }
-#homepage-button {
+.MyItemsButton { grid-area: MyItemsButton; position: relative; }
+#my-items-button {
     transform: translate(0%, 100%);
     border-radius: 4px;
-    background-color: #4bca69;
+    background-color: #0099ff;
     color: #FFFFFF;
     text-align: center;
     font-size: 12px;
@@ -30,13 +30,13 @@ body{
     transition: all 1s;
     cursor: pointer;
 }
-#homepage-button span {
+#my-items-button span {
     cursor: pointer;
     display: inline-block;
     position: relative;
     transition: 1s;
 }
-#homepage-button span:after {
+#my-items-button span:after {
     content: '\00ab''\00ab';
     position: absolute;
     opacity: 0;
@@ -44,10 +44,10 @@ body{
     left: -3px;
     transition: 1s;
 }
-#homepage-button:hover span {
+#my-items-button:hover span {
     padding-left: 20px;
 }
-#homepage-button:hover span:after {
+#my-items-button:hover span:after {
     opacity: 1;
 }
 
@@ -67,23 +67,9 @@ body{
 }
 
 .Price { grid-area: Price; position: relative;}
-#price{
+#newPrice{
     width: 100px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: gray;
-}
-
-.Add-To-Wishlist { grid-area: Add-To-Wishlist; position: relative;}
-#wishlist-div{
-    margin-top: 7px;
-    width: 100px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    background: #b3b4b3;
 }
 
 .Image { grid-area: Image; position: relative;}
