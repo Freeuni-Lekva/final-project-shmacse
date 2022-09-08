@@ -17,6 +17,7 @@ public class UserDao {
 
     private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM users " +
             "WHERE username = ?";
+    private static final String UPDATE_PHONE_NUMBER = "UPDATE users SET phone_number = ? WHERE id = ?";
 
 
     private Connection connection;
@@ -56,6 +57,15 @@ public class UserDao {
                 rs.getString("username"),
                 rs.getString("password")
             );
+
+    }
+
+    public void updatePhoneNumber(int userId, String newPhoneNumber) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(UPDATE_PHONE_NUMBER);
+        stm.setString(1, newPhoneNumber);
+        stm.setInt(2, userId);
+        stm.executeUpdate();
 
     }
 
