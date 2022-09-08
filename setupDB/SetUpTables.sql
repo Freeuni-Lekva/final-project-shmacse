@@ -10,7 +10,7 @@ create table users(
     phone_number varchar(32),
     is_admin boolean,
     username varchar(32),
-    password varchar(32)
+    password varchar(64)
 );
 
 drop table if exists items;
