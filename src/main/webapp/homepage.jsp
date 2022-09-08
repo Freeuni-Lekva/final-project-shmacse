@@ -14,8 +14,9 @@
             integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
             crossorigin="anonymous"></script>
 </head>
-<body style="background-color: #c3c580;">
-<h1> Homepage </h1>
+<body style="background: rgb(250,248,223);
+background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1) 100%);">
+<h1> Shmacse </h1>
 <form id="search-form" action="search-servlet" method="post">
     <label for="categories" id="categories-label"> Categories: </label>
     <select name="categories" id="categories" style="background-color: #dde2eb; border-radius: 10px; padding: 0px 5px; font-size: 15px;">
@@ -66,8 +67,8 @@
             for (Item item: items) {
     %>
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 my-3" style="text-align: center; margin: 0 auto;">
-            <div class="card" style="width: 19rem; text-align: center; margin: 0 auto;">
-                <div class="card-body" style="background: rgb(167, 190, 130)">
+            <div class="card" style="width: 19rem; text-align: center; margin: 0 auto; border-radius: 15px; border-color: HoneyDew; border-width: medium">
+                <div class="card-body" style="background: rgb(167, 190, 130); border-radius: 15px">
 
                     <%
                         String nameToDisplay = item.getName();
@@ -116,7 +117,7 @@
 
         <input
                 type="submit" value="Next Page" id="next-page" onclick="changePage('next')"
-            <% if(((boolean)request.getAttribute("isLastPage"))){ %>
+            <% if(((Boolean) request.getAttribute("isLastPage"))){ %>
                 style="opacity: 0.4; cursor: not-allowed; transition-duration: 1000s;" disabled
             <% } %>
         >

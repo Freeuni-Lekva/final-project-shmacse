@@ -40,7 +40,6 @@ public class LoginServlet extends HttpServlet {
             } else {
                 session.setAttribute("username", userName);
                 req.getRequestDispatcher("homepage").forward(req, resp);
-                // dispacheri
             }
         }catch (SQLException ignored){}
 

@@ -71,7 +71,7 @@ public class RegistrationServlet extends HttpServlet {
             User user = new User(firstName, lastName, contact, username, password);
 
             userDao.add(user);
-            req.getRequestDispatcher("registration.jsp").forward(req, resp);
+            req.getRequestDispatcher("homepage").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

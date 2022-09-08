@@ -61,13 +61,13 @@ body {
 .knobs:before {
   z-index: 2;
   content: "Increasing";
-  background-color: #03a9f4;
+  background-color: #add8e6;
 }
 
 .knobs:after {
   z-index: 1;
   content: "Decreasing";
-  background-color: #f44336;
+  background-color: #c08080;
 }
 
 #invert:checked + .knobs:before {
@@ -90,7 +90,7 @@ body {
 
 #log-out:hover{
   color: white;
-  background-color: #ff443a;
+  background-color: #c08080;
 }
 
 #to-my-items{
@@ -101,7 +101,7 @@ body {
 
 #to-my-items:hover{
   color: white;
-  background:#0099ff;
+  background:#add8e6;
 }
 
 #log-in{
@@ -111,7 +111,7 @@ body {
 }
 
 #log-in:hover{
-  background-color: #f3f436;
+  background-color: #fdfd96;
 }
 
 #register{
@@ -121,7 +121,7 @@ body {
 }
 
 #register:hover{
-  background-color: #4bf0ff;
+  background-color: #add8e6;
 }
 
 #next-page{
@@ -138,7 +138,7 @@ body {
 
 #next-page:hover{
   font-size: 17px;
-  background-color: dodgerblue;
+  background-color: #add8e6;
 }
 
 #previous-page{
@@ -155,7 +155,7 @@ body {
 
 #previous-page:hover{
   font-size: 17px;
-  background-color: dodgerblue;
+  background-color: #add8e6;
 }
 
 #top-right-corner{
@@ -170,7 +170,7 @@ body {
 }
 
 #search-button:hover{
-  background-color: #ff9c3d;
+  background-color: #fac898;
 }
 
 #visit-button{
@@ -186,6 +186,6 @@ body {
 
 #visit-button:hover{
   color: white;
-  background:#0099ff;
+  background:#add8e6;
 }
 
