@@ -44,15 +44,22 @@ background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1)
     <%
         if(request.getSession().getAttribute("username") != null){
     %>
-
+        <%
+            if((boolean) request.getSession().getAttribute("isAdmin")){
+        %>
+        <a href="${pageContext.request.contextPath}/admin-page" class="btn" role="button" id="admin-page" name="admin-page">
+            <span>Admin Page</span>
+        </a>
+        <%
+            }
+        %>
         <button type="submit" formaction="my-items" formmethod="get" id="to-my-items" name="to-my-items"> My Items </button>
         <button type="submit" formaction="log-out" formmethod="post" id="log-out" name="log-out"> Log Out </button>
-
     <%
         }else{
     %>
-    <input type="submit" formaction="login.jsp" value="Log In" id="log-in" name="log-in">
-    <input type="submit" formaction="registration.jsp" value="Register" id="register" name="register">
+        <input type="submit" formaction="login.jsp" value="Log In" id="log-in" name="log-in">
+        <input type="submit" formaction="registration.jsp" value="Register" id="register" name="register">
     <%
         }
     %>
