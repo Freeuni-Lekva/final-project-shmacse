@@ -94,10 +94,6 @@ public class RegistrationServlet extends HttpServlet {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        } finally {
-            DBConnection.closeConnection();
         }
-
-
     }
 }
