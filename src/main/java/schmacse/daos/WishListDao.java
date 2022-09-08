@@ -95,6 +95,7 @@ public class WishListDao {
         stm.executeUpdate();
 
     }
+    
     public void removeRowsOfUser(int userID) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(DELETE_ROW_WITH_USER);

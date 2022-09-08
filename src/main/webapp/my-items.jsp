@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<section id="my-notes" class="container bg-light py-4">
+<section id="my-notes" class="container py-4">
 
     <h1 class="text-center">My Items to Sell</h1>
     <br>
@@ -46,7 +46,7 @@
 
             <div class="col-lg-4 col-md-6 col-sm-10 my-3">
                 <div class="card" style="width: 18rem; text-align: center; margin: 0 auto;">
-                    <div class="card-body">
+                    <div class="card-body" style="background: rgb(167, 190, 130)">
 
                         <h3><%=item.getName()%></h3>
                         <p class="card-text"><%=item.getDescription()%></p>

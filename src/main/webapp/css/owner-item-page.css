@@ -9,19 +9,19 @@ body{
     grid-template-rows: 0.4fr 0.3fr 0.4fr 0.4fr 3.8fr 0.5fr;
     gap: 0px 0px;
     grid-template-areas:
-    "HomepageButton . Title Title . ."
+    "MyItemsButton . Title Title . ."
     ". . Category Category . ."
     ". . . . . ."
-    "Description-header Description-header . Price Add-To-Wishlist ."
+    "Description-header Description-header . Price Price ."
     "Description Description Image Image Image Image"
-    ". . . Owner Owner .";
+    ". Update-Page Update-Page Owner Owner .";
 }
 
-.HomepageButton { grid-area: HomepageButton; position: relative; }
-#homepage-button {
+.MyItemsButton { grid-area: MyItemsButton; position: relative; }
+#my-items-button {
     transform: translate(0%, 100%);
     border-radius: 4px;
-    background-color: #4bca69;
+    background-color: #0099ff;
     color: #FFFFFF;
     text-align: center;
     font-size: 12px;
@@ -30,13 +30,13 @@ body{
     transition: all 1s;
     cursor: pointer;
 }
-#homepage-button span {
+#my-items-button span {
     cursor: pointer;
     display: inline-block;
     position: relative;
     transition: 1s;
 }
-#homepage-button span:after {
+#my-items-button span:after {
     content: '\00ab''\00ab';
     position: absolute;
     opacity: 0;
@@ -44,10 +44,10 @@ body{
     left: -3px;
     transition: 1s;
 }
-#homepage-button:hover span {
+#my-items-button:hover span {
     padding-left: 20px;
 }
-#homepage-button:hover span:after {
+#my-items-button:hover span:after {
     opacity: 1;
 }
 
@@ -63,27 +63,16 @@ body{
     text-align:justify;
     text-justify:auto;
     margin:10px;
-    display: flex;
+    width: 94%;
+    height: 97%;
+    background: #b3b4b3;
 }
 
-.Price { grid-area: Price; position: relative;}
-#price{
+.Price { grid-area: Price; position: relative;
+    text-align: center;}
+#updated-price{
     width: 100px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: gray;
-}
-
-.Add-To-Wishlist { grid-area: Add-To-Wishlist; position: relative;}
-#wishlist-div{
-    margin-top: 7px;
-    width: 100px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    background: #b3b4b3;
 }
 
 .Image { grid-area: Image; position: relative;}
@@ -104,7 +93,41 @@ body{
     border-radius: 5px;
     color: #f7f8f7;
 }
+#owner-phone{
+    width: 130px;
+    background: #b3b4b3;
+}
 
-.Title { grid-area: Title; position: relative;}
+.Title { grid-area: Title; position: relative;
+    text-align: center;}
+#item-name{
+    font-size: 25px;
+    width: 200px;
+    margin-top: 20px;
+    background:  #b3b4b3;
+}
 
-.Category { grid-area: Category; position: relative;}
+.Category { grid-area: Category; position: relative;
+    margin-top: 10px; text-align: center;}
+#categories{
+    background: #b3b4b3;
+    font-size: 20px;
+}
+
+.Update-Page { grid-area: Update-Page; position: relative;
+    text-align: center;}
+#update-button{
+    transform: translate(0%, 60%);
+    border-radius: 5px;
+    border-width: 5px;
+    background-color: #b3b4b3;
+    transition: 1s;
+}
+#update-button:hover{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 1px;
+    background-color: skyblue;
+    color: white;
+    letter-spacing: 1px;
+}
