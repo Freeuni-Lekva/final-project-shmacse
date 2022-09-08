@@ -26,6 +26,8 @@
 		<label form="registration-form"> Please enter valid contact number </label>
 		<% }else if (request.getAttribute("status").equals("failed, empty field(s)")) {%>
 		<label form="registration-form"> All fields must be filled </label>
+		<% }else if (request.getAttribute("status").equals("failed, phone number is taken")) {%>
+		<label form="registration-form"> Contact number is already taken </label>
 		<% }}%>
 		<br><br>
 		<button type="submit" class="register">Sign up</button>

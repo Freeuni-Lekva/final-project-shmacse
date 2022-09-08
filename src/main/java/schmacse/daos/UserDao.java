@@ -1,6 +1,9 @@
 package schmacse.daos;
 
 import schmacse.model.User;
+import schmacse.utilities.Hasher;
+
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +21,8 @@ public class UserDao {
     private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM users " +
             "WHERE username = ?";
     private static final String UPDATE_PHONE_NUMBER = "UPDATE users SET phone_number = ? WHERE id = ?";
-
+    private static final String SELECT_USER_BY_PHONE_NUMBER = "SELECT * FROM users " +
+            "WHERE phone_number = ?";
 
     private Connection connection;
 
@@ -59,6 +63,26 @@ public class UserDao {
             );
 
     }
+    public User getUserByUsernameAndHashedPassword(String username, String password) throws SQLException, NoSuchAlgorithmException {
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME_AND_PASSWORD);
+
+        stm.setString(1,username);
+        stm.setString(2, Hasher.hashString(password));
+
+        ResultSet rs = stm.executeQuery();
+        if(!rs.next()) return null;
+
+        return new User(
+                rs.getInt(1),
+                rs.getString("first_name"),
+                rs.getString("last_name"),
+                rs.getString("phone_number"),
+                rs.getString("username"),
+                rs.getString("password")
+        );
+
+    }
 
     public void updatePhoneNumber(int userId, String newPhoneNumber) throws SQLException {
 
@@ -69,6 +93,24 @@ public class UserDao {
 
     }
 
+    public User getUserByPhoneNumber(String phoneNumber) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_PHONE_NUMBER);
+
+        stm.setString(1, phoneNumber);
+
+        ResultSet resultSet = stm.executeQuery();
+        if(!resultSet.next()) return null;
+
+        return new User(
+                resultSet.getInt(1),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("phone_number"),
+                resultSet.getString("username"),
+                resultSet.getString("password")
+        );
+    }
     public User getUserByUsername(String username) throws SQLException {
 
         PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME);

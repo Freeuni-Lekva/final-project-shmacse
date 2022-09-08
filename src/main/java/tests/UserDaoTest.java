@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import schmacse.daos.UserDao;
 import schmacse.databaseconnection.DBConnection;
 import schmacse.model.User;
+import schmacse.utilities.Hasher;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -48,6 +50,30 @@ public class UserDaoTest {
 
         reset_db(connection);
     }
+    @Test
+    void testGetUserByUsernameAndHashedPassword() throws SQLException, NoSuchAlgorithmException {
+        UserDao userDao = new UserDao(connection);
+
+        for(int i = 0; i < 5; i++){
+            User user = new User(101 + i,usersData[i][0],usersData[i][1],usersData[i][2],usersData[i][3], Hasher.hashString(usersData[i][4]));
+            userDao.add(user);
+        }
+
+        for(int i = 0; i < usersData.length; i++){
+            User user = userDao.getUserByUsernameAndHashedPassword(usersData[i][3], usersData[i][4]);
+            Assertions.assertNotNull(user);
+            Assertions.assertEquals(user.getFirstName(), usersData[i][0]);
+            Assertions.assertEquals(user.getLastName(), usersData[i][1]);
+            Assertions.assertEquals(user.getPhoneNumber(), usersData[i][2]);
+            Assertions.assertEquals(user.getUsername(), usersData[i][3]);
+            Assertions.assertEquals(user.getPassword(), Hasher.hashString(usersData[i][4]));
+        }
+
+        Assertions.assertNull(userDao.getUserByUsernameAndPassword("foo", "foo"));
+
+        reset_db(connection);
+    }
+
 
     @Test
     void testGetUserById() throws SQLException {
