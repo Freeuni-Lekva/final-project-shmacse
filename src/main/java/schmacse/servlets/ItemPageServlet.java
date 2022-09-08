@@ -2,7 +2,9 @@ package schmacse.servlets;
 
 import schmacse.daos.ItemDao;
 import schmacse.daos.UserDao;
+import schmacse.daos.UserReviewDao;
 import schmacse.model.Item;
+import schmacse.model.Review;
 import schmacse.model.User;
 
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(name = "item-page", value = "/item-page")
 public class ItemPageServlet extends HttpServlet {
@@ -27,6 +30,7 @@ public class ItemPageServlet extends HttpServlet {
         Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
         ItemDao itemDao = new ItemDao(connection);
         UserDao userDao = new UserDao(connection);
+        UserReviewDao reviewDao = new UserReviewDao(connection);
 
         int itemId = Integer.parseInt(req.getParameter("itemId"));
 
@@ -35,9 +39,12 @@ public class ItemPageServlet extends HttpServlet {
             Item item = itemDao.getItemByItemID(itemId);
             int userID = itemDao.getUserIDByItemID(itemId);
             User user = userDao.getUserById(userID);
+            List<Review> itemSellerReviews = reviewDao.getReviewsByUserId(userID);
+            //TODO: get review from input, call raviewDao.add(userID, input)
 
             req.setAttribute("item", item);
             req.setAttribute("user", user);
+            req.setAttribute("item-seller_reviews", itemSellerReviews);
 
             req.getRequestDispatcher("/item-page.jsp").forward(req, resp);
 

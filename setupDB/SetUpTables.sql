@@ -40,5 +40,13 @@ create table review(
                          constraint review_user_fk foreign key (user_id) references users (id)
 );
 
+drop table if exists rating;
+create table rating(
+                       user_id int,
+                       rating_id int,
+                       rating int,
+                       constraint rating_user_fk foreign key (user_id) references users (id)
+);
+
 
 SET FOREIGN_KEY_CHECKS=1; -- to re-enable them

@@ -11,8 +11,8 @@ body {
     line-height: 2;
     padding: 2em 2em;
     color: #555;
-    background: white;
-    background-color: #c3c580;
+    background: rgb(250,248,223);
+    background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1) 100%);
     -moz-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }

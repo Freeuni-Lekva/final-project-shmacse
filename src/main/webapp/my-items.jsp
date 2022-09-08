@@ -45,8 +45,8 @@
         %>
 
             <div class="col-lg-4 col-md-6 col-sm-10 my-3">
-                <div class="card" style="width: 18rem; text-align: center; margin: 0 auto;">
-                    <div class="card-body" style="background: rgb(167, 190, 130)">
+                <div class="card" style="width: 18rem; text-align: center; margin: 0 auto; border-radius: 15px; border-width: medium; border-color: HoneyDew">
+                    <div class="card-body" style="background: rgb(167, 190, 130); border-radius: 15px">
 
                         <h3><%=item.getName()%></h3>
                         <p class="card-text"><%=item.getDescription()%></p>
@@ -55,8 +55,8 @@
                         <div class="text-center my-3">
                             <form>
                                 <input type="hidden" name="itemId" value="<%=item.getId()%>">
-                                <button formaction="owner-item-page" formmethod="get" class="btn btn-primary">Visit</button>
-                                <button formaction="delete-item" formmethod="post" class="btn btn-danger">Delete</button>
+                                <button formaction="owner-item-page" formmethod="get" class="bton vist" style="background-color: #a7c7e7; border-radius: 10px">Visit</button>
+                                <button formaction="delete-item" formmethod="post" class="bton delete" style="background-color: #ff6961; border-radius: 10px">Delete</button>
                             </form>
                         </div>
 
