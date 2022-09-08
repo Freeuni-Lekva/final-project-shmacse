@@ -25,22 +25,35 @@ public class AddToWishlistServlet extends HttpServlet {
         Connection connection = (Connection) req.getServletContext().getAttribute("DBConnection");
 
         String username = (String) req.getSession().getAttribute("username");
+        int itemId = Integer.parseInt(req.getParameter("itemId"));
+        int ownerId = Integer.parseInt(req.getParameter("ownerId"));
 
         UserDao userDao = new UserDao(connection);
-        int itemId = Integer.parseInt(req.getParameter("itemId"));
 
-        User user = null;
+        User user = null; // user who adds to his wishlist
+        User owner = null; // user who is the owner of item
         try {
+            owner = userDao.getUserById(ownerId);
+
             user = userDao.getUserByUsername(username);
             int userID = user.getId();
 
             WishListDao wishListDao = new WishListDao(connection);
-            boolean added = wishListDao.add(userID, itemId);
-            if(!added){
-                // prepare for error page
-                req.setAttribute("error-message", "unable to add to wishlist");
+
+            boolean added = false;
+            boolean alreadyInWishlist = wishListDao.hasItemInWishlist(userID, itemId);
+            if(alreadyInWishlist) {
+                req.setAttribute("error-message", "item already in wishlist");
                 req.setAttribute("back-to", "item-page"); // where to go from error page
+            }else{
+                added = wishListDao.add(userID, itemId);
+                if (!added) {
+                    // prepare for error page
+                    req.setAttribute("error-message", "unable to add to wishlist");
+                    req.setAttribute("back-to", "item-page"); // where to go from error page
+                }
             }
+
 
             ItemDao itemDao = new ItemDao(connection);
             Item item = null;
@@ -51,6 +64,9 @@ public class AddToWishlistServlet extends HttpServlet {
             }
 
             req.setAttribute("itemId", itemId);
+            req.setAttribute("item", item);
+            req.setAttribute("user", owner);
+
             if(added){
                 req.getRequestDispatcher("item-page.jsp").forward(req,resp);
             }else{

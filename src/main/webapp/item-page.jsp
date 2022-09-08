@@ -36,14 +36,17 @@
         <div class="Add-To-Wishlist">
             <%
                 if(request.getSession().getAttribute("username") != null){
+                    if(!(((String)request.getSession().getAttribute("username")).equals(owner.getUsername()))){
             %>
             <div class="text-start py-2" id="wishlist-div">
                 <form action="add-to-wishlist" method="post" id="wishlist-form">
                     <input type="hidden" name="itemId" value="<%=item.getId()%>">
+                    <input type="hidden" name="ownerId" value="<%=item.getUserId()%>">
                     <button class="btn btn-success" id="wishlist-button">Add to WishList</button>
                 </form>
             </div>
             <%
+                    }
                 }
             %>
         </div>
