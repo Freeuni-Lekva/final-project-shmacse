@@ -35,7 +35,7 @@
         <label class="pe-5"id="label-second"> ₾ </label>
     </div>
     <div class="Image">
-        <img src="images/bags.png" id="image">
+        <img src="getImage.jsp?item_id=<%=item.getId()%>" id="image" style="width: 800px; height: 520px; white-space: nowrap;">
     </div>
 
     <div class="Owner">

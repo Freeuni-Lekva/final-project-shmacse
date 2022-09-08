@@ -51,7 +51,8 @@
                         <h3><%=item.getName()%></h3>
                         <p class="card-text"><%=item.getDescription()%></p>
 
-                        <img src="images/bags.png" style="width: 242px; height: 133px; white-space: nowrap;">
+<%--                        <img src="images/bags.png" style="width: 242px; height: 133px; white-space: nowrap;">--%>
+                        <img src="getImage.jsp?item_id=<%=item.getId()%>" style="width: 242px; height: 133px; white-space: nowrap; object-fit: contain;">
                         <div class="text-center my-3">
                             <form>
                                 <input type="hidden" name="itemId" value="<%=item.getId()%>">

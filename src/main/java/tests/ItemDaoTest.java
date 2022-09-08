@@ -51,8 +51,8 @@ public class ItemDaoTest {
 
         Statement stm = connection.createStatement();
         stm.executeUpdate(
-                "INSERT INTO items (user_id, name, price, description, category)" +
-                        "VALUES (1, 'item', 1, 'nice', 'TROUSERS')"
+                "INSERT INTO items (user_id, name, price, description, category, image_id)" +
+                        "VALUES (1, 'item', 1, 'nice', 'TROUSERS', 0)"
         );
 
 
@@ -60,8 +60,8 @@ public class ItemDaoTest {
     private void addDummyItem(Connection connection, int userID) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(
-                "INSERT INTO items (user_id, name, price, description, category)" +
-                "VALUES (?, 'item', 1, 'nice', 'TROUSERS')");
+                "INSERT INTO items (user_id, name, price, description, category, image_id)" +
+                "VALUES (?, 'item', 1, 'nice', 'TROUSERS', 0)");
         stm.setInt(1, userID);
         stm.executeUpdate();
 
@@ -76,7 +76,7 @@ public class ItemDaoTest {
         ItemDao itemDao = new ItemDao(connection);
         for(int i = 0; i < 60; i++){
             Item firstItem = new Item(i,1, Integer.toString(i), 1, Integer.toString(i),
-                    Category.TROUSERS);
+                    Category.TROUSERS, 0);
             itemDao.add(firstItem);
         }
         PreparedStatement stm = connection.prepareStatement(selectItems);
@@ -104,7 +104,7 @@ public class ItemDaoTest {
         Item[] items = new Item[item_names.length];
         for(int i = 0; i < items.length; i++){
             items[i] = new Item(1,1, item_names[i][0], i,
-                    item_names[i][1], Category.valueOf(item_names[i][2]));
+                    item_names[i][1], Category.valueOf(item_names[i][2]), 0);
         }
 
         // add items
@@ -141,7 +141,7 @@ public class ItemDaoTest {
         addDummyItem(connection);
         itemDao.remove(1); // because its first item
 
-        Item secondItem = new Item(2, 1, "second", 2, "good", Category.TROUSERS);
+        Item secondItem = new Item(2, 1, "second", 2, "good", Category.TROUSERS, 0);
         itemDao.remove(secondItem); // check both ways to remove
 
         PreparedStatement stm = connection.prepareStatement(selectItems);
@@ -260,15 +260,15 @@ public class ItemDaoTest {
         addDummyUser(connection);
 
         itemDao.add(new Item(1, 1, item_names[0][0], 1, item_names[0][1],
-                Category.valueOf(item_names[0][2])));
+                Category.valueOf(item_names[0][2]), 0));
         itemDao.add(new Item(2, 1, item_names[1][0], 2, item_names[1][1],
-                Category.valueOf(item_names[1][2])));
+                Category.valueOf(item_names[1][2]), 0));
         itemDao.add(new Item(3, 1, item_names[2][0], 3, item_names[2][1],
-                Category.valueOf(item_names[2][2])));
+                Category.valueOf(item_names[2][2]), 0));
         itemDao.add(new Item(4, 1, item_names[3][0], 4, item_names[3][1],
-                Category.valueOf(item_names[3][2])));
+                Category.valueOf(item_names[3][2]), 0));
         itemDao.add(new Item(5, 1, item_names[4][0], 5, item_names[4][1],
-                Category.valueOf(item_names[4][2])));
+                Category.valueOf(item_names[4][2]), 0));
 
         PreparedStatement stm = connection.prepareStatement(selectItems);
         ResultSet resultSet = stm.executeQuery();
@@ -301,15 +301,15 @@ public class ItemDaoTest {
         }
 
         itemDao.add(new Item(0, 2, item_names[0][0], 4, item_names[0][1],
-                Category.valueOf(item_names[0][2])));
+                Category.valueOf(item_names[0][2]), 0));
         itemDao.add(new Item(0, 4, item_names[1][0], 3, item_names[1][1],
-                Category.valueOf(item_names[1][2])));
+                Category.valueOf(item_names[1][2]), 0));
         itemDao.add(new Item(0, 3, item_names[2][0], 6, item_names[2][1],
-                Category.valueOf(item_names[2][2])));
+                Category.valueOf(item_names[2][2]), 0));
         itemDao.add(new Item(0, 1, item_names[3][0], 12, item_names[3][1],
-                Category.valueOf(item_names[3][2])));
+                Category.valueOf(item_names[3][2]), 0));
         itemDao.add(new Item(0, 5, item_names[4][0], 5, item_names[4][1],
-                Category.valueOf(item_names[4][2])));
+                Category.valueOf(item_names[4][2]), 0));
 
         Assertions.assertEquals(itemDao.getUserIDByItemID(1), 2);
         Assertions.assertEquals(itemDao.getUserIDByItemID(2), 4);
@@ -435,16 +435,16 @@ public class ItemDaoTest {
         statement.executeUpdate("INSERT INTO users (id, first_name, last_name, phone_number, username, password) " +
                 "VALUES (2, 'name2', 'lastname2', '456', 'username2', 'password2')");
 
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
-                "VALUES (1, 2, '%s', 4, '%s', '%s')", item_names[0][0], item_names[0][1], item_names[0][2]));
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
-                "VALUES (2, 2, '%s', 6, '%s', '%s')", item_names[1][0], item_names[1][1], item_names[1][2]));
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
-                "VALUES (3, 1, '%s', 5, '%s', '%s')", item_names[2][0], item_names[2][1], item_names[2][2]));
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
-                "VALUES (4, 2, '%s', 14, '%s', '%s')", item_names[3][0], item_names[3][1], item_names[3][2]));
-        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category) " +
-                "VALUES (5, 1, '%s', 24, '%s', '%s')", item_names[4][0], item_names[4][1], item_names[4][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category, image_id) " +
+                "VALUES (1, 2, '%s', 4, '%s', '%s', 0)", item_names[0][0], item_names[0][1], item_names[0][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category, image_id) " +
+                "VALUES (2, 2, '%s', 6, '%s', '%s', 0)", item_names[1][0], item_names[1][1], item_names[1][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category, image_id) " +
+                "VALUES (3, 1, '%s', 5, '%s', '%s', 0)", item_names[2][0], item_names[2][1], item_names[2][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category, image_id) " +
+                "VALUES (4, 2, '%s', 14, '%s', '%s', 0)", item_names[3][0], item_names[3][1], item_names[3][2]));
+        statement.executeUpdate(String.format("INSERT INTO items (id, user_id, name, price, description, category, image_id) " +
+                "VALUES (5, 1, '%s', 24, '%s', '%s', 0)", item_names[4][0], item_names[4][1], item_names[4][2]));
 
         statement.executeUpdate("INSERT INTO wishlist (user_id, item_id) " +
                 "VALUES (1, 1)");

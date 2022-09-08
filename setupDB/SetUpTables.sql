@@ -13,6 +13,24 @@ create table users(
     password varchar(32)
 );
 
+# # for mysql
+# drop table if exists item_images;
+# create table item_images(
+#     id int auto_increment primary key,
+#     item_id int,
+#     image VARBINARY(max)
+# constraint item_image_fk foreign key (item_id) references items (id)
+# );
+
+# for mariadb
+drop table if exists item_images;
+create table item_images(
+    id int auto_increment primary key,
+    item_id int,
+    image longblob,
+    constraint item_image_fk foreign key (item_id) references items (id)
+);
+
 drop table if exists items;
 create table items(
     id int auto_increment primary key,
@@ -21,6 +39,7 @@ create table items(
     price int,
     description text,
     category varchar(32),
+    image_id int,
     constraint user_item_fk foreign key (user_id) references users (id)
 );
 
