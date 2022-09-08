@@ -90,9 +90,7 @@ public class RegistrationServlet extends HttpServlet {
 
             req.getSession().setAttribute("username", username);
             req.getRequestDispatcher("homepage").forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }

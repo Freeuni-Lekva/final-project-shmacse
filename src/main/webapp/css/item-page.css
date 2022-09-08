@@ -1,6 +1,6 @@
 body{
-    background: rgb(112,210,179);
-    background: linear-gradient(209deg, rgba(112,210,179,1) 0%, rgba(170,226,119,1) 8%, rgba(112,210,179,1) 27%);
+    background: rgb(250,248,223);
+    background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1) 100%);
 }
 
 .container {
@@ -21,7 +21,7 @@ body{
 #homepage-button {
     transform: translate(0%, 100%);
     border-radius: 4px;
-    background-color: #4bca69;
+    background-color: #748500;
     color: #FFFFFF;
     text-align: center;
     font-size: 12px;
@@ -57,8 +57,15 @@ body{
     text-align: center;
 }
 
-.Description { grid-area: Description; position: relative;
-    border: 1px dashed #b3b4b3; background:rgba(179,180,179,0.15); margin-right: 10px;}
+.Description {
+    grid-area: Description;
+    position: relative;
+    border: 1px dashed #b3b4b3;
+    background:rgba(179,180,179,0.15);
+    margin-right: 10px;
+    border-radius: 25px;
+}
+
 #description{
     text-align:justify;
     text-justify:auto;
@@ -99,7 +106,7 @@ body{
     padding-left: 5px;
     font-size: 17px;
     width: 260px;
-    background-color: #6dd39e;
+    background-color: #394000;
     border-width: 20px;
     border-radius: 5px;
     color: #f7f8f7;
