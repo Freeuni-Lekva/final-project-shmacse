@@ -44,6 +44,9 @@ public class HomepageServlet extends HttpServlet {
         }else{
             currentPageNumber = Integer.parseInt(req.getParameter("pageNumber"));
         }
+//        if(allItems == null){
+//            allItems = new ArrayList<>();
+//        }
 
         int endIndex = currentPageNumber * MAX_ITEMS_PER_PAGE;
         if(allItems.size() - (currentPageNumber * MAX_ITEMS_PER_PAGE) <= 0){

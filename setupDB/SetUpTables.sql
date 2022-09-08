@@ -32,4 +32,13 @@ create table wishlist(
     constraint wishlist_item_fk foreign key (item_id) references items (id)
 );
 
+drop table if exists review;
+create table review(
+                         user_id int,
+                         review_id int,
+                         review_str varchar(64),
+                         constraint review_user_fk foreign key (user_id) references users (id)
+);
+
+
 SET FOREIGN_KEY_CHECKS=1; -- to re-enable them
