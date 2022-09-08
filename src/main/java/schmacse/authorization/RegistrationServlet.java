@@ -3,6 +3,7 @@ package schmacse.authorization;
 import schmacse.daos.UserDao;
 import schmacse.databaseconnection.DBConnection;
 import schmacse.model.User;
+import schmacse.utilities.Hasher;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -68,13 +70,19 @@ public class RegistrationServlet extends HttpServlet {
         try {
             Connection con = (Connection) req.getServletContext().getAttribute("DBConnection");
             UserDao userDao = new UserDao(con);
-            User user = new User(firstName, lastName, contact, username, password);
 
+            String hashedPassword = Hasher.hashString(password);
+
+            User user = new User(firstName, lastName, contact, username, hashedPassword);
             userDao.add(user);
+
+            req.getSession().setAttribute("username", username);
             req.getRequestDispatcher("homepage").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } finally {
             DBConnection.closeConnection();
         }
 
