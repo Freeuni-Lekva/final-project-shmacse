@@ -8,7 +8,17 @@ public class User {
     private String phoneNumber;
     private String username;
     private String password;
+    private boolean isAdmin;
 
+    public User(int id, String firstName, String lastName, String phoneNumber, String username, String password, boolean isAdmin){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
     public User(int id, String firstName, String lastName, String phoneNumber, String username, String password) {
         this.id = id;
         this.firstName = firstName;
@@ -17,7 +27,6 @@ public class User {
         this.username = username;
         this.password = password;
     }
-
     public User(String firstName, String lastName, String phoneNumber, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
