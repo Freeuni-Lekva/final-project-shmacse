@@ -59,6 +59,18 @@ public class RegistrationServlet extends HttpServlet {
         try{
             Connection con = (Connection) req.getServletContext().getAttribute("DBConnection");
             UserDao userDao = new UserDao(con);
+            if(userDao.getUserByPhoneNumber(contact) != null){
+                req.setAttribute("status", "failed, phone number is taken");
+                req.getRequestDispatcher("registration.jsp").forward(req, resp);
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            Connection con = (Connection) req.getServletContext().getAttribute("DBConnection");
+            UserDao userDao = new UserDao(con);
             if (userDao.getUserByUsername(username) != null){
                 req.setAttribute("status", "failed, username is already taken");
                 req.getRequestDispatcher("registration.jsp").forward(req, resp);

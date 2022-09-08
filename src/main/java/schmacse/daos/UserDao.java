@@ -21,7 +21,8 @@ public class UserDao {
     private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM users " +
             "WHERE username = ?";
     private static final String UPDATE_PHONE_NUMBER = "UPDATE users SET phone_number = ? WHERE id = ?";
-
+    private static final String SELECT_USER_BY_PHONE_NUMBER = "SELECT * FROM users " +
+            "WHERE phone_number = ?";
 
     private Connection connection;
 
@@ -92,6 +93,24 @@ public class UserDao {
 
     }
 
+    public User getUserByPhoneNumber(String phoneNumber) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_PHONE_NUMBER);
+
+        stm.setString(1, phoneNumber);
+
+        ResultSet resultSet = stm.executeQuery();
+        if(!resultSet.next()) return null;
+
+        return new User(
+                resultSet.getInt(1),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("phone_number"),
+                resultSet.getString("username"),
+                resultSet.getString("password")
+        );
+    }
     public User getUserByUsername(String username) throws SQLException {
 
         PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME);
