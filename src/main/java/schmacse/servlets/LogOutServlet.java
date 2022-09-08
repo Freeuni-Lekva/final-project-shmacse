@@ -14,6 +14,7 @@ public class LogOutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.getSession().removeAttribute("username");
+        req.getSession().removeAttribute("isAdmin");
         req.getRequestDispatcher("/homepage").forward(req,resp);
 
     }

@@ -3,6 +3,7 @@ package schmacse.authorization;
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import schmacse.daos.UserDao;
 import schmacse.databaseconnection.DBConnection;
+import schmacse.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,6 +41,7 @@ public class LoginServlet extends HttpServlet {
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
             } else {
                 session.setAttribute("username", userName);
+                session.setAttribute("isAdmin", userDao.getIsAdminByUsername(userName));
                 req.getRequestDispatcher("homepage").forward(req, resp);
             }
         }catch (SQLException ignored){}
