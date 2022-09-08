@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ItemDao {
@@ -233,6 +234,10 @@ public class ItemDao {
 
             Item newItem = new Item(id, userId, itemName, price, description, category);
             filteredList.add(newItem);
+        }
+
+        if (filteredList.size() == 0){
+            return Collections.emptyList();
         }
 
         return filteredList;

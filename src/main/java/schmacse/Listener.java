@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 @WebListener
@@ -38,7 +39,6 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         try {
             List<Item> itemsList = itemDao.getFilteredItems("", null);
             itemsList.sort(Item::comparePrice);
-            System.out.println(itemsList.get(0).getName());
             se.getSession().setAttribute("itemsList", itemsList);
         } catch (SQLException e) {
             e.printStackTrace();

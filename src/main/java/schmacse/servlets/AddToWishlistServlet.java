@@ -43,11 +43,15 @@ public class AddToWishlistServlet extends HttpServlet {
             boolean added = false;
             boolean alreadyInWishlist = wishListDao.hasItemInWishlist(userID, itemId);
             if(alreadyInWishlist) {
+
+                // prepare for error page
                 req.setAttribute("error-message", "item already in wishlist");
                 req.setAttribute("back-to", "item-page"); // where to go from error page
             }else{
                 added = wishListDao.add(userID, itemId);
-                if (!added) {
+
+                if(!added){
+                
                     // prepare for error page
                     req.setAttribute("error-message", "unable to add to wishlist");
                     req.setAttribute("back-to", "item-page"); // where to go from error page
@@ -63,8 +67,9 @@ public class AddToWishlistServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            req.setAttribute("itemId", itemId);
+
             req.setAttribute("item", item);
+            req.setAttribute("itemId", itemId);
             req.setAttribute("user", owner);
 
             if(added){

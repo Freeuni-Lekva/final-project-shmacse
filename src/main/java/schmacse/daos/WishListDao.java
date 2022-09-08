@@ -5,6 +5,7 @@ import schmacse.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class WishListDao {
@@ -21,7 +22,7 @@ public class WishListDao {
         this.connection = connection;
     }
 
-    // returs true if added succesfully
+    // returns true if added succesfully
     public boolean add(User user, Item item) throws SQLException {
 
         int userID = user.getId();
@@ -94,6 +95,7 @@ public class WishListDao {
         stm.executeUpdate();
 
     }
+    
     public void removeRowsOfUser(int userID) throws SQLException{
 
         PreparedStatement stm = connection.prepareStatement(DELETE_ROW_WITH_USER);
@@ -101,7 +103,6 @@ public class WishListDao {
         stm.executeUpdate();
 
     }
-
 
     public boolean hasItemInWishlist(int userId, int itemId) throws SQLException{
         PreparedStatement stm = connection.prepareStatement(FIND_IN_WISHLIST);
