@@ -1,6 +1,9 @@
 package schmacse.daos;
 
 import schmacse.model.User;
+import schmacse.utilities.Hasher;
+
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,6 +60,26 @@ public class UserDao {
                 rs.getString("username"),
                 rs.getString("password")
             );
+
+    }
+    public User getUserByUsernameAndHashedPassword(String username, String password) throws SQLException, NoSuchAlgorithmException {
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME_AND_PASSWORD);
+
+        stm.setString(1,username);
+        stm.setString(2, Hasher.hashString(password));
+
+        ResultSet rs = stm.executeQuery();
+        if(!rs.next()) return null;
+
+        return new User(
+                rs.getInt(1),
+                rs.getString("first_name"),
+                rs.getString("last_name"),
+                rs.getString("phone_number"),
+                rs.getString("username"),
+                rs.getString("password")
+        );
 
     }
 
