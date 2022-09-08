@@ -43,6 +43,27 @@ public class UserDao {
         stm.executeUpdate();
     }
 
+    public boolean getIsAdminByUsername(String username) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME);
+
+        stm.setString(1, username);
+        ResultSet rs = stm.executeQuery();
+
+        if(!rs.next()) return false;
+        return rs.getBoolean("is_admin");
+    }
+    public boolean getIsAdminByUserId(int userId) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_ID);
+
+        stm.setInt(1, userId);
+        ResultSet rs = stm.executeQuery();
+
+        if(!rs.next()) return false;
+        return rs.getBoolean("is_admin");
+    }
+
     public User getUserByUsernameAndPassword(String username, String password) throws SQLException {
 
         PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME_AND_PASSWORD);
