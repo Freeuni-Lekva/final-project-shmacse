@@ -85,7 +85,7 @@ public class ItemDao {
             PreparedStatement stm2 = connection.prepareStatement("UPDATE items SET image_id = ? WHERE id = ?");
             stm2.setInt(1, image_id);
             stm2.setInt(2, itemId);
-            stm2.executeUpdate();
+            stm2.execute();
             stm2.close();
         }
     }
