@@ -1,6 +1,12 @@
 package schmacse.model;
 
 
+import schmacse.daos.ImageDao;
+
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class Item {
 
     private int id;
@@ -9,6 +15,7 @@ public class Item {
     private String name;
     private String description;
     private Category category;
+    private int imageId;
 
     public Item(int id, int userId, String name, int price, String description, Category category) {
         this.id = id;
@@ -17,6 +24,18 @@ public class Item {
         this.price = price;
         this.description = description;
         this.category = category;
+        this.imageId = 0;
+    }
+
+
+    public Item(int id, int userId, String name, int price, String description, Category category, int imageId) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+        this.imageId = imageId;
     }
 
     public static int comparePrice(Item a, Item b) {
@@ -59,6 +78,24 @@ public class Item {
         return category;
     }
 
+    public int getImageId() {
+        return imageId;
+    }
+
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public byte[] getImage(Connection connection) {
+        ImageDao imageDao = new ImageDao(connection);
+        try {
+            return imageDao.getImage(imageId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -74,4 +111,5 @@ public class Item {
                 ", category=" + category +
                 '}';
     }
+
 }

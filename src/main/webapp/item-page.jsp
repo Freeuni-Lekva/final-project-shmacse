@@ -2,6 +2,8 @@
 <%@ page import="schmacse.model.Item" %>
 <%@ page import="schmacse.model.User" %>
 <%@ page import="schmacse.model.Category" %>
+<%@ page import="java.io.OutputStream" %>
+<%@ page import="java.sql.Connection" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -51,7 +53,7 @@
             %>
         </div>
         <div class="Image">
-            <img src="images/bags.png" id="image">
+           <img src="getImage.jsp?item_id=<%=item.getId()%>" id="image" style="width: 800px; height: 520px; white-space: nowrap;">
         </div>
         <div class="Owner">
             <span id="owner-info">

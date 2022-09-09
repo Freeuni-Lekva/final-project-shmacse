@@ -28,7 +28,6 @@ public class HomepageServlet extends HttpServlet {
 
         List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));
         req.setAttribute("categoryList", categories);
-
         List<Item> allItems;
         if(req.getAttribute("itemsList") != null){
             allItems = (List<Item>) req.getAttribute("itemsList");

@@ -2,8 +2,8 @@ package schmacse.daos;
 
 import schmacse.model.Category;
 import schmacse.model.Item;
-import schmacse.model.User;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +27,7 @@ public class ItemDao {
     private static final String UPDATE_CATEGORY = "UPDATE items SET category = ? WHERE id = ?";
 
     private static final String SELECT_ITEMS_FOR_USER_IN_WISHLIST = "SELECT DISTINCT " +
-            "items.id, items.user_id, items.name, items.price, items.description, items.category FROM items " +
+            "items.id, items.user_id, items.name, items.price, items.description, items.category, items.image_id FROM items " +
             "JOIN wishlist ON items.id = wishlist.item_id AND wishlist.user_id = ?";
     private static final String SELECT_FILTERED_ITEMS = "SELECT * FROM items " +
             "WHERE name LIKE CONCAT('%', ?, '%') AND category LIKE CONCAT('%', ?, '%')";
@@ -53,9 +53,48 @@ public class ItemDao {
         stm.executeUpdate();
     }
 
-    public void remove(Item item) throws SQLException{
 
+    public void add(Item item, byte[] image) throws SQLException {
+        connection.createStatement().execute("SET FOREIGN_KEY_CHECKS=0");
+
+        PreparedStatement stm =  connection.prepareStatement(
+                "INSERT INTO items (user_id, name, price, description, category, image_id) " +
+                        "VALUES (?, ?, ?, ?, ?, ?)"
+        );
+
+        stm.setInt(1, item.getUserId());
+        stm.setString(2, item.getName());
+        stm.setInt(3, item.getPrice());
+        stm.setString(4, item.getDescription());
+        stm.setObject(5, item.getCategory().name());
+        stm.setInt(6, 0);
+        stm.executeUpdate();
+        stm.close();
+
+
+        connection.createStatement().execute("SET FOREIGN_KEY_CHECKS=1");
+
+        ResultSet rs = connection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
+        rs.next();
+        int itemId = rs.getInt(1);
+
+        if (image != null) {
+            ImageDao imageDao = new ImageDao(connection);
+            int image_id = imageDao.addImage(itemId, image);
+
+            PreparedStatement stm2 = connection.prepareStatement("UPDATE items SET image_id = ? WHERE id = ?");
+            stm2.setInt(1, image_id);
+            stm2.setInt(2, itemId);
+            stm2.execute();
+            stm2.close();
+        }
+    }
+
+    public void remove(Item item) throws SQLException{
         int itemId = item.getId();
+
+        ImageDao imageDao = new ImageDao(connection);
+        imageDao.removeWithItemId(itemId);
 
         PreparedStatement stm = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
@@ -63,9 +102,12 @@ public class ItemDao {
 
         stm.setInt(1,itemId);
         stm.executeUpdate();
-
     }
+
     public void remove(int itemId) throws SQLException{
+
+        ImageDao imageDao = new ImageDao(connection);
+        imageDao.removeWithItemId(itemId);
 
         PreparedStatement stm = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
@@ -77,6 +119,11 @@ public class ItemDao {
     }
 
     public void removeByUserID(int userID) throws SQLException{
+
+        for (Item item : getItemsByUserId(userID)) {
+            ImageDao imageDao = new ImageDao(connection);
+            imageDao.removeWithItemId(item.getId());
+        }
 
         PreparedStatement stm = connection.prepareStatement(DELETE_ITEMS_WITH_USER_ID);
         stm.setInt(1, userID);
@@ -125,8 +172,8 @@ public class ItemDao {
 
         resultSet.next();
         return resultSet.getInt(2);
-
     }
+
     public int getUserIDByItem(Item item) throws SQLException{
 
         int itemId = item.getId();
@@ -137,7 +184,6 @@ public class ItemDao {
 
         resultSet.next();
         return resultSet.getInt(2);
-
     }
 
     public Item getItemByItemID(int itemId) throws SQLException{
@@ -147,10 +193,7 @@ public class ItemDao {
         ResultSet resultSet = stm.executeQuery();
 
         resultSet.next();
-        return new Item(resultSet.getInt(1), resultSet.getInt(2),
-                resultSet.getString(3), resultSet.getInt(4),
-                resultSet.getString(5),Category.valueOf(resultSet.getString(6)));
-
+        return getItemFromRow(resultSet);
     }
 
     public List<Item> getItemsByUsername(String username) throws SQLException {
@@ -164,20 +207,16 @@ public class ItemDao {
         ResultSet resultSet = stm.executeQuery();
 
         while (resultSet.next()) {
-
-            int id = resultSet.getInt("id");
-            int userId = resultSet.getInt("user_id");
-            String name = resultSet.getString("name");
-            int price = resultSet.getInt("price");
-            String description = resultSet.getString("description");
-            Category category = Category.valueOf(resultSet.getString("category"));
-
-            Item newItem = new Item(id, userId, name, price, description, category);
-
-            itemList.add(newItem);
+            itemList.add(getItemFromRow(resultSet));
         }
 
         return itemList;
+    }
+
+
+    public List<Item> getItemsByUserId(int userId) throws SQLException {
+        UserDao userDao = new UserDao(connection);
+        return getItemsByUsername(userDao.getUserById(userId).getUsername());
     }
 
     public List<Item> getItemsForUserInWishlist(int id) throws SQLException {
@@ -190,17 +229,7 @@ public class ItemDao {
         ResultSet resultSet = stm.executeQuery();
 
         while (resultSet.next()) {
-
-            int itemId = resultSet.getInt("id");
-            int userId = resultSet.getInt("user_id");
-            String name = resultSet.getString("name");
-            int price = resultSet.getInt("price");
-            String description = resultSet.getString("description");
-            Category category = Category.valueOf(resultSet.getString("category"));
-
-            Item newItem = new Item(itemId, userId, name, price, description, category);
-
-            itemsInWishlist.add(newItem);
+            itemsInWishlist.add(getItemFromRow(resultSet));
         }
 
         return itemsInWishlist;
@@ -225,15 +254,7 @@ public class ItemDao {
 
         ResultSet resultSet = stm.executeQuery();
         while(resultSet.next()){
-            int id = resultSet.getInt("id");
-            int userId = resultSet.getInt("user_id");
-            int price = resultSet.getInt("price");
-            itemName = resultSet.getString("name");
-            String description = resultSet.getString("description");
-            category = Category.valueOf(resultSet.getString("category"));
-
-            Item newItem = new Item(id, userId, itemName, price, description, category);
-            filteredList.add(newItem);
+            filteredList.add(getItemFromRow(resultSet));
         }
 
         if (filteredList.size() == 0){
@@ -243,4 +264,15 @@ public class ItemDao {
         return filteredList;
     }
 
+    private Item getItemFromRow(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        int userId = resultSet.getInt("user_id");
+        String name = resultSet.getString("name");
+        int price = resultSet.getInt("price");
+        String description = resultSet.getString("description");
+        Category category = Category.valueOf(resultSet.getString("category"));
+        int imageId = resultSet.getInt("image_id");
+
+        return new Item(id, userId, name, price, description, category, imageId);
+    }
 }
