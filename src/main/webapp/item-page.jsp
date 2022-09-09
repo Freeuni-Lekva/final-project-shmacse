@@ -2,6 +2,8 @@
 <%@ page import="schmacse.model.Item" %>
 <%@ page import="schmacse.model.User" %>
 <%@ page import="schmacse.model.Category" %>
+<%@ page import="java.io.OutputStream" %>
+<%@ page import="java.sql.Connection" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -51,7 +53,7 @@
             %>
         </div>
         <div class="Image">
-            <img src="images/bags.png" id="image">
+           <img src="getImage.jsp?item_id=<%=item.getId()%>" id="image" style="width: 800px; height: 520px; white-space: nowrap;">
         </div>
         <div class="Owner">
             <span id="owner-info">
@@ -64,6 +66,12 @@
         </div>
         <div class="Category">
             <h2 class="fs-4 text-center text-muted"><%=item.getCategory().toString()%></h2>
+        </div>
+        <div class="Reviews">
+            <c:forEach items="${reviews}" var="review">
+                <input type="checkbox" id="${review}" name="genre" value="${review}">
+                <label for="${review}"> ${review} </label><br>
+            </c:forEach>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
