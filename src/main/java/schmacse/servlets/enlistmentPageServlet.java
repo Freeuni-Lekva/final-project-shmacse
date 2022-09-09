@@ -77,16 +77,13 @@ public class enlistmentPageServlet extends HttpServlet {
                 }
                 imageByteArray = output.toByteArray();
 
-                BufferedImage img = null;
-                img = ImageIO.read(stream);
-
             } catch (IOException | ServletException e) {
                 throw new RuntimeException(e);
             }
 
             try {
                 itemDao.add(new Item(0, userId, req.getParameter("item-name"), Integer.parseInt(req.getParameter("item-price")),
-                        req.getParameter("description"), Category.valueOf(req.getParameter("categories")), 0));
+                        req.getParameter("description"), Category.valueOf(req.getParameter("categories"))), imageByteArray);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
