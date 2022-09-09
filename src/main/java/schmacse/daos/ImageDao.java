@@ -26,14 +26,14 @@ public class ImageDao {
     }
 
     public void removeWithItemId(int itemId) throws SQLException {
-        connection.createStatement().executeQuery("SET FOREIGN_KEY_CHECKS=0");
+        connection.createStatement().execute("SET FOREIGN_KEY_CHECKS=0");
 
         PreparedStatement stm = connection.prepareStatement("DELETE FROM item_images WHERE item_id = ?");
         stm.setInt(1, itemId);
         stm.executeQuery();
         stm.close();
 
-        connection.createStatement().executeQuery("SET FOREIGN_KEY_CHECKS=0");
+        connection.createStatement().execute("SET FOREIGN_KEY_CHECKS=1");
     }
 
     public byte[] getImage(int itemId) throws SQLException {

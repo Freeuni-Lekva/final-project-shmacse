@@ -55,7 +55,7 @@ public class ItemDao {
 
 
     public void add(Item item, byte[] image) throws SQLException {
-        connection.createStatement().executeQuery("SET FOREIGN_KEY_CHECKS=0");
+        connection.createStatement().execute("SET FOREIGN_KEY_CHECKS=0");
 
         PreparedStatement stm =  connection.prepareStatement(
                 "INSERT INTO items (user_id, name, price, description, category, image_id) " +
@@ -72,7 +72,7 @@ public class ItemDao {
         stm.close();
 
 
-        connection.createStatement().executeQuery("SET FOREIGN_KEY_CHECKS=1");
+        connection.createStatement().execute("SET FOREIGN_KEY_CHECKS=1");
 
         ResultSet rs = connection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");
         rs.next();
