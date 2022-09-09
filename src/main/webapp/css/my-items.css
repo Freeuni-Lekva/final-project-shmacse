@@ -49,10 +49,6 @@ body {
 #homepage-button:hover span:after {
     opacity: 1;
 }
-#span-homepage{
-    float: left;
-    margin-left: 10px;
-}
 
 #enlist-button {
     display: inline-block;

@@ -1,0 +1,203 @@
+.container {
+    display: grid;
+    grid-template-columns: 0.9fr 0.2fr 0.6fr 1fr 0.2fr 2.4fr 1.7fr 1fr 1fr;
+    grid-template-rows: 0.5fr 1.4fr 0.2fr 0.1fr 3.4fr 2.1fr 1.2fr 2.9fr 0.1fr 1fr;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    '. . . . . . . . .'
+    'To-Homepage To-Homepage . . . . Shut-Down-Website Shut-Down-Website .'
+    '. User-Search User-Search User-Search User-Search User-Search . . .'
+    '. User-Search User-Search User-Search User-Search User-Search . . .'
+    '. User-Search User-Search User-Search User-Search User-Search . . .'
+    'Gap Gap Gap Gap Gap Gap Item-Image Item-Image .'
+    '. Item-Search Item-Search Item-Search Item-Search Item-Search Item-Image Item-Image .'
+    '. Item-Search Item-Search Item-Search Item-Search Item-Search Item-Image Item-Image .'
+    '. . . . . . Remove-Image Remove-Image .'
+    '. . . . . . . . .';
+}
+
+.To-Homepage {
+    grid-area: To-Homepage;
+}
+#homepage-button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #4bca69;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 10px;
+    width: 220px;
+    transition: all 1s;
+    cursor: pointer;
+}
+#homepage-button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 1s;
+}
+#homepage-button span:after {
+    content: '\00ab''\00ab';
+    position: absolute;
+    opacity: 0;
+    top: -1px;
+    left: -3px;
+    transition: 1s;
+}
+#homepage-button:hover span {
+    padding-left: 30px;
+}
+#homepage-button:hover span:after {
+    opacity: 1;
+}
+
+.User-Search {
+    display: grid;
+    grid-template-columns: 0.8fr 1.8fr 1.6fr 0.7fr 0.9fr;
+    grid-template-rows: 0.7fr 0.2fr [\30 \.5fr]0.5fr 0.5fr;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    'User-Search-Area User-Search-Area Ban-Username Delete-User Delete-User'
+    'User-Id-Title Full-Name-Title Phone-Number-Title isAdmin-Title .'
+    'User-Id Full-Name Phone-Number isAdmin Make-Admin'
+    '. Visit-Items Ban-Phone-Number . .';
+    grid-area: User-Search;
+}
+
+.User-Search-Area {
+    grid-area: User-Search-Area;
+}
+
+.User-Id {
+    grid-area: User-Id;
+}
+.User-Id-Title {
+    grid-area: User-Id-Title;
+}
+
+.Full-Name {
+    grid-area: Full-Name;
+}
+.Full-Name-Title {
+    grid-area: Full-Name-Title;
+}
+
+.Phone-Number {
+    grid-area: Phone-Number;
+}
+.Phone-Number-Title {
+    grid-area: Phone-Number-Title;
+}
+
+.isAdmin {
+    grid-area: isAdmin;
+}
+.isAdmin-Title{
+    grid-area: isAdming-Title;
+}
+
+.Ban-Phone-Number {
+    grid-area: Ban-Phone-Number;
+}
+
+.Ban-Username {
+    grid-area: Ban-Username;
+}
+
+.Delete-User {
+    grid-area: Delete-User;
+}
+
+.Visit-Items {
+    grid-area: Visit-Items;
+}
+
+.Make-Admin {
+    grid-area: Make-Admin;
+}
+
+.Item-Search {
+    display: grid;
+    grid-template-columns: 0.3fr 1.2fr 1.5fr 1fr;
+    grid-template-rows: 1fr 0.2fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    'Item-Search-Area Item-Search-Area Delete-Item .'
+    'Item-Id-Title Item-Name-Title Item-Price-Title Item-Category-Title'
+    'Item-Id Item-Name Item-Price Item-Category'
+    '. Visit-Item Owner-Username .';
+    grid-area: Item-Search;
+}
+
+.Item-Search-Area {
+    grid-area: Item-Search-Area;
+}
+
+.Item-Id {
+    grid-area: Item-Id;
+}
+.Item-Id-Title {
+    grid-area: Item-Id-Title;
+}
+
+.Item-Name {
+    grid-area: Item-Name;
+}
+.Item-Name-Title {
+    grid-area: Item-Name-Title;
+}
+
+.Item-Price {
+    grid-area: Item-Price;
+}
+.Item-Price-Title{
+    grid-area: Item-Price-Title;
+}
+
+.Item-Category {
+    grid-area: Item-Category;
+}
+.Item-Category-Title {
+    grid-area: Item-Category-Title;
+}
+
+.Visit-Item {
+    grid-area: Visit-Item;
+}
+
+.Delete-Item {
+    grid-area: Delete-Item;
+}
+
+.Owner-Username {
+    grid-area: Owner-Username;
+}
+
+.Remove-Image {
+    grid-area: Remove-Image;
+}
+
+.Item-Image {
+    grid-area: Item-Image;
+}
+
+.Gap {
+    grid-area: Gap;
+}
+
+.Shut-Down-Website {
+    grid-area: Shut-Down-Website;
+}
+
+html,
+body,
+.container {
+    height: 100%;
+    margin: 0;
+}
