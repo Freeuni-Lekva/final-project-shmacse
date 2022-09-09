@@ -45,12 +45,14 @@ background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1)
         if(request.getSession().getAttribute("username") != null){
     %>
         <%
-            if((boolean) request.getSession().getAttribute("isAdmin")){
+            if(request.getSession().getAttribute("isAdmin") != null){
+                if((boolean) request.getSession().getAttribute("isAdmin")){
         %>
         <a href="${pageContext.request.contextPath}/admin-page" class="btn" role="button" id="admin-page" name="admin-page">
             <span>Admin Page</span>
         </a>
         <%
+                }
             }
         %>
         <button type="submit" formaction="my-items" formmethod="get" id="to-my-items" name="to-my-items"> My Items </button>
