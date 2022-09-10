@@ -188,14 +188,3 @@ body {
   color: white;
   background:#add8e6;
 }
-
-.home-button
-{
-  font-family: Monospace, Monaco, serif;
-  font-size: 20px;
-  background-color: HoneyDew;
-  border-radius: 20px;
-  width: 170px;
-  height: 40px;
-}
-

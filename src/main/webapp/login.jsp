@@ -3,9 +3,11 @@
 <head>
 	<link href="css/login.css" type="text/css" rel="stylesheet">
 	<title>shmacse</title>
-	<form action="gohome" method="post">
-		<button formaction="homepage" formmethod="post" class="home-button" type="submit">Shmacse Store</button>
-	</form>
+	<span name="span-homepage" id="span-homepage">
+        <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
+            <span>Shmacse Store</span>
+        </a>
+    </span>
 </head>
 <body>
 <div class="login-form">

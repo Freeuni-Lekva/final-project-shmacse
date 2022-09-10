@@ -19,11 +19,11 @@
         User owner = (User) request.getAttribute("user");
     %>
     <div class="container">
-        <div class="HomepageButton">
-            <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
-                    <span>Go to Homepage</span>
-            </a>
-        </div>
+        <span name="span-homepage" id="span-homepage">
+        <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
+            <span>Shmacse Store</span>
+        </a>
+    </span>
         <div class="Description-header">
             <div class="fs-3" id="description-header"> Description </div>
         </div>

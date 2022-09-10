@@ -17,18 +17,19 @@ body{
     ". . . Owner Owner .";
 }
 
-.HomepageButton { grid-area: HomepageButton; position: relative; }
+
 #homepage-button {
-    transform: translate(0%, 100%);
+    display: inline-block;
     border-radius: 4px;
-    background-color: #748500;
+    background-color: #4bca69;
     color: #FFFFFF;
     text-align: center;
-    font-size: 12px;
+    font-size: 20px;
     padding: 10px;
-    width: 150px;
+    width: 220px;
     transition: all 1s;
     cursor: pointer;
+    margin: 7%;
 }
 #homepage-button span {
     cursor: pointer;
@@ -45,10 +46,14 @@ body{
     transition: 1s;
 }
 #homepage-button:hover span {
-    padding-left: 20px;
+    padding-left: 30px;
 }
 #homepage-button:hover span:after {
     opacity: 1;
+}
+#span-homepage{
+    float: left;
+    margin-left: 10px;
 }
 
 .Description-header { grid-area: Description-header; position: relative;}

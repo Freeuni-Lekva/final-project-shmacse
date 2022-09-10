@@ -91,3 +91,18 @@ body {
     float: right;
     margin-right: 10px;
 }
+
+.home-button
+{
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #42ca99;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 8px;
+    width: 180px;
+    transition: all 1s;
+    cursor: pointer;
+}
+
