@@ -25,19 +25,25 @@ public class MyItemsServlet extends HttpServlet {
         Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
         ItemDao itemDao = new ItemDao(connection);
 
-        String username = (String) session.getAttribute("username");
+        if(session.getAttribute("username") != null) {
+            String username = (String) session.getAttribute("username");
 
-        List<Item> myItemsList;
+            List<Item> myItemsList;
 
-        try {
-            myItemsList = itemDao.getItemsByUsername(username);
-        } catch (SQLException e) {
-            myItemsList = Collections.emptyList();
+            try {
+                myItemsList = itemDao.getItemsByUsername(username);
+            } catch (SQLException e) {
+                myItemsList = Collections.emptyList();
+            }
+
+            req.setAttribute("myItemsList", myItemsList);
+
+            req.getRequestDispatcher("/my-items.jsp").forward(req, resp);
+        }else{
+            req.setAttribute("error-message", "User is not logged in.");
+            req.setAttribute("back-to", "homepage");
+            req.getRequestDispatcher("/error-page.jsp").forward(req,resp);
         }
-
-        req.setAttribute("myItemsList", myItemsList);
-
-        req.getRequestDispatcher("/my-items.jsp").forward(req, resp);
     }
 
 }

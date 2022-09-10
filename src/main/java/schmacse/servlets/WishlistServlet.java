@@ -29,21 +29,28 @@ public class WishlistServlet extends HttpServlet {
         UserDao userDao = new UserDao(connection);
         ItemDao itemDao = new ItemDao(connection);
 
-        String username = (String) session.getAttribute("username");
+        if(session.getAttribute("username") != null) {
+            String username = (String) session.getAttribute("username");
 
-        List<Item> itemsInWishlist;
+            List<Item> itemsInWishlist;
 
-        try {
-            User user = userDao.getUserByUsername(username);
+            try {
+                User user = userDao.getUserByUsername(username);
 
-            itemsInWishlist = itemDao.getItemsForUserInWishlist(user.getId());
-        } catch (SQLException e) {
-            itemsInWishlist = Collections.emptyList();
+                itemsInWishlist = itemDao.getItemsForUserInWishlist(user.getId());
+            } catch (SQLException e) {
+                itemsInWishlist = Collections.emptyList();
+            }
+
+            req.setAttribute("itemsInWishlist", itemsInWishlist);
+
+            req.getRequestDispatcher("/wishlist.jsp").forward(req, resp);
+        }else{
+
+            req.setAttribute("error-message", "User is not logged in.");
+            req.setAttribute("back-to", "homepage");
+            req.getRequestDispatcher("/error-page.jsp").forward(req, resp);
         }
-
-        req.setAttribute("itemsInWishlist", itemsInWishlist);
-
-        req.getRequestDispatcher("/wishlist.jsp").forward(req, resp);
     }
 
     @Override

@@ -9,8 +9,22 @@ import java.sql.SQLException;
 public class ImageDao {
     private final Connection connection;
 
+    private final static String SELECT_ROWS_WITH_IMAGE_ID = "SELECT * FROM item_images WHERE id = ?";
+
     public ImageDao(Connection connection) {
         this.connection = connection;
+    }
+
+    public int getItemId(int imageId) throws SQLException{
+
+        PreparedStatement stm = connection.prepareStatement(SELECT_ROWS_WITH_IMAGE_ID);
+        stm.setInt(1,imageId);
+
+        ResultSet resultSet = stm.executeQuery();
+
+        resultSet.next();
+        return resultSet.getInt(2);
+
     }
 
     public int addImage(int itemId, byte[] image) throws SQLException {

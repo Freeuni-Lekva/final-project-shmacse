@@ -132,3 +132,16 @@ body{
     color: white;
     letter-spacing: 1px;
 }
+
+#upload-button{
+    width: 180px;
+    float:right;
+    color:black;
+    background: #b3b4b3;
+    transition: all 1s;
+    border-width: 2px;
+}
+#upload-button:hover {
+    border-color: skyblue;
+    background: #ffd6da;
+}

@@ -25,6 +25,7 @@ public class ItemDao {
     private static final String UPDATE_NAME = "UPDATE items SET name = ? WHERE id = ?";
     private static final String UPDATE_DESCRIPTION = "UPDATE items SET description = ? WHERE id = ?";
     private static final String UPDATE_CATEGORY = "UPDATE items SET category = ? WHERE id = ?";
+    private static final String UPDATE_IMAGE_ID = "UPDATE items SET image_id = ? WHERE id = ?";
 
     private static final String SELECT_ITEMS_FOR_USER_IN_WISHLIST = "SELECT DISTINCT " +
             "items.id, items.user_id, items.name, items.price, items.description, items.category, items.image_id FROM items " +
@@ -36,6 +37,15 @@ public class ItemDao {
 
     public ItemDao(Connection connection){
         this.connection = connection;
+    }
+
+    public void changeImageID(int itemId, int imageId) throws SQLException {
+
+        PreparedStatement stm = connection.prepareStatement(UPDATE_IMAGE_ID);
+        stm.setInt(1, imageId);
+        stm.setInt(2, itemId);
+        stm.executeUpdate();
+
     }
 
     public void add(Item item) throws SQLException {
@@ -52,8 +62,6 @@ public class ItemDao {
         stm.setObject(5, item.getCategory().name());
         stm.executeUpdate();
     }
-
-
     public void add(Item item, byte[] image) throws SQLException {
         connection.createStatement().execute("SET FOREIGN_KEY_CHECKS=0");
 
@@ -103,7 +111,6 @@ public class ItemDao {
         stm.setInt(1,itemId);
         stm.executeUpdate();
     }
-
     public void remove(int itemId) throws SQLException{
 
         ImageDao imageDao = new ImageDao(connection);

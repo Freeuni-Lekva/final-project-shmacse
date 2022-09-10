@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import java.sql.Connection;
 
 @WebListener
 public class Listener implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener {
@@ -30,19 +31,22 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         DBConnection.closeConnection();
     }
 
-    @Override
-    public void sessionCreated(HttpSessionEvent se) {
-        /* Session is created. */
-        Connection connection = DBConnection.getConnection();
-
+    public static void updateSessionItemsList(Connection connection, HttpSession session){
         ItemDao itemDao = new ItemDao(connection);
         try {
             List<Item> itemsList = itemDao.getFilteredItems("", null);
             itemsList.sort(Item::comparePrice);
-            se.getSession().setAttribute("itemsList", itemsList);
+            session.setAttribute("itemsList", itemsList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void sessionCreated(HttpSessionEvent se) {
+        /* Session is created. */
+        Connection connection = DBConnection.getConnection();
+        updateSessionItemsList(connection, se.getSession());
 
         //TODO initiate user session (privileges, shopping cart etc.).
     }
