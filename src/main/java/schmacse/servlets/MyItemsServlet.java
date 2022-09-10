@@ -42,7 +42,7 @@ public class MyItemsServlet extends HttpServlet {
         }else{
             req.setAttribute("error-message", "User is not logged in.");
             req.setAttribute("back-to", "homepage");
-            req.getRequestDispatcher("/error-page.jsp");
+            req.getRequestDispatcher("/error-page.jsp").forward(req,resp);
         }
     }
 
