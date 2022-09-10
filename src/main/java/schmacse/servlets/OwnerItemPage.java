@@ -1,5 +1,6 @@
 package schmacse.servlets;
 
+import schmacse.daos.ImageDao;
 import schmacse.daos.ItemDao;
 import schmacse.daos.UserDao;
 import schmacse.model.Category;
@@ -7,11 +8,14 @@ import schmacse.model.Item;
 import schmacse.model.User;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name = "owner-item-page", value = "/owner-item-page")
+@MultipartConfig
 public class OwnerItemPage extends HttpServlet {
 
     @Override
@@ -63,9 +68,26 @@ public class OwnerItemPage extends HttpServlet {
         String newPhoneNumber = req.getParameter("updated-owner-phone");
         String newDescription = req.getParameter("updated-description");
         Category newCategory = Category.valueOf(req.getParameter("updated-category"));
+        boolean hasChanged = !("".equals(req.getParameter("updated-image-check")));
+
+        byte[] imageByteArray = null;
+        try {
+            InputStream stream = req.getPart("new-image").getInputStream();
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            while ((bytesRead = stream.read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
+            }
+            imageByteArray = output.toByteArray();
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         ItemDao itemDao = new ItemDao(connection);
         UserDao userDao = new UserDao(connection);
+        ImageDao imageDao = new ImageDao(connection);
 
         try {
 
@@ -78,6 +100,11 @@ public class OwnerItemPage extends HttpServlet {
             userDao.updatePhoneNumber(userId, newPhoneNumber);
             itemDao.updateCategory(itemId, newCategory);
 
+            if(hasChanged) {
+                imageDao.removeWithItemId(itemId);
+                int imageId = imageDao.addImage(itemId, imageByteArray);
+                itemDao.changeImageID(itemId, imageId);
+            }
 
             Item item = itemDao.getItemByItemID(itemId);
             List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));

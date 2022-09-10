@@ -36,9 +36,8 @@
     </div>
     <div class="Image">
         <img src="getImage.jsp?item_id=<%=item.getId()%>" id="image" style="width: 800px; height: 520px; white-space: nowrap;">
-        <span id="for-new-image" name="for-new-image">
-            <label for="new-image">Select New Image:</label>
-            <input id="new-image" name="new-image" type="file" accept="image/*">
+        <span>
+            <button type="button" id="upload-button" name="upload-button" onclick="clickUploadImage()"> Upload New Image </button>
         </span>
     </div>
 
@@ -66,7 +65,7 @@
         </select>
     </div>
     <div class="Update-Page">
-        <form action="${pageContext.request.contextPath}/owner-item-page" method="post">
+        <form action="${pageContext.request.contextPath}/owner-item-page" method="post" enctype="multipart/form-data">
             <input type="submit" id="update-button" value="Update Information" onclick="prepeareHiddenParameters()">
 
             <input type="hidden" id="hidden-updated-owner-phone" name="updated-owner-phone" value="">
@@ -74,7 +73,9 @@
             <input type="hidden" id="hidden-updated-description" name="updated-description" value="">
             <input type="hidden" id="hidden-updated-item-name" name="updated-item-name" value="">
             <input type="hidden" id="hidden-updated-category" name="updated-category" value="">
-            <input type="hidden" id="hidden-updated-image" name="updated-image" value="">
+
+            <input type="hidden" id="hidden-updated-image-check" name="updated-image-check" value="">
+            <input type="file" id="new-image" name="new-image" accept="image/*" style="display: none;">
 
             <input type="hidden" value="<%=item.getId()%>" name="itemId">
         </form>
@@ -87,7 +88,11 @@
         document.getElementById('hidden-updated-description').setAttribute('value', document.getElementById('description').value);
         document.getElementById('hidden-updated-item-name').setAttribute('value', document.getElementById('item-name').value);
         document.getElementById('hidden-updated-category').setAttribute('value', document.getElementById('categories').value);
-        document.getElementById('hidden-updated-image').setAttribute('value', document.getElementById('new-image').value);
+        document.getElementById('hidden-updated-image-check').setAttribute('value', document.getElementById('new-image').value);
+    }
+
+    function clickUploadImage(){
+        document.getElementById('new-image').click();
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
