@@ -12,7 +12,7 @@ public class DBConnection {
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db",
-                    "root", "Babaiaga12");
+                    "root", "password");
         } catch (SQLException e) {
             e.printStackTrace();
         }
