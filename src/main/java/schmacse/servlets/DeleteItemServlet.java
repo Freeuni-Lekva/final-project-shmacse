@@ -1,5 +1,6 @@
 package schmacse.servlets;
 
+import schmacse.Listener;
 import schmacse.daos.ItemDao;
 import schmacse.daos.WishListDao;
 import schmacse.model.Item;
@@ -27,7 +28,7 @@ public class DeleteItemServlet extends HttpServlet {
         ItemDao itemDao = new ItemDao(connection);
         WishListDao wishListDao = new WishListDao(connection);
 
-        int itemId = Integer.parseInt(req.getParameter("itemId"));
+        int itemId = Integer.parseInt(req.getParameter("itemId"))/(7*13*37);
 
         String username = (String) session.getAttribute("username");
 
@@ -45,6 +46,7 @@ public class DeleteItemServlet extends HttpServlet {
 
         req.setAttribute("myItemsList", myItemsList);
 
+        Listener.updateSessionItemsList(connection, session);
         req.getRequestDispatcher("/my-items.jsp").forward(req, resp);
     }
 }
