@@ -26,6 +26,7 @@ public class HomepageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+
         List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));
         req.setAttribute("categoryList", categories);
         List<Item> allItems;
