@@ -1,6 +1,6 @@
 body{
-    background: rgb(112,210,179);
-    background: linear-gradient(209deg, rgba(112,210,179,1) 0%, rgba(170,226,119,1) 8%, rgba(112,210,179,1) 27%);
+    background: rgb(250,248,223);
+    background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1) 100%);
 }
 
 .container {
@@ -21,7 +21,7 @@ body{
 #my-items-button {
     transform: translate(0%, 100%);
     border-radius: 4px;
-    background-color: #0099ff;
+    background-color: #748500;
     color: #FFFFFF;
     text-align: center;
     font-size: 12px;
@@ -65,14 +65,14 @@ body{
     margin:10px;
     width: 94%;
     height: 97%;
-    background: #b3b4b3;
+    background: #fffff0;
 }
 
 .Price { grid-area: Price; position: relative;
     text-align: center;}
 #updated-price{
     width: 100px;
-    background: #b3b4b3;
+    background: #fffff0;
 }
 
 .Image { grid-area: Image; position: relative;}
@@ -89,14 +89,14 @@ body{
     padding-left: 5px;
     font-size: 17px;
     width: 260px;
-    background-color: #6dd39e;
+    background-color: #394000;
     border-width: 20px;
     border-radius: 5px;
     color: #f7f8f7;
 }
 #owner-phone{
     width: 130px;
-    background: #b3b4b3;
+    background: #fffff0;
 }
 
 .Title { grid-area: Title; position: relative;
@@ -105,7 +105,7 @@ body{
     font-size: 25px;
     width: 200px;
     margin-top: 20px;
-    background:  #b3b4b3;
+    background:  #fffff0;
 }
 
 .Category { grid-area: Category; position: relative;
