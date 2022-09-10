@@ -77,7 +77,7 @@ background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1)
                         }
                     %>
                     <h3 class="text-center fw-bold"><%=nameToDisplay%></h3>
-                    <h5 class="text-center" style="opacity: 0.5;"><%=item.getPrice()+" GEL"%></h5>
+                    <h5 class="text-center" style="opacity: 0.5; font-size: 18px;"><%=item.getPrice()+" ₾"%></h5>
 
                     <img src="getImage.jsp?item_id=<%=item.getId()%>" style="width: 242px; height: 133px; white-space: nowrap; object-fit: contain;">
                     <div class="text-center my-3">

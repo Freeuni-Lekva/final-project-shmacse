@@ -29,6 +29,13 @@
             <span>Go to Homepage</span>
         </a>
     </span>
+
+    <span name="span-wishlist" id="span-wishlist">
+        <a href="${pageContext.request.contextPath}/wishlist" class="btn" role="button" id="wishlist-button" name="wishlist-button">
+            <span>My Wishlist</span>
+        </a>
+    </span>
+
     <span name="span-enlist" id="span-enlist">
         <a href="${pageContext.request.contextPath}/enlistment-page" class="btn" role="button" id="enlist-button" name="enlist-button">
             <span>Add Item</span>
@@ -49,7 +56,7 @@
                     <div class="card-body" style="background: rgb(167, 190, 130); border-radius: 15px">
 
                         <h3><%=item.getName()%></h3>
-                        <p class="card-text"><%=item.getDescription()%></p>
+                        <p class="card-text"> Price: <%=item.getPrice()%> ₾</p>
 
 <%--                        <img src="images/bags.png" style="width: 242px; height: 133px; white-space: nowrap;">--%>
                         <img src="getImage.jsp?item_id=<%=item.getId()%>" style="width: 242px; height: 133px; white-space: nowrap; object-fit: contain;">

@@ -15,12 +15,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
             integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="css/wishlist.css">
 </head>
 <body>
 
-<section id="my-wishlist" class="container bg-light py-4">
+<section id="my-wishlist" class="container py-4">
 
     <h1 class="text-center">My Wishlist</h1>
+    <br>
+
+    <span name="span-my-items" id="span-my-items">
+        <a href="${pageContext.request.contextPath}/my-items" class="btn" role="button" id="my-items-button" name="my-items-button">
+            <span>My Items</span>
+        </a>
+    </span>
 
     <div class="row">
         <%
@@ -30,17 +38,19 @@
         %>
 
         <div class="col-lg-4 col-md-6 col-sm-10 my-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
+            <div class="card" style="width: 18rem; text-align: center; margin: 0 auto; border-radius: 15px; border-width: medium; border-color: HoneyDew">
+                <div class="card-body" style="background: rgb(167, 190, 130); border-radius: 15px">
 
-                    <h3><%=item.getName()%></h3>
-                    <p class="card-text"><%=item.getDescription()%></p><br/>
-                    <p class="card-text">Price: <%=item.getPrice()%></p>
+                    <h3 id="item-name"><%=item.getName()%></h3>
+                    <p class="card-text" id="item-category"><%=item.getCategory().toString()%></p>
+                    <p class="card-text" id="item-price">Price: <%=item.getPrice()%> ₾</p>
 
+                    <img src="getImage.jsp?item_id=<%=item.getId()%>" style="width: 242px; height: 133px; white-space: nowrap; object-fit: contain;">
                     <div class="text-center my-3">
-                        <form action="wishlist" method="post">
+                        <form>
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
-                            <button class="btn btn-danger">Delete</button>
+                            <button formaction="item-page" formmethod="get" class="bton vist" style="background-color: #a7c7e7; border-radius: 10px">Visit</button>
+                            <button formaction="wishlist" formmethod="post" class="bton delete" style="background-color: #ff6961; border-radius: 10px">Delete</button>
                         </form>
                     </div>
 

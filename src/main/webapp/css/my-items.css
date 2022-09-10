@@ -54,6 +54,26 @@ body {
     margin-left: 10px;
 }
 
+#wishlist-button{
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #B19E81;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 8px;
+    width: 180px;
+    transition: all 1s;
+    cursor: pointer;
+}
+#wishlist-button:hover {
+    background: blue;
+}
+#span-wishlist{
+    float: right;
+    text-align: center;
+}
+
 #enlist-button {
     display: inline-block;
     border-radius: 4px;
@@ -62,7 +82,7 @@ body {
     text-align: center;
     font-size: 20px;
     padding: 8px;
-    width: 180px;
+    width: 150px;
     transition: all 1s;
     cursor: pointer;
 }
@@ -77,12 +97,12 @@ body {
     font-size: 25px;
     position: absolute;
     opacity: 0;
-    top: -5px;
+    top: -3px;
     right: -5px;
     transition: 1s;
 }
 #enlist-button:hover span {
-    padding-right: 25px;
+    padding-right: 19px;
 }
 #enlist-button:hover span:after {
     opacity: 1;
