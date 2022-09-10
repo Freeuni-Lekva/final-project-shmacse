@@ -32,12 +32,37 @@
 <section id="my-notes" class="container py-4">
 
     <h1 class="text-center">My Items to Sell</h1>
+    <br>
+
+    <span name="span-homepage" id="span-homepage">
+        <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
+            <span>Go to Homepage</span>
+        </a>
+    </span>
+
+    <span name="span-wishlist" id="span-wishlist">
+        <a href="${pageContext.request.contextPath}/wishlist" class="btn" role="button" id="wishlist-button" name="wishlist-button">
+            <span>My Wishlist</span>
+        </a>
+    </span>
+
+    <span name="span-enlist" id="span-enlist">
+        <a href="${pageContext.request.contextPath}/enlistment-page" class="btn" role="button" id="enlist-button" name="enlist-button">
+            <span>Add Item</span>
+        </a>
+    </span>
+    <br>
+    <br>
 
     <div class="row">
         <%
+
+
             List<Item> myItemList = (List<Item>) request.getAttribute("myItemsList");
 
             for (Item item: myItemList) {
+                int itemId = item.getId();
+                int encodedItemId = 7 * 37 * 13 * itemId;
         %>
 
             <div class="col-lg-4 col-md-6 col-sm-10 my-3">
@@ -45,13 +70,13 @@
                     <div class="card-body" style="background: rgb(167, 190, 130); border-radius: 15px">
 
                         <h3><%=item.getName()%></h3>
-                        <p class="card-text"><%=item.getDescription()%></p>
+                        <p class="card-text"> Price: <%=item.getPrice()%> ₾</p>
 
 <%--                        <img src="images/bags.png" style="width: 242px; height: 133px; white-space: nowrap;">--%>
                         <img src="getImage.jsp?item_id=<%=item.getId()%>" style="width: 242px; height: 133px; white-space: nowrap; object-fit: contain;">
                         <div class="text-center my-3">
                             <form>
-                                <input type="hidden" name="itemId" value="<%=item.getId()%>">
+                                <input type="hidden" name="itemId" value="<%=encodedItemId%>">
                                 <button formaction="owner-item-page" formmethod="get" class="bton vist" style="background-color: #a7c7e7; border-radius: 10px">Visit</button>
                                 <button formaction="delete-item" formmethod="post" class="bton delete" style="background-color: #ff6961; border-radius: 10px">Delete</button>
                             </form>

@@ -1,5 +1,6 @@
 package schmacse.servlets;
 
+import schmacse.Listener;
 import schmacse.daos.ItemDao;
 import schmacse.daos.UserDao;
 import schmacse.model.Category;
@@ -87,6 +88,8 @@ public class enlistmentPageServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
+            Listener.updateSessionItemsList(dbconnection, session);
             resp.sendRedirect("my-items");
             return;
         }

@@ -148,4 +148,14 @@ public class UserDao {
         );
     }
 
+    public boolean isAdmin(String username) throws SQLException {
+        PreparedStatement stm = connection.prepareStatement(SELECT_USER_BY_USERNAME);
+        stm.setString(1, username);
+
+        ResultSet rs = stm.executeQuery();
+        if(!rs.next()) return false;
+
+        return rs.getBoolean("is_admin");
+    }
+
 }
