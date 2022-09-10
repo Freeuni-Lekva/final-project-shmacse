@@ -16,7 +16,7 @@
     <h2 class="display-6"> <%= errorMessage %> </h2>
 
     <br>
-    <form action= <%= backTo %> method="get">
+    <form action="<%= backTo %>" method="get">
         <%
             int itemId = 0;
             if (request.getAttribute("itemId") != null){

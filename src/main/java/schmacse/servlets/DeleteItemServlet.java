@@ -1,7 +1,9 @@
 package schmacse.servlets;
 
+import schmacse.Listener;
 import schmacse.daos.ItemDao;
 import schmacse.daos.WishListDao;
+import schmacse.model.Category;
 import schmacse.model.Item;
 
 import javax.servlet.ServletException;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +31,7 @@ public class DeleteItemServlet extends HttpServlet {
         ItemDao itemDao = new ItemDao(connection);
         WishListDao wishListDao = new WishListDao(connection);
 
-        int itemId = Integer.parseInt(req.getParameter("itemId"));
+        int itemId = Integer.parseInt(req.getParameter("itemId"))/(7*13*37);
 
         String username = (String) session.getAttribute("username");
 
@@ -44,7 +48,16 @@ public class DeleteItemServlet extends HttpServlet {
         }
 
         req.setAttribute("myItemsList", myItemsList);
+        List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));
+        req.setAttribute("categoryList", categories);
 
+        if(req.getSession().getAttribute("byAdmin")!= null && (Boolean) req.getSession().getAttribute("byAdmin")) {
+            req.getRequestDispatcher("/homepage").forward(req, resp);
+        }
+        else
+            req.getRequestDispatcher("/my-items.jsp").forward(req, resp);
+
+        Listener.updateSessionItemsList(connection, session);
         req.getRequestDispatcher("/my-items.jsp").forward(req, resp);
     }
 }
