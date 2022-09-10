@@ -3,9 +3,11 @@
 <head>
 	<link href="css/login.css" type="text/css" rel="stylesheet">
 	<title>shmacse</title>
+	<form action="gohome" method="post">
+		<button formaction="homepage" formmethod="post" class="home-button" type="submit">Shmacse Store</button>
+	</form>
 </head>
 <body>
-
 <div class="login-form">
 	<img src="images/cart.png"  alt="." style="width:130px;height:auto;">
 	<h1>Log in</h1>

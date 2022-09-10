@@ -19,7 +19,7 @@ body{
     width: 300px;
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
     padding: 30px;
-    margin: 10% auto 0;
+    margin: 0% auto 0;
     text-align: center;
     position: center;
 }
@@ -42,4 +42,13 @@ body{
     border-radius: 20px;
     width: 100px;
     height: 40px;
+}
+.home-button
+{
+    font-family: Monospace, Monaco, serif;
+    font-size: 20px;
+    background-color: HoneyDew;
+    border-radius: 20px;
+    width: 170px;
+    height: 60px;
 }

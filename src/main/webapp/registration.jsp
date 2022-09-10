@@ -3,6 +3,9 @@
 <head>
 	<link href="css/registration.css" type="text/css" rel="stylesheet">
 	<title>shmacse</title>
+	<form action="gohome" method="post">
+		<button formaction="homepage" formmethod="post" class="home-button" type="submit">Shmacse Store</button>
+	</form>
 </head>
 <body>
 
