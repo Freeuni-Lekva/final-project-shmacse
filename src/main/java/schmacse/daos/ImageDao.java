@@ -17,7 +17,7 @@ public class ImageDao {
         PreparedStatement stm = connection.prepareStatement("INSERT INTO item_images (item_id, image) VALUES (?, ?)");
         stm.setInt(1, itemId);
         stm.setBytes(2, image);
-        stm.executeQuery();
+        stm.execute();
         stm.close();
 
         ResultSet rs = connection.createStatement().executeQuery("SELECT LAST_INSERT_ID()");

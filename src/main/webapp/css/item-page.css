@@ -116,3 +116,6 @@ body{
 .Title { grid-area: Title; position: relative;}
 
 .Category { grid-area: Category; position: relative;}
+
+.ReviewInput {grid-area: ReviewInput; position: absolute; right: 150px; top: 230px}
+.Reviews {grid-area: Reviews; position: absolute; right: 150px; top: 200px}

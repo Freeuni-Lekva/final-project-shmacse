@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "item-page", value = "/item-page")
@@ -35,8 +36,13 @@ public class ItemPageServlet extends HttpServlet {
             Item item = itemDao.getItemByItemID(itemId);
             int userID = itemDao.getUserIDByItemID(itemId);
             User user = userDao.getUserById(userID);
+            String review = req.getParameter("review-input");
             List<Review> itemSellerReviews = reviewDao.getReviewsByUserId(userID);
             //TODO: get review from input, call reviewDao.add(userID, input)
+            if(review != null && review.length() > 0){
+                itemSellerReviews.add(new Review(user.getId(), review));
+                reviewDao.addReview(new Review(user.getId(), review));
+            }
 
             req.setAttribute("item", item);
             req.setAttribute("user", user);

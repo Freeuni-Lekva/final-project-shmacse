@@ -11,6 +11,11 @@ public class Review {
         this.comment = comment;
     }
 
+    public Review(int user_id, String comment){
+        this.user_id = user_id;
+        this.comment = comment;
+    }
+
     public int getUser_id() {
         return user_id;
     }
@@ -19,7 +24,9 @@ public class Review {
         this.user_id = user_id;
     }
 
-    public int getReview_id(){ return review_id; }
+    public int getReview_id(){
+        return review_id;
+    }
 
     public String getComment() {
         return comment;

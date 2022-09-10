@@ -4,6 +4,9 @@
 <%@ page import="schmacse.model.Category" %>
 <%@ page import="java.io.OutputStream" %>
 <%@ page import="java.sql.Connection" %>
+<%@ page import="java.util.List" %>
+<%@ page import="schmacse.model.Review" %>
+<%@ page import="java.util.Arrays" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,10 +71,48 @@
             <h2 class="fs-4 text-center text-muted"><%=item.getCategory().toString()%></h2>
         </div>
         <div class="Reviews">
-            <c:forEach items="${reviews}" var="review">
-                <input type="checkbox" id="${review}" name="genre" value="${review}">
-                <label for="${review}"> ${review} </label><br>
-            </c:forEach>
+            <div class="row">
+                <%
+                    if (request.getAttribute("reviews") != null){
+                        List<Review> reviews = (List<Review>) request.getAttribute("reviews");
+//
+//                        List<Review> reviews = Arrays.asList(new Review(11, 21, "komentari1"), new Review(12, 22, "komentari2"), new Review(13, 23, "komentari3"));
+                        int coords = 120;
+
+                        for (Review review: reviews) {
+                %>
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 my-3" style="text-align: center; margin: 0 auto;">
+                    <div class="card" style="width: 19rem; text-align: center; margin: 0 auto; border-radius: 15px; border-color: HoneyDew; border-width: medium; position: absolute; top: <%=coords%>px; right: -50px">
+                        <div class="card-body" style="background: rgb(167, 190, 130); border-radius: 15px">
+
+                            <%
+                                String nameToDisplay = item.getName();
+                                if(nameToDisplay.length() >= 15){
+                                    nameToDisplay = nameToDisplay.substring(0,15) + "...";
+                                }
+                            %>
+                            <h3 class="text-center fw-bold"><%out.println(review.getUser_id());%></h3>
+                            <h5 class="text-center" style="opacity: 0.5;"><%out.println(review.getComment());%></h5>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+
+                <%          coords += 120;
+                        }
+                    }
+                %>
+
+            </div>
+        </div>
+        <div class="ReviewInput">
+            <form>
+                <label id="review"> Review : </label>
+                <input type="hidden" name="itemId" value="<%=item.getId()%>">
+                <input type="text" name="review-input" placeholder="Review.." style="border-radius: 8px; border-color: darkblue; border-width: 2px; background-color: #dde2eb; padding: 0px 5px;">
+                <button formaction="item-page" formmethod="get" type="submit" id="submit-review">Submit Review</button>
+            </form>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
