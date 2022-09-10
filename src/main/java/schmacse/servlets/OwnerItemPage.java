@@ -32,10 +32,22 @@ public class OwnerItemPage extends HttpServlet {
         Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
 
         String username = (String) req.getSession().getAttribute("username");
-        int itemId = Integer.parseInt(req.getParameter("itemId"));
+        int itemId = Integer.parseInt(req.getParameter("itemId"))/(7*37*13);
 
         UserDao userDao = new UserDao(connection);
         ItemDao itemDao = new ItemDao(connection);
+        try {
+            if(itemDao.getUserIDByItemID(itemId) != userDao.getUserByUsername(username).getId()){
+                // not the owner is trying to acces the webpage
+                req.setAttribute("error-message", "Current user is not the owner of this item.");
+                req.setAttribute("back-to", "homepage");
+                req.getRequestDispatcher("/error-page.jsp").forward(req,resp);
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         try {
 
             User user = userDao.getUserByUsername(username);

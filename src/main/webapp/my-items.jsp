@@ -46,9 +46,13 @@
 
     <div class="row">
         <%
+
+
             List<Item> myItemList = (List<Item>) request.getAttribute("myItemsList");
 
             for (Item item: myItemList) {
+                int itemId = item.getId();
+                int encodedItemId = 7 * 37 * 13 * itemId;
         %>
 
             <div class="col-lg-4 col-md-6 col-sm-10 my-3">
@@ -62,7 +66,7 @@
                         <img src="getImage.jsp?item_id=<%=item.getId()%>" style="width: 242px; height: 133px; white-space: nowrap; object-fit: contain;">
                         <div class="text-center my-3">
                             <form>
-                                <input type="hidden" name="itemId" value="<%=item.getId()%>">
+                                <input type="hidden" name="itemId" value="<%=encodedItemId%>">
                                 <button formaction="owner-item-page" formmethod="get" class="bton vist" style="background-color: #a7c7e7; border-radius: 10px">Visit</button>
                                 <button formaction="delete-item" formmethod="post" class="bton delete" style="background-color: #ff6961; border-radius: 10px">Delete</button>
                             </form>
