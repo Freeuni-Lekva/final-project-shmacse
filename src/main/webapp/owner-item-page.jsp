@@ -36,6 +36,10 @@
     </div>
     <div class="Image">
         <img src="getImage.jsp?item_id=<%=item.getId()%>" id="image" style="width: 800px; height: 520px; white-space: nowrap;">
+        <span id="for-new-image" name="for-new-image">
+            <label for="new-image">Select New Image:</label>
+            <input id="new-image" name="new-image" type="file" accept="image/*">
+        </span>
     </div>
 
     <div class="Owner">
@@ -70,6 +74,7 @@
             <input type="hidden" id="hidden-updated-description" name="updated-description" value="">
             <input type="hidden" id="hidden-updated-item-name" name="updated-item-name" value="">
             <input type="hidden" id="hidden-updated-category" name="updated-category" value="">
+            <input type="hidden" id="hidden-updated-image" name="updated-image" value="">
 
             <input type="hidden" value="<%=item.getId()%>" name="itemId">
         </form>
@@ -82,6 +87,7 @@
         document.getElementById('hidden-updated-description').setAttribute('value', document.getElementById('description').value);
         document.getElementById('hidden-updated-item-name').setAttribute('value', document.getElementById('item-name').value);
         document.getElementById('hidden-updated-category').setAttribute('value', document.getElementById('categories').value);
+        document.getElementById('hidden-updated-image').setAttribute('value', document.getElementById('new-image').value);
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
