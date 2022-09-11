@@ -18,7 +18,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-
+:
 <section id="my-notes" class="container py-4">
 
     <h1 class="text-center">My Items to Sell</h1>
@@ -52,7 +52,6 @@
 
             for (Item item: myItemList) {
                 int itemId = item.getId();
-                int encodedItemId = 7 * 37 * 13 * itemId;
         %>
 
             <div class="col-lg-4 col-md-6 col-sm-10 my-3">
@@ -62,11 +61,13 @@
                         <h3><%=item.getName()%></h3>
                         <p class="card-text"> Price: <%=item.getPrice()%> ₾</p>
 
-<%--                        <img src="images/bags.png" style="width: 242px; height: 133px; white-space: nowrap;">--%>
                         <img src="getImage.jsp?item_id=<%=item.getId()%>" style="width: 242px; height: 133px; white-space: nowrap; object-fit: contain;">
                         <div class="text-center my-3">
                             <form>
-                                <input type="hidden" name="itemId" value="<%=encodedItemId%>">
+                                <input type="hidden" name="itemId" value="<%=itemId%>">
+                                <%
+                                    request.getSession().setAttribute("byAdmin", Boolean.FALSE);
+                                %>
                                 <button formaction="owner-item-page" formmethod="get" class="bton vist" style="background-color: #a7c7e7; border-radius: 10px">Visit</button>
                                 <button formaction="delete-item" formmethod="post" class="bton delete" style="background-color: #ff6961; border-radius: 10px">Delete</button>
                             </form>

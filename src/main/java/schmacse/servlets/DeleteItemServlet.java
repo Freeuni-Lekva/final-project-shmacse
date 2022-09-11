@@ -31,7 +31,7 @@ public class DeleteItemServlet extends HttpServlet {
         ItemDao itemDao = new ItemDao(connection);
         WishListDao wishListDao = new WishListDao(connection);
 
-        int itemId = Integer.parseInt(req.getParameter("itemId"))/(7*13*37);
+        int itemId = Integer.parseInt(req.getParameter("itemId"));
 
         String username = (String) session.getAttribute("username");
 
@@ -46,6 +46,16 @@ public class DeleteItemServlet extends HttpServlet {
             req.getRequestDispatcher("/my-items.jsp").forward(req, resp);
             return;
         }
+
+
+        List<Item> itemsList = null;
+        try {
+            itemsList = itemDao.getFilteredItems("", null);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        itemsList.sort(Item::comparePrice);
+        req.getSession().setAttribute("itemsList", itemsList);
 
         req.setAttribute("myItemsList", myItemsList);
         List<Category> categories = new ArrayList<>(Arrays.asList(Category.values()));
