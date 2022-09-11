@@ -83,17 +83,12 @@ background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1)
                     <div class="text-center my-3">
                         <form>
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
+                            <button formaction="item-page" formmethod="get" id="visit-button" name="visit-button">Visit</button>
                             <%
-                                if(request.getSession().getAttribute("isAdmin") == null || !(Boolean) request.getSession().getAttribute("isAdmin")) {
+                                if(request.getSession().getAttribute("isAdmin") != null && (Boolean) request.getSession().getAttribute("isAdmin")) {
+                                    request.getSession().setAttribute("byAdmin", Boolean.TRUE);
                             %>
-                            <button formaction="item-page" formmethod="get" id="visit-button" name="visit-button"
-                            >Visit</button>
-                            <%
-                                }else {
-                                    request.getSession().setAttribute("byAdmin", new Boolean(true));
-                            %>
-                            <button formaction="owner-item-page" formmethod="get" class="bton vist" style="background-color: #a7c7e7; border-radius: 10px">Visit</button>
-                            <button formaction="delete-item" formmethod="post" class="bton delete" style="background-color: #ff6961; border-radius: 10px">Delete</button>
+                                <button formaction="delete-item" formmethod="post" class="bton delete" style="background-color: #ff6961; border-radius: 10px">Delete</button>
                             <%
                                 }
                             %>
