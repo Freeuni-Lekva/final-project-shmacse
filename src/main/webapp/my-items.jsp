@@ -3,6 +3,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <span name="span-homepage" id="span-homepage">
+        <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
+            <span>Shmacse Store</span>
+        </a>
+    </span>
+    <span name="span-wishlist" id="span-wishlist">
+        <a href="${pageContext.request.contextPath}/wishlist" class="btn" role="button" id="wishlist-button" name="wishlist-button">
+            <span>My Wishlist</span>
+        </a>
+    </span>
+    <span name="span-enlist" id="span-enlist">
+        <a href="${pageContext.request.contextPath}/enlistment-page" class="btn" role="button" id="enlist-button" name="enlist-button">
+            <span>Add Item</span>
+        </a>
+    </span>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,27 +37,6 @@
 <section id="my-notes" class="container py-4">
 
     <h1 class="text-center">My Items to Sell</h1>
-    <br>
-
-    <span name="span-homepage" id="span-homepage">
-        <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
-            <span>Go to Homepage</span>
-        </a>
-    </span>
-
-    <span name="span-wishlist" id="span-wishlist">
-        <a href="${pageContext.request.contextPath}/wishlist" class="btn" role="button" id="wishlist-button" name="wishlist-button">
-            <span>My Wishlist</span>
-        </a>
-    </span>
-
-    <span name="span-enlist" id="span-enlist">
-        <a href="${pageContext.request.contextPath}/enlistment-page" class="btn" role="button" id="enlist-button" name="enlist-button">
-            <span>Add Item</span>
-        </a>
-    </span>
-    <br>
-    <br>
 
     <div class="row">
         <%

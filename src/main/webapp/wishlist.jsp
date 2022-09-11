@@ -3,6 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+     <span name="span-my-items" id="span-my-items">
+        <a href="${pageContext.request.contextPath}/my-items" class="btn" role="button" id="my-items-button" name="my-items-button">
+            <span>My Items</span>
+        </a>
+    </span>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,11 +29,7 @@
     <h1 class="text-center">My Wishlist</h1>
     <br>
 
-    <span name="span-my-items" id="span-my-items">
-        <a href="${pageContext.request.contextPath}/my-items" class="btn" role="button" id="my-items-button" name="my-items-button">
-            <span>My Items</span>
-        </a>
-    </span>
+
 
     <div class="row">
         <%

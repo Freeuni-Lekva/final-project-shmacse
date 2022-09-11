@@ -3,9 +3,13 @@
 <head>
 	<link href="css/login.css" type="text/css" rel="stylesheet">
 	<title>shmacse</title>
+	<span name="span-homepage" id="span-homepage">
+        <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
+            <span>Shmacse Store</span>
+        </a>
+    </span>
 </head>
 <body>
-
 <div class="login-form">
 	<img src="images/cart.png"  alt="." style="width:130px;height:auto;">
 	<h1>Log in</h1>

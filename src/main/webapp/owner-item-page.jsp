@@ -18,11 +18,16 @@
     User owner = (User) request.getAttribute("user");
 %>
 <div class="container">
-    <div class="MyItemsButton">
+    <span name="span-homepage" id="span-homepage">
+        <a href="${pageContext.request.contextPath}/homepage" class="btn" role="button" id="homepage-button" name="homepage-button">
+            <span>Shmacse Store</span>
+        </a>
+    </span>
+    <span class="MyItemsButton">
         <a href="${pageContext.request.contextPath}/my-items" class="btn" role="button" id="my-items-button">
             <span>Go to My Items</span>
         </a>
-    </div>
+    </span>
     <div class="Description-header">
         <div class="fs-3" id="description-header"> Description </div>
     </div>

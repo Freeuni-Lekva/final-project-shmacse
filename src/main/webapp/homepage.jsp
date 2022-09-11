@@ -16,8 +16,8 @@
 </head>
 <body style="background: rgb(250,248,223);
 background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1) 100%);">
-<h1> Shmacse </h1>
 <form id="search-form" action="search-servlet" method="post">
+
     <label for="categories" id="categories-label"> Categories: </label>
     <select name="categories" id="categories" style="background-color: #dde2eb; border-radius: 10px; padding: 0px 5px; font-size: 15px;">
         <option value="ALL"> ALL </option>
