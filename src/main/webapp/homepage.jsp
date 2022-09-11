@@ -82,6 +82,7 @@ background: radial-gradient(circle, rgba(250,248,223,1) 50%, rgba(222,218,173,1)
                     <img src="getImage.jsp?item_id=<%=item.getId()%>" style="width: 242px; height: 133px; white-space: nowrap; object-fit: contain;">
                     <div class="text-center my-3">
                         <form>
+
                             <input type="hidden" name="itemId" value="<%=item.getId()%>">
                             <button formaction="item-page" formmethod="get" id="visit-button" name="visit-button">Visit</button>
                             <%

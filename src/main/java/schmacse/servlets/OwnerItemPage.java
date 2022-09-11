@@ -65,7 +65,25 @@ public class OwnerItemPage extends HttpServlet {
         }
     }
 
-    // updates price
+    private  boolean onlyDigits(String str, int n) {
+        // Traverse the string from
+        // start to end
+        for (int i = 0; i < n; i++) {
+
+            // Check if character is
+            // not a digit between 0-9
+            // then return false
+            if (str.charAt(i) < '0'
+                    || str.charAt(i) > '9') {
+                return false;
+            }
+        }
+        if(n == 0) return false;
+        // If we reach here, that means
+        // all characters were digits.
+        return true;
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -75,7 +93,11 @@ public class OwnerItemPage extends HttpServlet {
 
         int itemId = Integer.parseInt(req.getParameter("itemId"));
 
-        int newPrice = Integer.parseInt(req.getParameter("updated-price"));
+        String newPriceString = req.getParameter("updated-price");
+        int newPrice = 0;
+        if(onlyDigits(newPriceString, newPriceString.length())){
+            newPrice = Integer.parseInt(req.getParameter("updated-price"));
+        }
         String newItemName = req.getParameter("updated-item-name");
         String newPhoneNumber = req.getParameter("updated-owner-phone");
         String newDescription = req.getParameter("updated-description");
@@ -106,8 +128,12 @@ public class OwnerItemPage extends HttpServlet {
             User user = userDao.getUserByUsername(username);
             int userId = user.getId();
 
-            itemDao.updatePrice(itemId, newPrice);
-            itemDao.updateName(itemId, newItemName);
+            if(newPrice > 0){
+                itemDao.updatePrice(itemId, newPrice);
+            }
+            if(newItemName.length() > 0){
+                itemDao.updateName(itemId, newItemName);
+            }
             itemDao.updateDescription(itemId, newDescription);
             userDao.updatePhoneNumber(userId, newPhoneNumber);
             itemDao.updateCategory(itemId, newCategory);
